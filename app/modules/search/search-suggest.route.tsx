@@ -1,5 +1,3 @@
-import {json} from 'react-router';
-
 import {PREDICTIVE_SEARCH_QUERY} from './search-suggest.queries';
 
 import type {Route} from './+types/search-suggest.route';
@@ -16,7 +14,7 @@ export async function loader({request, context}: Route.LoaderArgs) {
   const limit = parseInt(url.searchParams.get('limit') || '10', 10);
 
   if (!q.trim()) {
-    return json({
+    return Response.json({
       products: [],
       collections: [],
       pages: [],
@@ -42,7 +40,7 @@ export async function loader({request, context}: Route.LoaderArgs) {
     );
 
     if (!result?.predictiveSearch) {
-      return json({
+      return Response.json({
         products: [],
         collections: [],
         pages: [],
@@ -51,7 +49,7 @@ export async function loader({request, context}: Route.LoaderArgs) {
       });
     }
 
-    return json({
+    return Response.json({
       products: result.predictiveSearch.products || [],
       collections: result.predictiveSearch.collections || [],
       pages: result.predictiveSearch.pages || [],
@@ -60,7 +58,7 @@ export async function loader({request, context}: Route.LoaderArgs) {
     });
   } catch (error) {
     console.error('Predictive search error:', error);
-    return json(
+    return Response.json(
       {
         error: 'Failed to fetch search suggestions',
         products: [],
