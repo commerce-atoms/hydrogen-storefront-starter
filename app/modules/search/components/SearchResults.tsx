@@ -10,19 +10,35 @@ import styles from './search-results.module.css';
 
 import type {
   SearchProductsQuery,
-  SearchCollectionsQuery,
   SearchPagesQuery,
   SearchArticlesQuery,
 } from 'storefrontapi.generated';
 
-interface SearchResultsData {
+export interface SearchResultsData {
   products?: {
     nodes: SearchProductsQuery['products']['nodes'];
     pageInfo: SearchProductsQuery['products']['pageInfo'];
   };
   collections?: {
-    nodes: SearchCollectionsQuery['collections']['nodes'];
-    pageInfo: SearchCollectionsQuery['collections']['pageInfo'];
+    nodes: Array<{
+      __typename: 'Collection';
+      handle: string;
+      id: string;
+      title: string;
+      image?: {
+        url: string;
+        altText?: string | null;
+        width?: number;
+        height?: number;
+      } | null;
+      trackingParameters?: string | null;
+    }>;
+    pageInfo: {
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor: string | null;
+      endCursor: string | null;
+    };
   };
   pages?: {
     nodes: SearchPagesQuery['pages']['nodes'];

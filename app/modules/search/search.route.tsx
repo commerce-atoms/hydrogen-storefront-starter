@@ -18,7 +18,6 @@ import {mapSortToShopify} from './utils/sortMapping';
 import type {Route} from './+types/search.route';
 import type {
   SearchProductsQuery,
-  SearchCollectionsQuery,
   SearchPagesQuery,
   SearchArticlesQuery,
 } from 'storefrontapi.generated';
@@ -59,8 +58,25 @@ interface SearchLoaderData {
       pageInfo: SearchProductsQuery['products']['pageInfo'];
     };
     collections?: {
-      nodes: SearchCollectionsQuery['collections']['nodes'];
-      pageInfo: SearchCollectionsQuery['collections']['pageInfo'];
+      nodes: Array<{
+        __typename: 'Collection';
+        handle: string;
+        id: string;
+        title: string;
+        image?: {
+          url: string;
+          altText?: string | null;
+          width?: number;
+          height?: number;
+        } | null;
+        trackingParameters?: string | null;
+      }>;
+      pageInfo: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor: string | null;
+        endCursor: string | null;
+      };
     };
     pages?: {
       nodes: SearchPagesQuery['pages']['nodes'];
@@ -213,7 +229,29 @@ export async function loader({request, context}: Route.LoaderArgs) {
   }
 
   if (shouldFetchCollections) {
-    const collectionsResult = results[resultIndex++] as SearchCollectionsQuery;
+    const collectionsResult = results[resultIndex++] as {
+      collections: {
+        nodes: Array<{
+          __typename: 'Collection';
+          handle: string;
+          id: string;
+          title: string;
+          image?: {
+            url: string;
+            altText?: string | null;
+            width?: number;
+            height?: number;
+          } | null;
+          trackingParameters?: string | null;
+        }>;
+        pageInfo: {
+          hasNextPage: boolean;
+          hasPreviousPage: boolean;
+          startCursor: string | null;
+          endCursor: string | null;
+        };
+      };
+    };
     if (collectionsResult?.collections) {
       searchResults.collections = {
         nodes: collectionsResult.collections.nodes,
