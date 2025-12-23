@@ -32,6 +32,13 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Generate types
+        run: npm run codegen
+        env:
+          PUBLIC_STORE_DOMAIN: test.myshopify.com
+          PUBLIC_STOREFRONT_API_TOKEN: test
+          PUBLIC_CHECKOUT_DOMAIN: test.myshopify.com
+
       - name: Type check
         run: npm run typecheck
 

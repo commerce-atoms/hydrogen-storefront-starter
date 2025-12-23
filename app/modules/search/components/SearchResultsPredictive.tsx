@@ -8,13 +8,12 @@ import {pickDefaultVariant} from '@commerce-atoms/variants/pickDefaultVariant';
 
 import {useAside} from '@layout/components/Aside';
 
-import {
-  getEmptyPredictiveSearchResult,
-  urlWithTrackingParams,
-  type PredictiveSearchReturn,
-} from '../utils/search';
+import {getEmptyPredictiveSearchResult} from '../utils/predictive';
+import {urlWithTrackingParams} from '../utils/tracking';
 
 import styles from './search-results-predictive.module.css';
+
+import type {PredictiveSearchReturn} from '../types/predictive';
 
 type PredictiveSearchItems = PredictiveSearchReturn['result']['items'];
 
