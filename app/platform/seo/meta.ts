@@ -1,4 +1,4 @@
-import type {MetaOutput} from '@shoppy/seo/types/meta';
+import type {MetaOutput} from '@commerce-atoms/seo/types/meta';
 
 export type MetaTag =
   | {title: string}

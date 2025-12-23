@@ -2,8 +2,8 @@ import {Link} from 'react-router';
 
 import {Image} from '@shopify/hydrogen';
 
-import {formatMoney} from '@shoppy/money/format/formatMoney';
-import {formatRange} from '@shoppy/money/format/formatRange';
+import {formatMoney} from '@commerce-atoms/money/format/formatMoney';
+import {formatRange} from '@commerce-atoms/money/format/formatRange';
 
 import {getProductUrl} from '@platform/i18n/urls';
 

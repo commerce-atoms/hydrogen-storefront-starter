@@ -32,7 +32,7 @@ export default hydrogenRoutes([
   route('api/:version/graphql.json', 'platform/routing/graphql-api.route.tsx'),
 
   // Predictive search endpoint
-  route('api/search-suggest', 'platform/routing/search-suggest.route.tsx'),
+  route('api/search-suggest', 'modules/search/search-suggest.route.tsx'),
 
   // ═══════════════════════════════════════════════════════════════════════════
   // LOCALE-PREFIXED ROUTES

@@ -2,7 +2,7 @@ import {useLoaderData, data, type HeadersFunction} from 'react-router';
 
 import {CartForm} from '@shopify/hydrogen';
 
-import {buildPageMeta} from '@shoppy/seo/meta/buildPageMeta';
+import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
 import {buildMetaTags} from '@platform/seo/meta';
 

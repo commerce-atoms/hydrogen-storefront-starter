@@ -39,8 +39,7 @@
       "@hooks/*": ["app/hooks/*"],
       "@utils/*": ["app/utils/*"],
       "@styles/*": ["app/styles/*"],
-      "~/*": ["app/*"],
-      "@shoppy/*": ["@shoppy/*/src", "@shoppy/*"]
+      "~/*": ["app/*"]
     },
     "noEmit": true,
     "rootDirs": [".", "./.react-router/types"],

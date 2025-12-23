@@ -2,7 +2,7 @@ import {useLoaderData} from 'react-router';
 
 import {getPaginationVariables} from '@shopify/hydrogen';
 
-import {buildPageMeta} from '@shoppy/seo/meta/buildPageMeta';
+import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
 import {buildMetaTags} from '@platform/seo/meta';
 

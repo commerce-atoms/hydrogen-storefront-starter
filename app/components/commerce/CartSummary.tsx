@@ -1,6 +1,6 @@
 import {CartForm, type OptimisticCart} from '@shopify/hydrogen';
 
-import {formatMoney} from '@shoppy/money/format/formatMoney';
+import {formatMoney} from '@commerce-atoms/money/format/formatMoney';
 
 import {Button} from '@components/primitives/Button';
 import {Input} from '@components/primitives/Input';

@@ -10,7 +10,7 @@ import {useAside} from '@layout/components/Aside';
 
 import styles from './search-form-predictive.module.css';
 
-import type {PredictiveSearchReturn} from '../utils/search';
+import type {PredictiveSearchReturn} from '../types/predictive';
 
 type SearchFormPredictiveChildren = (args: {
   fetchResults: (event: React.ChangeEvent<HTMLInputElement>) => void;

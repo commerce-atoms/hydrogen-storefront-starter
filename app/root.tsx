@@ -18,11 +18,11 @@ import {AppErrorBoundary, RouteErrorBoundary} from '@layout/ErrorBoundary';
 import {FOOTER_QUERY, HEADER_QUERY} from '@layout/graphql/queries';
 import {PageLayout} from '@layout/PageLayout';
 
+import type {Route} from './+types/root';
+
 import baseStyles from '@styles/base.css?url';
 import resetStyles from '@styles/reset.css?url';
 import tokensStyles from '@styles/tokens.css?url';
-
-import type {Route} from './+types/root';
 
 export type RootLoader = typeof loader;
 

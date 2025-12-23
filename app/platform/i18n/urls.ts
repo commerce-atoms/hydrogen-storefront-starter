@@ -1,4 +1,4 @@
-import {selectedOptionsToUrlParams} from '@shoppy/variants/selectedOptionsToUrlParams';
+import {selectedOptionsToUrlParams} from '@commerce-atoms/variants/selectedOptionsToUrlParams';
 
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 
@@ -22,7 +22,7 @@ export function buildProductUrl({
     ? `${match![0]}products/${handle}`
     : `/products/${handle}`;
 
-  // Use @shoppy/variants for URL serialization
+  // Use @commerce-atoms/variants for URL serialization
   const params = selectedOptions
     ? selectedOptionsToUrlParams(selectedOptions)
     : new URLSearchParams();

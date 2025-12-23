@@ -13,6 +13,8 @@ import {SearchTabs} from './components/SearchTabs';
 import styles from './search.view.module.css';
 import {DEFAULT_SEARCH_SORT, SEARCH_SORT_OPTIONS} from './sort';
 
+import type {SearchResultsData} from './components/SearchResults';
+
 interface SearchViewProps {
   data: {
     q: string;
@@ -23,24 +25,7 @@ interface SearchViewProps {
       minPrice?: number;
       maxPrice?: number;
     };
-    results: {
-      products?: {
-        nodes: unknown[];
-        pageInfo: {hasNextPage: boolean; endCursor: string | null};
-      };
-      collections?: {
-        nodes: unknown[];
-        pageInfo: {hasNextPage: boolean; endCursor: string | null};
-      };
-      pages?: {
-        nodes: unknown[];
-        pageInfo: {hasNextPage: boolean; endCursor: string | null};
-      };
-      articles?: {
-        nodes: unknown[];
-        pageInfo: {hasNextPage: boolean; endCursor: string | null};
-      };
-    };
+    results: SearchResultsData;
   };
 }
 

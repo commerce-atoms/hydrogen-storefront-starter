@@ -1,7 +1,7 @@
 import {useMemo} from 'react';
 
-import {findVariant} from '@shoppy/variants/findVariant';
-import {pickDefaultVariant} from '@shoppy/variants/pickDefaultVariant';
+import {findVariant} from '@commerce-atoms/variants/findVariant';
+import {pickDefaultVariant} from '@commerce-atoms/variants/pickDefaultVariant';
 
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import type {ProductFragment} from 'storefrontapi.generated';
