@@ -27,7 +27,7 @@ export function SearchFilters({filters}: SearchFiltersProps) {
     const params = new URLSearchParams(searchParams);
     updater(params);
     params.delete('after');
-    navigate(`/search?${params.toString()}`);
+    void navigate(`/search?${params.toString()}`);
   };
 
   const handleClear = () => {

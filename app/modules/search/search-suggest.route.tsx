@@ -1,6 +1,6 @@
 import {json} from 'react-router';
 
-import {PREDICTIVE_SEARCH_QUERY} from '../../modules/search/graphql/queries';
+import {PREDICTIVE_SEARCH_QUERY} from './search-suggest.queries';
 
 import type {Route} from './+types/search-suggest.route';
 import type {PredictiveSearchQuery} from 'storefrontapi.generated';
@@ -32,7 +32,7 @@ export async function loader({request, context}: Route.LoaderArgs) {
       PREDICTIVE_SEARCH_QUERY,
       {
         variables: {
-          query: q,
+          term: q,
           limit,
           limitScope: 'EACH',
           types: ['PRODUCT', 'COLLECTION', 'PAGE', 'ARTICLE'],
