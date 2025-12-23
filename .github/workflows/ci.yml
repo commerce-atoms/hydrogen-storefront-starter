@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    env:
+      CI: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Test
+        run: npm run test:smoke
+
+      # TODO: Uncomment this when needed
+      # - name: Build
+      #   run: npm run build
+      #   env:
+      #     PUBLIC_STORE_DOMAIN: test.myshopify.com
+      #     PUBLIC_STOREFRONT_API_TOKEN: test
+      #     PUBLIC_CHECKOUT_DOMAIN: test.myshopify.com

@@ -1,0 +1,15 @@
+.cartLine {
+  display: flex;
+  padding: var(--space-5) 0;
+}
+
+.cartLine img {
+  height: 100%;
+  display: block;
+  margin-right: 0.75rem;
+}
+
+.cartLineQuantity {
+  display: flex;
+}
+

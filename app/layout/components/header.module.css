@@ -1,0 +1,58 @@
+.header {
+  align-items: center;
+  background: var(--color-background);
+  display: flex;
+  height: var(--header-height);
+  padding: 0 var(--space-6);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.headerMenuMobileToggle {
+  @media (min-width: 48em) {
+    display: none;
+  }
+}
+
+.headerMenuMobile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.headerMenuDesktop {
+  display: none;
+  gap: var(--space-6);
+  @media (min-width: 45em) {
+    display: flex;
+    gap: var(--space-6);
+    margin-left: 3rem;
+  }
+}
+
+.headerMenuItem {
+  cursor: pointer;
+}
+
+.headerCtas {
+  align-items: center;
+  display: flex;
+  gap: var(--space-6);
+  margin-left: auto;
+}
+
+.headerCtas > * {
+  min-width: fit-content;
+}
+
+.reset {
+  border: 0;
+  background: inherit;
+  font-size: inherit;
+}
+
+.reset:hover:not(:has(> *)) {
+  text-decoration: underline;
+  cursor: pointer;
+}

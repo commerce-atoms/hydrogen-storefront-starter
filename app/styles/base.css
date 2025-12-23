@@ -1,0 +1,14 @@
+/*
+ * Global base styles - minimal defaults only
+ */
+
+/* Element defaults */
+img {
+  border-radius: var(--radius-sm);
+}
+
+/* Link defaults */
+.link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

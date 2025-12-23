@@ -1,0 +1,97 @@
+{
+  "name": "hydrogen-storefront-starter",
+  "private": true,
+  "sideEffects": false,
+  "version": "0.0.1",
+  "description": "A structured, production-ready base for building scalable Shopify Hydrogen storefronts with React Router",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/doctor-undefined/hydrogen-storefront-base.git"
+  },
+  "homepage": "https://github.com/doctor-undefined/hydrogen-storefront-base#readme",
+  "bugs": {
+    "url": "https://github.com/doctor-undefined/hydrogen-storefront-base/issues"
+  },
+  "keywords": [
+    "shopify",
+    "hydrogen",
+    "react-router",
+    "ecommerce",
+    "storefront",
+    "modular-architecture"
+  ],
+  "scripts": {
+    "build": "shopify hydrogen build --codegen",
+    "dev": "shopify hydrogen dev --codegen",
+    "preview": "shopify hydrogen preview --build",
+    "lint": "eslint --no-error-on-unmatched-pattern .",
+    "lint:fix": "eslint --no-error-on-unmatched-pattern --fix .",
+    "typecheck": "react-router typegen && tsc --noEmit",
+    "codegen": "shopify hydrogen codegen && react-router typegen",
+    "test": "vitest",
+    "test:smoke": "vitest run --reporter=verbose",
+    "test:ui": "vitest --ui",
+    "ci": "npm run lint && npm run typecheck && npm run test:smoke"
+  },
+  "prettier": "@shopify/prettier-config",
+  "dependencies": {
+    "@shopify/hydrogen": "2025.7.0",
+    "@shoppy/filters": "file:../shoppy/packages/filters",
+    "@shoppy/money": "file:../shoppy/packages/money",
+    "@shoppy/seo": "file:../shoppy/packages/seo",
+    "@shoppy/urlstate": "file:../shoppy/packages/urlstate",
+    "@shoppy/variants": "file:../shoppy/packages/variants",
+    "graphql": "^16.10.0",
+    "graphql-tag": "^2.12.6",
+    "isbot": "^5.1.22",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router": "7.9.2"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.2.5",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@graphql-codegen/cli": "5.0.2",
+    "@react-router/dev": "7.9.2",
+    "@react-router/fs-routes": "7.9.2",
+    "@shopify/cli": "3.85.4",
+    "@shopify/hydrogen-codegen": "^0.3.3",
+    "@shopify/mini-oxygen": "^4.0.0",
+    "@shopify/oxygen-workers-types": "^4.1.6",
+    "@shopify/prettier-config": "^1.1.2",
+    "@total-typescript/ts-reset": "^0.6.1",
+    "@types/eslint": "^9.6.1",
+    "@types/jsdom": "^27.0.0",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/ui": "^4.0.16",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "globals": "^15.14.0",
+    "jsdom": "^27.0.1",
+    "prettier": "^3.4.2",
+    "typescript": "^5.9.2",
+    "vite": "^6.2.4",
+    "vite-tsconfig-paths": "^4.3.1",
+    "vitest": "^4.0.16"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "overrides": {
+    "valibot": "1.2.0",
+    "cookie": "0.7.0"
+  }
+}

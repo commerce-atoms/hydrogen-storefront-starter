@@ -1,0 +1,9 @@
+.productImage {
+  /* add any specific styles if needed, previously it was just a placeholder class */
+}
+
+.productImage img {
+  height: auto;
+  width: 100%;
+}
+

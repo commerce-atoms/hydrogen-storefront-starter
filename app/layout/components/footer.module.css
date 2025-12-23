@@ -1,0 +1,17 @@
+.footer {
+  background: var(--color-text-primary);
+  margin-top: auto;
+}
+
+.footerMenu {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  padding: var(--space-6);
+}
+
+.footerMenu a {
+  color: var(--color-background);
+  min-width: fit-content;
+}

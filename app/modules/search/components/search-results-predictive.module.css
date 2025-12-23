@@ -1,0 +1,22 @@
+.predictiveSearchResult {
+  margin-bottom: var(--space-10);
+}
+
+.predictiveSearchResult h5 {
+  text-transform: uppercase;
+}
+
+.predictiveSearchResultItem {
+  margin-bottom: var(--space-3);
+}
+
+.predictiveSearchResultItem a {
+  align-items: center;
+  display: flex;
+}
+
+.predictiveSearchResultItem a img {
+  margin-right: 0.75rem;
+  height: 100%;
+}
+

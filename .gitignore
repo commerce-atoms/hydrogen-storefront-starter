@@ -1,0 +1,13 @@
+node_modules
+/.cache
+/build
+/dist
+/public/build
+/.mf
+.env
+.shopify
+.react-router
+*.tsbuildinfo
+storefrontapi.generated.d.ts
+server-bundle-analyzer.html
+.DS_Store

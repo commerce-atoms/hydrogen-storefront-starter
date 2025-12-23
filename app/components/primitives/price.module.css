@@ -1,0 +1,17 @@
+.productPrice {
+  display: block;
+}
+
+.productPriceOnSale {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.productPriceOnSale s {
+  opacity: 0.5;
+}
+
+.discountPercent {
+  color: var(--color-error);
+  font-weight: 600;
+}

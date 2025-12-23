@@ -1,0 +1,6 @@
+.predictiveSearchForm {
+  background: var(--color-light);
+  position: sticky;
+  top: 0;
+}
+

@@ -1,0 +1,29 @@
+.collections {
+  display: flex;
+  flex-direction: column;
+}
+
+.collectionsGrid {
+  display: grid;
+  gap: var(--space-10);
+  grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-width), 1fr));
+  margin-bottom: var(--space-12);
+}
+
+.collectionItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: inherit;
+}
+
+.collectionItem img {
+  height: auto;
+}
+
+.collectionItem h5 {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}

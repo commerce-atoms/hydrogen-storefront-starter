@@ -1,0 +1,11 @@
+.collection {
+  display: flex;
+  flex-direction: column;
+}
+
+.productsGrid {
+  display: grid;
+  gap: var(--space-10);
+  grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-width), 1fr));
+  margin-bottom: var(--space-12);
+}

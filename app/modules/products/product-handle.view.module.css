@@ -1,0 +1,16 @@
+.product {
+  display: grid;
+}
+
+@media (min-width: 45em) {
+  .product {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: var(--space-8);
+  }
+}
+
+.productMain {
+  display: flex;
+  flex-direction: column;
+}
+
