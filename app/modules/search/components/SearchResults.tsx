@@ -2,7 +2,7 @@ import {Link, useSearchParams} from 'react-router';
 
 import {Image} from '@shopify/hydrogen';
 
-import {applyFilters} from '@shoppy/filters/apply/applyFilters';
+import {applyFilters} from '@commerce-atoms/filters/apply/applyFilters';
 
 import {ProductCard} from '@components/commerce/ProductCard';
 

@@ -2,7 +2,7 @@ import {useLoaderData} from 'react-router';
 
 import {type Shop} from '@shopify/hydrogen/storefront-api-types';
 
-import {buildPageMeta} from '@shoppy/seo/meta/buildPageMeta';
+import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
 import {buildMetaTags} from '@platform/seo/meta';
 

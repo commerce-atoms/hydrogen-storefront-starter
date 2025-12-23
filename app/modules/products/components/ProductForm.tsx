@@ -1,7 +1,7 @@
 import {useNavigate, useSearchParams} from 'react-router';
 
-import {getAvailabilityMap} from '@shoppy/variants/getAvailabilityMap';
-import {selectedOptionsToUrlParams} from '@shoppy/variants/selectedOptionsToUrlParams';
+import {getAvailabilityMap} from '@commerce-atoms/variants/getAvailabilityMap';
+import {selectedOptionsToUrlParams} from '@commerce-atoms/variants/selectedOptionsToUrlParams';
 
 import {useAside} from '@layout/components/Aside';
 
@@ -26,7 +26,7 @@ export function ProductForm({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  // Get availability map for current selection using @shoppy/variants
+  // Get availability map for current selection using @commerce-atoms/variants
   const partialSelection = selectedVariant?.selectedOptions || [];
   const availabilityMap = getAvailabilityMap(product, partialSelection, {
     onlyAvailable: true,

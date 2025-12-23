@@ -1,6 +1,12 @@
 /**
  * Import ordering rule configuration
  * Defines the import/order rule with pathGroups for consistent import organization
+ *
+ * Key principles:
+ * - All value imports first
+ * - Type imports grouped just before styles
+ * - Styles always last (using 'object' group)
+ * - Minimal, predictable spacing
  */
 export default {
   files: ['**/*.{ts,tsx}'],
@@ -15,19 +21,21 @@ export default {
           'parent',
           'sibling',
           'type',
-          'index',
+          'object', // Styles live here, LAST
         ],
         pathGroups: [
+          // --- External ---
           {
             pattern: '@shopify/**',
             group: 'external',
             position: 'after',
           },
           {
-            pattern: '@shoppy/**',
+            pattern: '@commerce-atoms/**',
             group: 'external',
             position: 'after',
           },
+          // --- Internal ---
           {
             pattern: '@platform/**',
             group: 'internal',
@@ -58,24 +66,26 @@ export default {
             group: 'internal',
             position: 'after',
           },
+          // --- Styles (ALWAYS LAST) ---
           {
             pattern: '@styles/**',
-            group: 'internal',
+            group: 'object',
             position: 'after',
           },
           {
             pattern: '**/*.module.css',
-            group: 'index',
+            group: 'object',
             position: 'after',
           },
           {
             pattern: '**/*.css',
-            group: 'index',
+            group: 'object',
             position: 'after',
           },
         ],
         pathGroupsExcludedImportTypes: ['type'],
-        'newlines-between': 'always',
+        // Fixes spacing explosion - only adds newlines between logical groups
+        'newlines-between': 'always-and-inside-groups',
         alphabetize: {
           order: 'asc',
           caseInsensitive: true,

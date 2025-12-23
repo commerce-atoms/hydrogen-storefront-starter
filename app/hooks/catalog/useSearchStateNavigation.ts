@@ -1,9 +1,9 @@
 import {useNavigate, useSearchParams, useLocation} from 'react-router';
 
-import {patchSearchParams} from '@shoppy/urlstate/patchSearchParams';
+import {patchSearchParams} from '@commerce-atoms/urlstate/patchSearchParams';
 
-import type {SearchSchema} from '@shoppy/urlstate/types/schema';
-import type {SearchState} from '@shoppy/urlstate/types/searchState';
+import type {SearchSchema} from '@commerce-atoms/urlstate/types/schema';
+import type {SearchState} from '@commerce-atoms/urlstate/types/searchState';
 
 /**
  * Hook to simplify the common pattern of updating search state and navigating.

@@ -2,7 +2,7 @@ import {redirect, useLoaderData} from 'react-router';
 
 import {getPaginationVariables} from '@shopify/hydrogen';
 
-import {buildCollectionMeta} from '@shoppy/seo/meta/buildCollectionMeta';
+import {buildCollectionMeta} from '@commerce-atoms/seo/meta/buildCollectionMeta';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
 import {buildMetaTags} from '@platform/seo/meta';

@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {useSearchParams} from 'react-router';
 
-import {selectedOptionsToUrlParams} from '@shoppy/variants/selectedOptionsToUrlParams';
+import {selectedOptionsToUrlParams} from '@commerce-atoms/variants/selectedOptionsToUrlParams';
 
 import type {ProductVariantFragment} from 'storefrontapi.generated';
 

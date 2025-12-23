@@ -1,7 +1,7 @@
 import {useLoaderData} from 'react-router';
 
-import {buildProductMeta} from '@shoppy/seo/meta/buildProductMeta';
-import {getSelectedOptionsFromUrl} from '@shoppy/variants/getSelectedOptionsFromUrl';
+import {buildProductMeta} from '@commerce-atoms/seo/meta/buildProductMeta';
+import {getSelectedOptionsFromUrl} from '@commerce-atoms/variants/getSelectedOptionsFromUrl';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
 import {buildMetaTags} from '@platform/seo/meta';
@@ -61,7 +61,7 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
     throw new Error('Expected product handle to be defined');
   }
 
-  // Parse selected options from URL using @shoppy/variants
+  // Parse selected options from URL using @commerce-atoms/variants
   // Note: Passing empty array means we accept all URL params as potential options.
   // The GraphQL query will validate these against the actual product options.
   // This avoids needing to query the product twice (once for option names, once with selected options).

@@ -1,6 +1,6 @@
 import {useLoaderData} from 'react-router';
 
-import {buildPageMeta} from '@shoppy/seo/meta/buildPageMeta';
+import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
 import {buildMetaTags} from '@platform/seo/meta';

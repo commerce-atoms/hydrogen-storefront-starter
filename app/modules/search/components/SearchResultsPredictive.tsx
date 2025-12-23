@@ -3,8 +3,8 @@ import {Link, useFetcher, type Fetcher} from 'react-router';
 
 import {Image} from '@shopify/hydrogen';
 
-import {formatMoney} from '@shoppy/money/format/formatMoney';
-import {pickDefaultVariant} from '@shoppy/variants/pickDefaultVariant';
+import {formatMoney} from '@commerce-atoms/money/format/formatMoney';
+import {pickDefaultVariant} from '@commerce-atoms/variants/pickDefaultVariant';
 
 import {useAside} from '@layout/components/Aside';
 
@@ -224,7 +224,7 @@ function SearchResultsPredictiveProducts({
             term: term.current,
           });
 
-          // Use @shoppy/variants to pick default variant
+          // Use @commerce-atoms/variants to pick default variant
           const defaultVariant = pickDefaultVariant(product, 'first-available');
           const price = defaultVariant?.price;
           const image = defaultVariant?.image;

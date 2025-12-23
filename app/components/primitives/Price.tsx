@@ -1,5 +1,5 @@
-import {formatCompare} from '@shoppy/money/compare/formatCompare';
-import {formatMoney} from '@shoppy/money/format/formatMoney';
+import {formatCompare} from '@commerce-atoms/money/compare/formatCompare';
+import {formatMoney} from '@commerce-atoms/money/format/formatMoney';
 
 import styles from './price.module.css';
 
