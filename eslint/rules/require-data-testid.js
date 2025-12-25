@@ -19,7 +19,7 @@ export default {
     },
     messages: {
       missingTestId:
-        'Interactive element must have a data-testid attribute. See docs/reference/TEST_SELECTORS.md',
+        'Interactive element must have a data-testid attribute. See docs/reference/test_selectors.md',
     },
     schema: [],
   },

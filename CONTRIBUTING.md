@@ -127,8 +127,8 @@ And remove the `workspaces` array.
 Before contributing, read:
 
 1. [`docs/README.md`](docs/README.md) - Documentation overview
-2. [`docs/reference/MODULES.md`](docs/reference/MODULES.md) - Module structure and import rules
-3. [`docs/governance/GOVERNANCE.md`](docs/governance/GOVERNANCE.md) - Non-negotiable constraints
+2. [`docs/reference/modules.md`](docs/reference/modules.md) - Module structure and import rules
+3. [`docs/governance/governance.md`](docs/governance/governance.md) - Non-negotiable constraints
 
 ---
 
@@ -140,7 +140,7 @@ These rules are **non-negotiable** and enforced by automated tests:
 
 - **Modules NEVER import from other modules**
 - Modules are vertical domain slices (routes, UI, data, logic)
-- Cross-module reuse follows the [reuse ladder](docs/reference/MODULES.md#cross-module-reuse-ladder)
+- Cross-module reuse follows the [reuse ladder](docs/reference/modules.md#cross-module-reuse-ladder)
 
 ### ✅ Explicit Routing
 
@@ -238,7 +238,7 @@ Use clear, descriptive commit messages:
 # Good
 git commit -m "Add product review module with graphql queries"
 git commit -m "Fix: CSS colocation in cart components"
-git commit -m "Docs: Update MODULES.md with hooks policy"
+git commit -m "Docs: Update modules.md with hooks policy"
 
 # Bad
 git commit -m "updates"
@@ -299,7 +299,7 @@ Your PR will be reviewed for:
 - Start flat (route + view files)
 - Include GraphQL queries/fragments
 - Add route to `app/routes.ts`
-- Document in `docs/reference/MODULES.md` (if structure changes)
+- Document in `docs/reference/modules.md` (if structure changes)
 
 ### ✅ Shared Components
 
@@ -371,7 +371,7 @@ Your PR will be reviewed for:
 
 ### Adding a New Feature
 
-1. Read [`docs/guides/ADD_FEATURE.md`](docs/guides/ADD_FEATURE.md)
+1. Read [`docs/guides/add_feature.md`](docs/guides/add_feature.md)
 2. Decide module ownership
 3. Create route and view files
 4. Add to route manifest
@@ -380,7 +380,7 @@ Your PR will be reviewed for:
 
 ### Refactoring a Module
 
-1. Read [`docs/guides/SCALE_MODULE.md`](docs/guides/SCALE_MODULE.md)
+1. Read [`docs/guides/scale_module.md`](docs/guides/scale_module.md)
 2. Identify friction points
 3. Add folders incrementally
 4. Keep imports explicit
@@ -388,7 +388,7 @@ Your PR will be reviewed for:
 
 ### Scaling GraphQL
 
-1. Read [`docs/guides/SCALE_GRAPHQL.md`](docs/guides/SCALE_GRAPHQL.md)
+1. Read [`docs/guides/scale_graphql.md`](docs/guides/scale_graphql.md)
 2. Start consolidated (`queries.ts`)
 3. Split only when > 250-400 LOC
 4. Use structured folders

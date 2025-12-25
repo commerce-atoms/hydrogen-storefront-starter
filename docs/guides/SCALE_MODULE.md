@@ -11,8 +11,8 @@ Step-by-step guide for refactoring and evolving modules as they grow.
 
 **See Also:**
 
-- [../reference/MODULES.md](../reference/MODULES.md) - Module structure and import rules
-- [../governance/GOVERNANCE.md](../governance/GOVERNANCE.md) - Review checklist
+- [../reference/modules.md](../reference/modules.md) - Module structure and import rules
+- [../governance/governance.md](../governance/governance.md) - Review checklist
 
 ---
 
@@ -231,7 +231,7 @@ modules/products/graphql/
     └── review.ts
 ```
 
-**See:** [SCALE_GRAPHQL.md](SCALE_GRAPHQL.md) for detailed GraphQL scaling guide.
+**See:** [scale_graphql.md](scale_graphql.md) for detailed GraphQL scaling guide.
 
 ---
 

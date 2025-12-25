@@ -10,9 +10,9 @@ Step-by-step guide for adding new features while respecting architectural constr
 
 **See Also:**
 
-- [../reference/MODULES.md](../reference/MODULES.md) - Module structure and import rules
-- [../reference/ROUTING.md](../reference/ROUTING.md) - Routing conventions
-- [../governance/GOVERNANCE.md](../governance/GOVERNANCE.md) - Review checklist
+- [../reference/modules.md](../reference/modules.md) - Module structure and import rules
+- [../reference/routing.md](../reference/routing.md) - Routing conventions
+- [../governance/governance.md](../governance/governance.md) - Review checklist
 
 ---
 

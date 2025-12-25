@@ -19,7 +19,7 @@ export default [
                 'app/ui/**',
               ],
               message:
-                'Dumping ground folders are forbidden. Use app/components/* (shared UI), app/hooks/* (generic hooks), app/utils/* (tiny utilities), app/platform/* (infrastructure), or keep code in modules. See docs/reference/MODULES.md',
+                'Dumping ground folders are forbidden. Use app/components/* (shared UI), app/hooks/* (generic hooks), app/utils/* (tiny utilities), app/platform/* (infrastructure), or keep code in modules. See docs/reference/modules.md',
             },
           ],
         },
@@ -37,7 +37,7 @@ export default [
             {
               group: ['@modules/*', '../modules/*', '../../modules/*'],
               message:
-                'Platform code cannot import modules. Platform is infrastructure only. See docs/reference/PLATFORM.md',
+                'Platform code cannot import modules. Platform is infrastructure only. See docs/reference/platform.md',
             },
           ],
         },
@@ -62,7 +62,7 @@ export default [
             {
               group: ['@modules/*', '../modules/*', '../../modules/*'],
               message:
-                'Shared code (components/hooks/utils) cannot import modules. Keep domain logic in modules. See docs/reference/MODULES.md',
+                'Shared code (components/hooks/utils) cannot import modules. Keep domain logic in modules. See docs/reference/modules.md',
             },
           ],
         },

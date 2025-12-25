@@ -111,7 +111,7 @@ app/
 docs/                  # Architecture documentation — reference, guides, governance
 ```
 
-**See [`docs/reference/MODULES.md`](docs/reference/MODULES.md) for detailed structure rules.**
+**See [`docs/reference/modules.md`](docs/reference/modules.md) for detailed structure rules.**
 
 ---
 
@@ -191,7 +191,7 @@ npm test
 - No component tests (consumers customize UI)
 - No integration tests (project-specific)
 
-See [`docs/reference/TEST_SELECTORS.md`](docs/reference/TEST_SELECTORS.md) for test selector conventions.
+See [`docs/reference/test_selectors.md`](docs/reference/test_selectors.md) for test selector conventions.
 
 ---
 
@@ -244,10 +244,10 @@ Comprehensive architecture guidance organized into:
 
 **Quick links:**
 
-- 🆕 [Adding a new feature](docs/guides/ADD_FEATURE.md)
-- 📈 [Scaling a module](docs/guides/SCALE_MODULE.md)
-- 🔍 [Cross-module reuse](docs/reference/MODULES.md#cross-module-reuse-ladder)
-- ✅ [Review checklist](docs/governance/GOVERNANCE.md#review-checklist)
+- 🆕 [Adding a new feature](docs/guides/add_feature.md)
+- 📈 [Scaling a module](docs/guides/scale_module.md)
+- 🔍 [Cross-module reuse](docs/reference/modules.md#cross-module-reuse-ladder)
+- ✅ [Review checklist](docs/governance/governance.md#review-checklist)
 
 ---
 
@@ -295,9 +295,9 @@ node agents-sync.mjs
 
 ### Architecture
 
-- [`docs/reference/MODULES.md`](docs/reference/MODULES.md) — Module structure
-- [`docs/reference/ROUTING.md`](docs/reference/ROUTING.md) — Routing patterns
-- [`docs/governance/GOVERNANCE.md`](docs/governance/GOVERNANCE.md) — Constraints
+- [`docs/reference/modules.md`](docs/reference/modules.md) — Module structure
+- [`docs/reference/routing.md`](docs/reference/routing.md) — Routing patterns
+- [`docs/governance/governance.md`](docs/governance/governance.md) — Constraints
 
 ---
 
@@ -312,8 +312,8 @@ We welcome contributions! See [`CONTRIBUTING.md`](CONTRIBUTING.md) for:
 
 **Before contributing:**
 
-1. Read [`docs/reference/MODULES.md`](docs/reference/MODULES.md)
-2. Review [`docs/governance/GOVERNANCE.md`](docs/governance/GOVERNANCE.md)
+1. Read [`docs/reference/modules.md`](docs/reference/modules.md)
+2. Review [`docs/governance/governance.md`](docs/governance/governance.md)
 3. Run `npm run ci` before submitting
 
 ---
