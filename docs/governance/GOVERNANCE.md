@@ -6,10 +6,10 @@ This document defines **process rules** for maintaining architectural consistenc
 
 **See Also:**
 
-- [../reference/MODULES.md](../reference/MODULES.md) - Module structure and import rules
-- [../reference/TEST_SELECTORS.md](../reference/TEST_SELECTORS.md) - Testing selector convention
-- [ENFORCEMENT.md](ENFORCEMENT.md) - Tooling and automation
-- [DECISIONS.md](DECISIONS.md) - Architectural decision records
+- [../reference/modules.md](../reference/modules.md) - Module structure and import rules
+- [../reference/test_selectors.md](../reference/test_selectors.md) - Testing selector convention
+- [enforcement.md](enforcement.md) - Tooling and automation
+- [decisions.md](decisions.md) - Architectural decision records
 
 ---
 
@@ -29,7 +29,7 @@ These rules apply to the boilerplate and projects cloned from it (unless explici
 
 Violating these changes the architecture and must be treated as a conscious decision.
 
-**For detailed technical rules, see [../reference/MODULES.md](../reference/MODULES.md#module-import-rules)**
+**For detailed technical rules, see [../reference/modules.md](../reference/modules.md#module-import-rules)**
 
 ### Summary
 
@@ -90,7 +90,7 @@ Apply during code review for any structural change.
 - [ ] Interactive elements have `data-testid` attributes
 - [ ] Test selectors follow naming convention (kebab-case, domain-prefixed)
 - [ ] No class-based or text-based selectors in tests
-- [ ] See [../reference/TEST_SELECTORS.md](../reference/TEST_SELECTORS.md) for details
+- [ ] See [../reference/test_selectors.md](../reference/test_selectors.md) for details
 
 ---
 
@@ -135,7 +135,7 @@ Each ADR documents:
 - **Decision** - What was decided
 - **Consequences** - Impact and trade-offs
 
-**Location:** Recorded in [DECISIONS.md](DECISIONS.md)
+**Location:** Recorded in [decisions.md](decisions.md)
 
 **Immutability:** ADRs are immutable once accepted. New decisions supersede old ones.
 
@@ -203,8 +203,8 @@ Before making major changes:
 **Key artifacts:**
 
 - This file - Process and review rules
-- [MODULES.md](../reference/MODULES.md) - Module structure and import rules
-- [ENFORCEMENT.md](ENFORCEMENT.md) - Automation and tooling
-- [DECISIONS.md](DECISIONS.md) - Architectural decisions
+- [modules.md](../reference/modules.md) - Module structure and import rules
+- [enforcement.md](enforcement.md) - Automation and tooling
+- [decisions.md](decisions.md) - Architectural decisions
 
 **The goal:** Clarity, ownership, and long-term maintainability - not control.

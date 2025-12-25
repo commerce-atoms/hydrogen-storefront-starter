@@ -56,14 +56,13 @@ A **module-driven architecture** for Shopify Hydrogen storefronts built on React
 
 Core concepts and constraints that define the architecture.
 
-| Document                                     | Purpose                                        |
-| -------------------------------------------- | ---------------------------------------------- |
-| [**MODULES.md**](reference/MODULES.md)       | Module structure, scaling, and import rules    |
-| [**ROUTING.md**](reference/ROUTING.md)       | Explicit routing conventions and URL patterns  |
-| [**GRAPHQL.md**](reference/GRAPHQL.md)       | GraphQL organization, caching, and type safety |
-| [**PLATFORM.md**](reference/PLATFORM.md)     | Platform layer rules and what belongs there    |
-| [**SHOPPY.md**](reference/SHOPPY.md)         | Local workspace packages documentation         |
-| [**TEST_SELECTORS.md**](reference/TEST_SELECTORS.md) | Test selector convention and E2E testing patterns |
+| Document                                             | Purpose                                           |
+| ---------------------------------------------------- | ------------------------------------------------- |
+| [**modules.md**](reference/modules.md)               | Module structure, scaling, and import rules       |
+| [**routing.md**](reference/routing.md)               | Explicit routing conventions and URL patterns     |
+| [**graphql.md**](reference/graphql.md)               | GraphQL organization, caching, and type safety    |
+| [**platform.md**](reference/platform.md)             | Platform layer rules and what belongs there       |
+| [**test_selectors.md**](reference/test_selectors.md) | Test selector convention and E2E testing patterns |
 
 ### 🔧 Guides (How To Build)
 
@@ -71,9 +70,9 @@ Step-by-step playbooks for common development tasks.
 
 | Guide                                           | When to Use                             |
 | ----------------------------------------------- | --------------------------------------- |
-| [**ADD_FEATURE.md**](guides/ADD_FEATURE.md)     | Adding a new page or feature            |
-| [**SCALE_MODULE.md**](guides/SCALE_MODULE.md)   | Refactoring a module as it grows        |
-| [**SCALE_GRAPHQL.md**](guides/SCALE_GRAPHQL.md) | Organizing GraphQL files that get large |
+| [**add_feature.md**](guides/add_feature.md)     | Adding a new page or feature            |
+| [**scale_module.md**](guides/scale_module.md)   | Refactoring a module as it grows        |
+| [**scale_graphql.md**](guides/scale_graphql.md) | Organizing GraphQL files that get large |
 
 ### 🔒 Governance (Process & Enforcement)
 
@@ -81,9 +80,9 @@ Rules about rules and how they're enforced.
 
 | Document                                        | Purpose                                         |
 | ----------------------------------------------- | ----------------------------------------------- |
-| [**GOVERNANCE.md**](governance/GOVERNANCE.md)   | Non-negotiable constraints and review checklist |
-| [**ENFORCEMENT.md**](governance/ENFORCEMENT.md) | Tooling, linting, and automated enforcement     |
-| [**DECISIONS.md**](governance/DECISIONS.md)     | Architectural decision records (ADRs)           |
+| [**governance.md**](governance/governance.md)   | Non-negotiable constraints and review checklist |
+| [**enforcement.md**](governance/enforcement.md) | Tooling, linting, and automated enforcement     |
+| [**decisions.md**](governance/decisions.md)     | Architectural decision records (ADRs)           |
 
 ---
 
@@ -94,10 +93,10 @@ Rules about rules and how they're enforced.
 **Recommended reading order:**
 
 1. **This file** - Overview and structure
-2. [reference/MODULES.md](reference/MODULES.md) - Modules, structure, and import rules
-3. [reference/ROUTING.md](reference/ROUTING.md) - How routes work
-4. [governance/GOVERNANCE.md](governance/GOVERNANCE.md) - Constraints and review process
-5. [guides/ADD_FEATURE.md](guides/ADD_FEATURE.md) - Add your first feature
+2. [reference/modules.md](reference/modules.md) - Modules, structure, and import rules
+3. [reference/routing.md](reference/routing.md) - How routes work
+4. [governance/governance.md](governance/governance.md) - Constraints and review process
+5. [guides/add_feature.md](guides/add_feature.md) - Add your first feature
 
 **You don't need to read everything up front.** Use these documents as reference when making structural decisions.
 
@@ -105,14 +104,14 @@ Rules about rules and how they're enforced.
 
 | Need                    | Document                                                               |
 | ----------------------- | ---------------------------------------------------------------------- |
-| Add a new page          | [guides/ADD_FEATURE.md](guides/ADD_FEATURE.md)                         |
-| Module getting messy    | [guides/SCALE_MODULE.md](guides/SCALE_MODULE.md)                       |
-| GraphQL files too large | [guides/SCALE_GRAPHQL.md](guides/SCALE_GRAPHQL.md)                     |
-| Cross-module reuse      | [reference/MODULES.md](reference/MODULES.md#cross-module-reuse-ladder) |
-| Route not working       | [reference/ROUTING.md](reference/ROUTING.md)                           |
-| Platform vs module code | [reference/PLATFORM.md](reference/PLATFORM.md)                         |
-| Test selectors          | [reference/TEST_SELECTORS.md](reference/TEST_SELECTORS.md)             |
-| Review checklist        | [governance/GOVERNANCE.md](governance/GOVERNANCE.md#review-checklist)  |
+| Add a new page          | [guides/add_feature.md](guides/add_feature.md)                         |
+| Module getting messy    | [guides/scale_module.md](guides/scale_module.md)                       |
+| GraphQL files too large | [guides/scale_graphql.md](guides/scale_graphql.md)                     |
+| Cross-module reuse      | [reference/modules.md](reference/modules.md#cross-module-reuse-ladder) |
+| Route not working       | [reference/routing.md](reference/routing.md)                           |
+| Platform vs module code | [reference/platform.md](reference/platform.md)                         |
+| Test selectors          | [reference/test_selectors.md](reference/test_selectors.md)             |
+| Review checklist        | [governance/governance.md](governance/governance.md#review-checklist)  |
 
 ---
 
@@ -181,19 +180,19 @@ This keeps the boilerplate stable and reusable.
 ### Common Questions
 
 **Q: Can modules import from other modules?**  
-A: No. Never. See [reference/MODULES.md](reference/MODULES.md#cross-module-reuse-ladder) for reuse strategies.
+A: No. Never. See [reference/modules.md](reference/modules.md#cross-module-reuse-ladder) for reuse strategies.
 
 **Q: Where should this component go?**  
-A: See [reference/MODULES.md](reference/MODULES.md#shared-components-vs-module-components).
+A: See [reference/modules.md](reference/modules.md#shared-components-vs-module-components).
 
 **Q: How do I add a new route?**  
-A: See [guides/ADD_FEATURE.md](guides/ADD_FEATURE.md).
+A: See [guides/add_feature.md](guides/add_feature.md).
 
 **Q: My GraphQL file is too large. What now?**  
-A: See [guides/SCALE_GRAPHQL.md](guides/SCALE_GRAPHQL.md).
+A: See [guides/scale_graphql.md](guides/scale_graphql.md).
 
 **Q: What belongs in `app/platform/`?**  
-A: See [reference/PLATFORM.md](reference/PLATFORM.md).
+A: See [reference/platform.md](reference/platform.md).
 
 ---
 
@@ -216,22 +215,21 @@ docs/
 ├── README.md                    ← You are here
 │
 ├── reference/                   # Architectural rules
-│   ├── MODULES.md              # Modules, structure, import rules
-│   ├── ROUTING.md              # Routing conventions
-│   ├── GRAPHQL.md              # GraphQL organization
-│   ├── PLATFORM.md             # Platform layer rules
-│   ├── SHOPPY.md               # Workspace packages
-│   └── TEST_SELECTORS.md       # Test selector convention
+│   ├── modules.md              # Modules, structure, import rules
+│   ├── routing.md              # Routing conventions
+│   ├── graphql.md              # GraphQL organization
+│   ├── platform.md             # Platform layer rules
+│   └── test_selectors.md       # Test selector convention
 │
 ├── guides/                      # Step-by-step playbooks
-│   ├── ADD_FEATURE.md          # Adding new features
-│   ├── SCALE_MODULE.md         # Refactoring modules
-│   └── SCALE_GRAPHQL.md        # Organizing GraphQL
+│   ├── add_feature.md          # Adding new features
+│   ├── scale_module.md         # Refactoring modules
+│   └── scale_graphql.md        # Organizing GraphQL
 │
 └── governance/                  # Process and enforcement
-    ├── GOVERNANCE.md           # Constraints and review process
-    ├── ENFORCEMENT.md          # Tooling and automation
-    └── DECISIONS.md            # Architectural decision records
+    ├── governance.md           # Constraints and review process
+    ├── enforcement.md          # Tooling and automation
+    └── decisions.md            # Architectural decision records
 ```
 
 ---

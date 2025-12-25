@@ -6,8 +6,8 @@ This document defines how feature modules are structured and how they evolve ove
 
 **See Also:**
 
-- [../governance/GOVERNANCE.md](../governance/GOVERNANCE.md) - Non-negotiable constraints and review process
-- [../guides/SCALE_MODULE.md](../guides/SCALE_MODULE.md) - Step-by-step scaling guide
+- [../governance/governance.md](../governance/governance.md) - Non-negotiable constraints and review process
+- [../guides/scale_module.md](../guides/scale_module.md) - Step-by-step scaling guide
 
 ---
 
@@ -284,7 +284,7 @@ modules/products/
 - Must not be imported by other modules
 - Start consolidated, split only when > 250-400 LOC
 
-**See:** [GRAPHQL.md](GRAPHQL.md) for detailed GraphQL organization rules.
+**See:** [graphql.md](graphql.md) for detailed GraphQL organization rules.
 
 ### When to Add `hooks/` Folder
 

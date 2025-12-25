@@ -5,8 +5,8 @@ This document defines how architectural constraints are enforced through tooling
 **Single Responsibility**: Practical guardrails to keep the architecture consistent.
 
 **See Also:**
-- [GOVERNANCE.md](GOVERNANCE.md) - Non-negotiable constraints and review process
-- [../reference/MODULES.md](../reference/MODULES.md) - Module structure and import rules
+- [governance.md](governance.md) - Non-negotiable constraints and review process
+- [../reference/modules.md](../reference/modules.md) - Module structure and import rules
 
 ---
 
@@ -142,7 +142,7 @@ A minimal set of lint rules that prevent architectural drift:
       patterns: [
         {
           group: ['**/modules/*/!(types)*'],
-          message: 'Modules cannot import from other modules. See docs/reference/MODULES.md',
+          message: 'Modules cannot import from other modules. See docs/reference/modules.md',
         },
       ],
     }],
@@ -238,7 +238,7 @@ Verifies:
 - ✅ Test selector convention is followed
 - ✅ No class-based or text-based selectors in production code
 
-See [../reference/TEST_SELECTORS.md](../reference/TEST_SELECTORS.md) for the full convention.
+See [../reference/test_selectors.md](../reference/test_selectors.md) for the full convention.
 
 ### Running Tests
 

@@ -6,8 +6,8 @@ This document defines how routing works and the constraints that apply to route 
 
 **See Also:**
 
-- [MODULES.md](MODULES.md) - Module structure and route file responsibilities
-- [../guides/ADD_FEATURE.md](../guides/ADD_FEATURE.md) - How to add new routes
+- [modules.md](modules.md) - Module structure and route file responsibilities
+- [../guides/add_feature.md](../guides/add_feature.md) - How to add new routes
 
 ---
 

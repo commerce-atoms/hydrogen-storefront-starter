@@ -10,8 +10,8 @@ Step-by-step guide for organizing GraphQL queries as they grow.
 
 **See Also:**
 
-- [../reference/GRAPHQL.md](../reference/GRAPHQL.md) - GraphQL rules and caching
-- [../reference/MODULES.md](../reference/MODULES.md) - Module structure
+- [../reference/graphql.md](../reference/graphql.md) - GraphQL rules and caching
+- [../reference/modules.md](../reference/modules.md) - Module structure
 
 ---
 
