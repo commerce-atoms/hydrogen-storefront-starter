@@ -424,6 +424,8 @@ export async function loader({params, context}: LoaderFunctionArgs) {
 
 ## Type Safety
 
+**See:** [modules.md](modules.md#generated-query-types-vs-domain-types) - When to use generated types vs domain types.
+
 ### Use Generated Types
 
 Generated types come from `storefrontapi.generated.d.ts`.

@@ -5,6 +5,7 @@ This document defines how architectural constraints are enforced through tooling
 **Single Responsibility**: Practical guardrails to keep the architecture consistent.
 
 **See Also:**
+
 - [governance.md](governance.md) - Non-negotiable constraints and review process
 - [../reference/modules.md](../reference/modules.md) - Module structure and import rules
 
@@ -34,31 +35,40 @@ Fast structural checks that fail builds if violations exist.
 
 ### File Naming
 
-| File Type | Pattern | Example |
-|-----------|---------|---------|
-| Route files | `*.route.tsx` | `product-handle.route.tsx` |
-| View files | `*.view.tsx` | `product-handle.view.tsx` |
-| Module components | `PascalCase.tsx` | `ProductForm.tsx` |
-| CSS modules | `kebab-case.module.css` | `product-form.module.css` |
-| GraphQL files | `lowercase.ts` | `queries.ts`, `fragments.ts` |
-| Utilities | `camelCase.ts` | `formatPrice.ts` |
+| File Type         | Pattern                 | Example                      |
+| ----------------- | ----------------------- | ---------------------------- |
+| Route files       | `*.route.tsx`           | `product-handle.route.tsx`   |
+| View files        | `*.view.tsx`            | `product-handle.view.tsx`    |
+| Module components | `PascalCase.tsx`        | `ProductForm.tsx`            |
+| CSS modules       | `kebab-case.module.css` | `product-form.module.css`    |
+| GraphQL files     | `lowercase.ts`          | `queries.ts`, `fragments.ts` |
+| Utilities         | `camelCase.ts`          | `formatPrice.ts`             |
 
 ### Export Conventions
 
 **Prefer named exports:**
+
 ```typescript
 // ✅ GOOD
-export function Button() { /* ... */ }
-export function getProduct() { /* ... */ }
+export function Button() {
+  /* ... */
+}
+export function getProduct() {
+  /* ... */
+}
 ```
 
 **Use default exports only when required:**
+
 ```typescript
 // ✅ ACCEPTABLE (required by React Router)
-export default function ProductRoute() { /* ... */ }
+export default function ProductRoute() {
+  /* ... */
+}
 ```
 
 **Never use barrel files:**
+
 ```typescript
 // ❌ FORBIDDEN
 // app/components/index.ts
@@ -97,6 +107,7 @@ Configure in `tsconfig.json` and `vite.config.ts`:
 ### Usage Guidelines
 
 **Inside a module:**
+
 ```typescript
 // ✅ Use relative imports for module-local files
 import {ProductForm} from './components/ProductForm';
@@ -107,6 +118,7 @@ import {createStorefrontClient} from '@platform/shopify/context';
 ```
 
 **Forbidden:**
+
 ```typescript
 // ❌ Don't use @/* root alias
 import {Button} from '@/components/Button';
@@ -118,6 +130,7 @@ import {helper} from '../../../platform/utils/helper';
 ### Configuration Rule
 
 Aliases must be:
+
 - ✅ Consistent across `tsconfig.json` and bundler (Vite)
 - ✅ Consistent across lint tooling
 - ✅ Non-overlapping
@@ -188,11 +201,13 @@ A minimal set of lint rules that prevent architectural drift:
 ### Enforcement Strategy
 
 **Option 1: `no-restricted-imports` (Simple, good enough)**
+
 - Block imports from forbidden paths
 - Easy to configure
 - Works out of the box with ESLint
 
 **Option 2: `eslint-plugin-boundaries` (Stronger)**
+
 - Declare element types (module, platform, components)
 - Enforce allowed dependencies
 - More configuration, more power
@@ -212,6 +227,7 @@ Located in `app/tests/`:
 #### `boundaries.smoke.test.ts`
 
 Verifies:
+
 - ✅ No module → module imports
 - ✅ No platform → module imports
 - ✅ No forbidden folders exist (`app/lib`, `app/common`, etc.)
@@ -219,6 +235,7 @@ Verifies:
 #### `structure.smoke.test.ts`
 
 Verifies:
+
 - ✅ Critical directories exist
 - ✅ No barrel files (`index.ts`)
 - ✅ Route manifest exists
@@ -227,6 +244,7 @@ Verifies:
 #### `routing.smoke.test.ts`
 
 Verifies:
+
 - ✅ Route manifest structure is valid
 - ✅ Critical routes are defined
 - ✅ Resource routes present
@@ -234,6 +252,7 @@ Verifies:
 #### `test-selectors.smoke.test.ts`
 
 Verifies:
+
 - ✅ Interactive elements have `data-testid` attributes
 - ✅ Test selector convention is followed
 - ✅ No class-based or text-based selectors in production code
@@ -261,29 +280,35 @@ npm run ci            # Lint + typecheck + smoke tests
 Use this checklist during code review:
 
 ### Routing
+
 - [ ] Is the route added to the single route manifest (`app/routes.ts`)?
 - [ ] Is the route mapped explicitly to a module file?
 - [ ] Is layout nesting intentional and correct?
 
 ### Modules
+
 - [ ] Does new feature logic live inside a module?
 - [ ] Is module ownership clear?
 - [ ] Are there any cross-module imports?
 
 ### Shared Components
+
 - [ ] Is the component domain-agnostic?
 - [ ] Could this component belong to a module instead?
 - [ ] Does it avoid Storefront API and routing assumptions?
 
 ### Platform
+
 - [ ] Is platform code limited to infrastructure concerns?
 - [ ] Does it avoid feature-specific shaping?
 
 ### Structure
+
 - [ ] Were new folders introduced only to reduce friction?
 - [ ] Is any new global folder justified?
 
 ### Code Quality
+
 - [ ] TypeScript compiles without errors?
 - [ ] ESLint passes?
 - [ ] Smoke tests pass?
@@ -361,6 +386,7 @@ import {ProductCard} from '@modules/products/components/ProductCard';
 ```
 
 **Exception policy:**
+
 - Must be documented with reason
 - Must be tracked (issue/ticket)
 - Must be temporary
@@ -373,10 +399,10 @@ import {ProductCard} from '@modules/products/components/ProductCard';
 **Enforcement exists to keep the architecture consistent as the codebase grows.**
 
 **Layers:**
+
 1. Conventions - Team discipline
 2. TypeScript - Path aliases and types
 3. ESLint - Automated boundary checks
 4. CI Tests - Structural integrity
 
 **These rules are not about control; they are about maintaining clarity and long-term maintainability.**
-
