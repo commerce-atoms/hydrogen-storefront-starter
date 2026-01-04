@@ -1,5 +1,5 @@
-import {Menu} from './Menu';
 import {Aside} from './Aside';
+import {Menu} from './Menu';
 
 import type {HeaderQuery} from 'storefrontapi.generated';
 
@@ -27,4 +27,3 @@ export function MobileMenuAside({
     )
   );
 }
-
