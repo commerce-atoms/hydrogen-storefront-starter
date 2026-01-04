@@ -82,7 +82,7 @@ From within a module, you may import:
 ## Documentation
 
 See `docs/` for detailed guidance:
-- `docs/reference/MODULES.md` — Module structure
-- `docs/reference/ROUTING.md` — Routing conventions
-- `docs/guides/ADD_FEATURE.md` — Adding features
+- `docs/reference/modules.md` — Module structure
+- `docs/reference/routing.md` — Routing conventions
+- `docs/guides/add_feature.md` — Adding features
 

@@ -60,8 +60,10 @@ Core concepts and constraints that define the architecture.
 | ---------------------------------------------------- | ------------------------------------------------- |
 | [**modules.md**](reference/modules.md)               | Module structure, scaling, and import rules       |
 | [**routing.md**](reference/routing.md)               | Explicit routing conventions and URL patterns     |
+| [**layout.md**](reference/layout.md)                 | Layout metadata and route handle contract         |
 | [**graphql.md**](reference/graphql.md)               | GraphQL organization, caching, and type safety    |
 | [**platform.md**](reference/platform.md)             | Platform layer rules and what belongs there       |
+| [**shoppy.md**](reference/shoppy.md)                 | Local workspace packages documentation            |
 | [**test_selectors.md**](reference/test_selectors.md) | Test selector convention and E2E testing patterns |
 
 ### 🔧 Guides (How To Build)
@@ -109,6 +111,7 @@ Rules about rules and how they're enforced.
 | GraphQL files too large | [guides/scale_graphql.md](guides/scale_graphql.md)                     |
 | Cross-module reuse      | [reference/modules.md](reference/modules.md#cross-module-reuse-ladder) |
 | Route not working       | [reference/routing.md](reference/routing.md)                           |
+| Layout metadata         | [reference/layout.md](reference/layout.md)                             |
 | Platform vs module code | [reference/platform.md](reference/platform.md)                         |
 | Test selectors          | [reference/test_selectors.md](reference/test_selectors.md)             |
 | Review checklist        | [governance/governance.md](governance/governance.md#review-checklist)  |
@@ -210,15 +213,17 @@ When in doubt:
 
 ## Document Map
 
-```
+```text
 docs/
 ├── README.md                    ← You are here
 │
 ├── reference/                   # Architectural rules
 │   ├── modules.md              # Modules, structure, import rules
 │   ├── routing.md              # Routing conventions
+│   ├── layout.md               # Layout metadata and route handle contract
 │   ├── graphql.md              # GraphQL organization
 │   ├── platform.md             # Platform layer rules
+│   ├── shoppy.md               # Workspace packages
 │   └── test_selectors.md       # Test selector convention
 │
 ├── guides/                      # Step-by-step playbooks

@@ -329,6 +329,127 @@ modules/search/utils/
 
 **Don't add utils for generic helpers** - those belong in `app/utils/` or `@shoppy/*`.
 
+### When to Add `transformers/` Folder
+
+Add when:
+
+- Module works with **Shopify Metaobjects** or other external data sources that need transformation, OR
+- Module has **multiple transformation functions** that convert API data to domain models
+
+**Purpose:**
+
+Transformers convert raw API data into clean, typed domain models used throughout the module.
+
+**Naming Convention:**
+
+- Transformers export functions named `toX()` where `X` is the domain type
+- Example: `toProduct()`, `toProductPreview()`, `toCollection()`
+
+**Structure:**
+
+```
+modules/products/
+├── transformers/
+│   ├── product.ts        # export toProduct(apiData)
+│   └── productPreview.ts # export toProductPreview(apiData)
+├── types/
+│   ├── product.ts
+│   └── productPreview.ts
+└── graphql/
+    └── queries.ts
+```
+
+**Rules:**
+
+- **One transformer per domain type** - Each transformer file handles one transformation
+- **Routes never access raw API data directly** - Always use transformers
+- **Transformers are pure functions** - No side effects, no data fetching
+- **Transformers handle null/undefined** - Return `null` if input is invalid
+
+**Example:**
+
+```typescript
+// transformers/product.ts
+import type {Product} from '../types/product';
+import type {ProductByHandleQuery} from 'storefrontapi.generated';
+
+type ProductData = NonNullable<ProductByHandleQuery['product']>;
+
+export function toProduct(data: ProductData | null): Product | null {
+  if (!data) return null;
+
+  return {
+    id: data.id,
+    handle: data.handle,
+    title: data.title,
+    // ... map other fields
+  };
+}
+```
+
+**When NOT to add transformers:**
+
+- Simple data structures that don't need transformation
+- Single-use mapping logic (can live in the route loader)
+- Generic data transformations (belong in `app/utils/` or `@shoppy/*`)
+
+### When to Add `types/` Folder
+
+Add when:
+
+- Module has **multiple domain types** that are reused across files, OR
+- Types are **imported by transformers, routes, and views**
+
+**Purpose:**
+
+Domain types represent the clean, typed data structures used within the module. They are separate from API response types (which come from codegen).
+
+**Structure:**
+
+```
+modules/products/
+├── types/
+│   ├── product.ts
+│   ├── productImage.ts
+│   └── productPreview.ts
+```
+
+**Rules:**
+
+- **One type per file** (or related types together)
+- **Types represent domain models**, not API shapes
+- **Types are exported** for use in routes, views, and transformers
+
+**Example:**
+
+```typescript
+// types/product.ts
+import type {ProductImage} from './productImage';
+
+export interface Product {
+  id: string;
+  handle: string;
+  title: string;
+  image: ProductImage | null;
+  // ... other fields
+}
+```
+
+### Generated Query Types vs Domain Types
+
+**Default:** Use `storefrontapi.generated` types directly when UI mirrors query shape.
+
+Introduce `transformers/` + `types/` only when you **transform** (metaobjects, parsing, flattening, merging sources) or you want **stable UI contracts** across multiple queries.
+
+**Rule:** If a module has `transformers/`, it should also have `types/`. If no transformers, skip `types/` unless there's clear reuse.
+
+**Heuristic:** "Should UI break when query fields change?"
+
+- Yes → generated types are fine.
+- No → domain types + transformer.
+
+Metaobjects usually require transformation (field lookup, JSON parsing, references), so they typically use `transformers/` + `types/`.
+
 ---
 
 ## CSS Colocation

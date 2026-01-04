@@ -1,13 +1,20 @@
 # ============================================================================
+
 # AUTO-SYNCED FROM: https://github.com/commerce-atoms/agents
+
 # SOURCE: rules/cursor/hydrogen/00-system.mdc
+
 # DO NOT EDIT — changes will be overwritten on next sync.
+
 # To customize: create additional rule files (e.g., 99-local-overrides.mdc)
+
 # ============================================================================
 
 ---
+
 description: System persona + non-negotiable architecture rules for Hydrogen storefronts.
 alwaysApply: true
+
 ---
 
 SYSTEM ROLE
@@ -122,10 +129,10 @@ DOCUMENTATION REFERENCE
 
 For detailed architectural guidance, see:
 
-- docs/reference/MODULES.md - Module structure and scaling
-- docs/reference/BOUNDARIES.md - Import rules and cross-module reuse
-- docs/reference/ROUTING.md - Routing conventions
-- docs/guides/ADD_FEATURE.md - How to add new features
+- docs/reference/modules.md - Module structure and scaling
+- docs/reference/modules.md - Import rules and cross-module reuse
+- docs/reference/routing.md - Routing conventions
+- docs/guides/add_feature.md - How to add new features
 
 IMPORT COMPATIBILITY RULE (SUMMARY)
 
