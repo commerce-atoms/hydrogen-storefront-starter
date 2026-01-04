@@ -12,13 +12,13 @@ import styles from './search-aside.module.css';
 
 export function SearchAside() {
   const queriesDatalistId = useId();
+
   return (
     <Aside type="search" heading="SEARCH">
       <div className={styles.predictiveSearch}>
-        <br />
         <SearchFormPredictive>
           {({fetchResults, goToSearch, inputRef}) => (
-            <>
+            <div className={styles.searchForm}>
               <Input
                 name="q"
                 onChange={fetchResults}
@@ -28,7 +28,6 @@ export function SearchAside() {
                 list={queriesDatalistId}
                 data-testid="search-input"
               />
-              &nbsp;
               <Button
                 onClick={goToSearch}
                 type="button"
@@ -38,7 +37,7 @@ export function SearchAside() {
               >
                 Search
               </Button>
-            </>
+            </div>
           )}
         </SearchFormPredictive>
 

@@ -1,0 +1,11 @@
+.headerCtas {
+  align-items: center;
+  display: flex;
+  gap: var(--space-6);
+  margin-left: auto;
+}
+
+.headerCtas > * {
+  min-width: fit-content;
+}
+

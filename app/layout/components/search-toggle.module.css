@@ -1,0 +1,10 @@
+.reset {
+  border: 0;
+  background: inherit;
+  font-size: inherit;
+}
+
+.reset:hover:not(:has(> *)) {
+  text-decoration: underline;
+  cursor: pointer;
+}
