@@ -1,19 +1,13 @@
-import {useNavigate, useSearchParams} from 'react-router';
+import {useNavigate} from 'react-router';
 
 import {getAvailabilityMap} from '@commerce-atoms/variants/getAvailabilityMap';
 import {selectedOptionsToUrlParams} from '@commerce-atoms/variants/selectedOptionsToUrlParams';
 
 import {useAside} from '@layout/components/Aside';
 
-import {Button} from '@components/primitives/Button';
-
 import {AddToCartButton} from './AddToCartButton';
 import styles from './product-form.module.css';
 
-import type {
-  Maybe,
-  ProductOptionValueSwatch,
-} from '@shopify/hydrogen/storefront-api-types';
 import type {ProductFragment} from 'storefrontapi.generated';
 
 export function ProductForm({
@@ -24,7 +18,6 @@ export function ProductForm({
   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
 }) {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
 
   // Get availability map for current selection using @commerce-atoms/variants
   const partialSelection = selectedVariant?.selectedOptions || [];
