@@ -63,7 +63,6 @@ Core concepts and constraints that define the architecture.
 | [**layout.md**](reference/layout.md)                 | Layout metadata and route handle contract         |
 | [**graphql.md**](reference/graphql.md)               | GraphQL organization, caching, and type safety    |
 | [**platform.md**](reference/platform.md)             | Platform layer rules and what belongs there       |
-| [**shoppy.md**](reference/shoppy.md)                 | Local workspace packages documentation            |
 | [**test_selectors.md**](reference/test_selectors.md) | Test selector convention and E2E testing patterns |
 
 ### 🔧 Guides (How To Build)
@@ -223,7 +222,6 @@ docs/
 │   ├── layout.md               # Layout metadata and route handle contract
 │   ├── graphql.md              # GraphQL organization
 │   ├── platform.md             # Platform layer rules
-│   ├── shoppy.md               # Workspace packages
 │   └── test_selectors.md       # Test selector convention
 │
 ├── guides/                      # Step-by-step playbooks
