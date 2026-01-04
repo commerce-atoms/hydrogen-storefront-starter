@@ -26,4 +26,7 @@ export interface LayoutHandle {
     keywords?: string[];
     canonical?: string;
   };
+
+  /** Layout variant for future layout switching (e.g., 'default' | 'shop') */
+  layoutVariant?: 'default' | 'shop';
 }
