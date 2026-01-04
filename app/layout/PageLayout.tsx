@@ -4,8 +4,10 @@ import {useDocumentTitle} from '@hooks/primitives/useDocumentTitle';
 
 import {Aside} from './components/Aside';
 import {Breadcrumb} from './components/Breadcrumb';
+import {CartAside} from './components/CartAside';
 import {Footer} from './components/Footer';
 import {Header} from './components/Header';
+import {MobileMenuAside} from './components/MobileMenuAside';
 import {SearchAside} from './components/SearchAside';
 import styles from './page-layout.module.css';
 
@@ -45,7 +47,9 @@ export function PageLayout({
 
   return (
     <Aside.Provider>
+      <CartAside cart={cart} />
       <SearchAside />
+      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
       <Header
         header={header}
         cart={cart}
