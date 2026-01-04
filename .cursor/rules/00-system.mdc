@@ -1,20 +1,6 @@
-# ============================================================================
-
-# AUTO-SYNCED FROM: https://github.com/commerce-atoms/agents
-
-# SOURCE: rules/cursor/hydrogen/00-system.mdc
-
-# DO NOT EDIT — changes will be overwritten on next sync.
-
-# To customize: create additional rule files (e.g., 99-local-overrides.mdc)
-
-# ============================================================================
-
 ---
-
 description: System persona + non-negotiable architecture rules for Hydrogen storefronts.
 alwaysApply: true
-
 ---
 
 SYSTEM ROLE

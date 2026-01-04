@@ -1,7 +1,7 @@
 # Hydrogen Storefront Starter
 
 > A structured, production-ready foundation for building scalable Shopify Hydrogen storefronts with React Router.  
-> Powered by @shoppy utilities, but zero vendor lock-in.
+> Powered by @commerce-atoms utilities, but zero vendor lock-in.
 
 <!-- [![CI](https://github.com/doctor-undefined/hydrogen-storefront-base/actions/workflows/ci.yml/badge.svg)](https://github.com/doctor-undefined/hydrogen-storefront-base/actions/workflows/ci.yml) -->
 
@@ -107,7 +107,7 @@ app/
 ├── platform/          # Infrastructure — sessions, i18n, routing (robots, sitemap, catchall)
 └── styles/            # Global design tokens
 
-@shoppy/               # Workspace packages — pure logic (variants, urlstate)
+@commerce-atoms/        # Workspace packages — pure logic (variants, urlstate, filters, money, seo)
 docs/                  # Architecture documentation — reference, guides, governance
 ```
 
@@ -151,12 +151,15 @@ Add folders **only when friction appears** (documented thresholds):
 - `hooks/` for domain-specific React hooks
 - `utils/` when helpers exceed ~200 LOC
 
-### 🎨 **Workspace Packages (`@shoppy/*`)**
+### 🎨 **Workspace Packages (`@commerce-atoms/*`)**
 
 Pure logic extracted for reuse:
 
-- **`@shoppy/variants`** — Variant selection, availability, URL sync
-- **`@shoppy/urlstate`** — Schema-driven filter/pagination state
+- **`@commerce-atoms/variants`** — Variant selection, availability, URL sync
+- **`@commerce-atoms/urlstate`** — Schema-driven filter/pagination state
+- **`@commerce-atoms/filters`** — Filter state management
+- **`@commerce-atoms/money`** — Money formatting and utilities
+- **`@commerce-atoms/seo`** — SEO metadata helpers
 
 **Local development:** npm workspaces for fast iteration
 
@@ -253,19 +256,12 @@ Comprehensive architecture guidance organized into:
 
 ## 🤖 **AI Assistance**
 
-This repository includes AI agent rules (Cursor, Copilot) synced from [commerce-atoms/agents](https://github.com/commerce-atoms/agents).
+This repository includes AI agent rules for Cursor and Copilot.
 
 **For AI tools to work optimally:**
 
 - Rules are in `.cursor/rules/` and `.github/copilot-instructions.md`
-- Do not edit synced files (they have headers indicating this)
 - To customize, create additional files (e.g., `.cursor/rules/99-local-overrides.mdc`)
-
-**To update rules from upstream:**
-
-```bash
-node agents-sync.mjs
-```
 
 ---
 
@@ -274,7 +270,7 @@ node agents-sync.mjs
 - ✅ **8 feature modules** — Products, cart, collections, search, blogs, pages, policies, home
 - ✅ **Infrastructure routes** — robots.txt, sitemap, catchall, locale validation (in `app/platform/routing/`)
 - ✅ **Shared components** — Primitives + domain components + global UI (cart/search)
-- ✅ **2 workspace packages** — `@shoppy/variants`, `@shoppy/urlstate`
+- ✅ **5 workspace packages** — `@commerce-atoms/variants`, `@commerce-atoms/urlstate`, `@commerce-atoms/filters`, `@commerce-atoms/money`, `@commerce-atoms/seo`
 - ✅ **Architectural docs** — 12 organized files (~5,000 lines)
 - ✅ **CI/CD pipeline** — Automated lint, typecheck, smoke tests
 - ✅ **Boundary enforcement** — ESLint rules + architectural tests

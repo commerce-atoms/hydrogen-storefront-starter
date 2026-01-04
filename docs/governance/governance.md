@@ -7,7 +7,7 @@ This document defines **process rules** for maintaining architectural consistenc
 **See Also:**
 
 - [../reference/modules.md](../reference/modules.md) - Module structure and import rules
-- [../reference/test_selectors.md](../reference/test_selectors.md) - Testing selector convention
+- [../reference/test-selectors.md](../reference/test-selectors.md) - Testing selector convention
 - [enforcement.md](enforcement.md) - Tooling and automation
 - [decisions.md](decisions.md) - Architectural decision records
 
@@ -90,7 +90,7 @@ Apply during code review for any structural change.
 - [ ] Interactive elements have `data-testid` attributes
 - [ ] Test selectors follow naming convention (kebab-case, domain-prefixed)
 - [ ] No class-based or text-based selectors in tests
-- [ ] See [../reference/test_selectors.md](../reference/test_selectors.md) for details
+- [ ] See [../reference/test-selectors.md](../reference/test-selectors.md) for details
 
 ---
 

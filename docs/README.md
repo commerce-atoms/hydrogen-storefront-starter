@@ -63,7 +63,7 @@ Core concepts and constraints that define the architecture.
 | [**layout.md**](reference/layout.md)                 | Layout metadata and route handle contract         |
 | [**graphql.md**](reference/graphql.md)               | GraphQL organization, caching, and type safety    |
 | [**platform.md**](reference/platform.md)             | Platform layer rules and what belongs there       |
-| [**test_selectors.md**](reference/test_selectors.md) | Test selector convention and E2E testing patterns |
+| [**test-selectors.md**](reference/test-selectors.md) | Test selector convention and E2E testing patterns |
 
 ### 🔧 Guides (How To Build)
 
@@ -112,7 +112,7 @@ Rules about rules and how they're enforced.
 | Route not working       | [reference/routing.md](reference/routing.md)                           |
 | Layout metadata         | [reference/layout.md](reference/layout.md)                             |
 | Platform vs module code | [reference/platform.md](reference/platform.md)                         |
-| Test selectors          | [reference/test_selectors.md](reference/test_selectors.md)             |
+| Test selectors          | [reference/test-selectors.md](reference/test-selectors.md)             |
 | Review checklist        | [governance/governance.md](governance/governance.md#review-checklist)  |
 
 ---
@@ -222,7 +222,7 @@ docs/
 │   ├── layout.md               # Layout metadata and route handle contract
 │   ├── graphql.md              # GraphQL organization
 │   ├── platform.md             # Platform layer rules
-│   └── test_selectors.md       # Test selector convention
+│   └── test-selectors.md       # Test selector convention
 │
 ├── guides/                      # Step-by-step playbooks
 │   ├── add_feature.md          # Adding new features

@@ -1,12 +1,3 @@
-<!--
-============================================================================
-AUTO-SYNCED FROM: https://github.com/commerce-atoms/agents
-SOURCE: rules/copilot/hydrogen/copilot-instructions.md
-DO NOT EDIT — changes will be overwritten on next sync.
-To customize: create a separate file or add local sections below the marker.
-============================================================================
--->
-
 # Copilot Instructions for Hydrogen Storefronts
 
 You are assisting with a **Shopify Hydrogen storefront** built with React and React Router.
@@ -46,6 +37,7 @@ app/
 ## Allowed Imports
 
 From within a module, you may import:
+
 - Relative imports within the same module
 - `app/components/*` (shared UI)
 - `app/hooks/*` (generic UI hooks)
@@ -82,7 +74,7 @@ From within a module, you may import:
 ## Documentation
 
 See `docs/` for detailed guidance:
+
 - `docs/reference/modules.md` — Module structure
 - `docs/reference/routing.md` — Routing conventions
 - `docs/guides/add_feature.md` — Adding features
-

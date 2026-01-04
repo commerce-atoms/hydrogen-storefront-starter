@@ -1,14 +1,7 @@
-# ============================================================================
-# AUTO-SYNCED FROM: https://github.com/commerce-atoms/agents
-# SOURCE: rules/cursor/hydrogen/20-routing.mdc
-# DO NOT EDIT — changes will be overwritten on next sync.
-# To customize: create additional rule files (e.g., 99-local-overrides.mdc)
-# ============================================================================
-
 ---
 description: Routing guardrails for app/routes.ts (single explicit route manifest, layout nesting, resource route placement).
 globs:
-  - "app/routes.ts"
+  - 'app/routes.ts'
 alwaysApply: true
 ---
 

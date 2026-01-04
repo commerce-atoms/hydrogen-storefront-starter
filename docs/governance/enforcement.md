@@ -257,7 +257,7 @@ Verifies:
 - ✅ Test selector convention is followed
 - ✅ No class-based or text-based selectors in production code
 
-See [../reference/test_selectors.md](../reference/test_selectors.md) for the full convention.
+See [../reference/test-selectors.md](../reference/test-selectors.md) for the full convention.
 
 ### Running Tests
 
