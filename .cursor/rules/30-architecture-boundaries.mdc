@@ -1,15 +1,8 @@
-# ============================================================================
-# AUTO-SYNCED FROM: https://github.com/commerce-atoms/agents
-# SOURCE: rules/cursor/hydrogen/30-architecture-boundaries.mdc
-# DO NOT EDIT — changes will be overwritten on next sync.
-# To customize: create additional rule files (e.g., 99-local-overrides.mdc)
-# ============================================================================
-
 ---
 description: Enforce module boundaries, shared/components and platform policies, and module scaling rules.
 globs:
-  - "app/**/*.ts"
-  - "app/**/*.tsx"
+  - 'app/**/*.ts'
+  - 'app/**/*.tsx'
 alwaysApply: true
 ---
 
@@ -51,7 +44,7 @@ CROSS-MODULE REUSE LADDER (IN ORDER)
 5. Extract pure logic to @shoppy/\* (for reusable business logic)
 6. Create platform utilities (for infrastructure helpers)
 
-2. SHARED FOLDERS POLICY
+7. SHARED FOLDERS POLICY
 
 app/components/\* (Shared UI Components)
 
