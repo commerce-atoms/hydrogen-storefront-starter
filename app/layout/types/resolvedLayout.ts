@@ -14,4 +14,5 @@ export interface ResolvedLayoutData {
     keywords?: string[];
     canonical?: string;
   };
+  layoutVariant?: 'default' | 'shop';
 }

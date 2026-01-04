@@ -23,6 +23,10 @@ export const meta: Route.MetaFunction = ({...args}) => {
   return buildMetaTags(seoMeta);
 };
 
+export const handle = {
+  layoutVariant: 'default' as const,
+};
+
 export async function loader(args: Route.LoaderArgs) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
