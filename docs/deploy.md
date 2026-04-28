@@ -2,6 +2,8 @@
 
 > **Doctrine.** The agent prepares and validates. CI deploys. See [`AGENTS.md` §0](../AGENTS.md). Never run `shopify hydrogen deploy` directly from your machine or from an agent session.
 
+> **Note for the upstream starter.** This workflow is a template intended to run in **forked stores**. The upstream `commerce-atoms/hydrogen-storefront-starter` repository has no real Oxygen storefront, so the deploy job short-circuits via a repository guard (`if: github.repository != 'commerce-atoms/hydrogen-storefront-starter'`). Forks evaluate the guard to `false` and run the job normally — provided the secrets below are set. No edit needed in your fork.
+
 ## Pipeline
 
 `.github/workflows/deploy.yml` triggers on:
@@ -19,7 +21,7 @@ The pipeline runs:
 5. Tests (`npm run test:smoke`)
 6. **Architecture validation** (`npx @commerce-atoms/agents validate-architecture`) — fails the build on any boundary violation.
 7. Build (`npm run build`)
-8. Deploy to Oxygen (`shopify/hydrogen/actions/deploy@stable`).
+8. Deploy to Oxygen (`npx shopify hydrogen deploy` — Shopify's canonical CLI command, no third-party GitHub Action needed; reads `SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN` from env).
 
 Any failure halts the deploy. The build never reaches Oxygen if validation fails.
 

@@ -7,6 +7,14 @@ name: Deploy
 #   - push to main: continuous deployment.
 #   - tag push (v*): explicit release; CI tags the deploy with the SemVer.
 #   - workflow_dispatch: manual rerun (no normal use case; keep behind a guard).
+#
+# IMPORTANT — this workflow is a TEMPLATE for forked stores:
+#   - In `commerce-atoms/hydrogen-storefront-starter` itself, the deploy job
+#     short-circuits via a repository guard (no Oxygen storefront exists).
+#   - In any fork, the guard evaluates false and the job runs normally
+#     (assuming required secrets are set; see docs/deploy.md).
+# This pattern lets the starter ship a deploy-ready CI scaffold without
+# attempting to deploy itself on every push.
 
 on:
   push:
@@ -27,6 +35,8 @@ jobs:
     name: Build + deploy to Oxygen
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # Skip in the upstream starter; run in any fork.
+    if: github.repository != 'commerce-atoms/hydrogen-storefront-starter'
     environment:
       name: production
 
@@ -70,13 +80,11 @@ jobs:
           PUBLIC_CHECKOUT_DOMAIN: ${{ secrets.PUBLIC_CHECKOUT_DOMAIN }}
 
       - name: Deploy to Oxygen
-        uses: shopify/hydrogen/actions/deploy@stable
-        with:
-          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN }}
-          environment_branch: ${{ github.ref_type == 'tag' && 'production' || 'main' }}
-          deployment_metadata: |
-            {
-              "ref": "${{ github.ref }}",
-              "sha": "${{ github.sha }}",
-              "actor": "${{ github.actor }}"
-            }
+        # Canonical Shopify path — no third-party GitHub Action needed.
+        # Pushes to `main` deploy to production; tag pushes deploy to production
+        # with the SemVer attached. Other branches would create previews if
+        # the workflow trigger included them (we keep it scoped to main + tags).
+        # See https://shopify.dev/docs/storefronts/headless/hydrogen/deployments/github
+        run: npx shopify hydrogen deploy
+        env:
+          SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN }}
