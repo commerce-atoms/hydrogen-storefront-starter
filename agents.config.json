@@ -1,0 +1,16 @@
+{
+  "agentsVersion": "0.1.0",
+  "audience": "store-fork",
+  "tools": {
+    "cursor": true,
+    "copilot": true,
+    "claude": true,
+    "codex": true
+  },
+  "out": {
+    "agentsMd": "AGENTS.md",
+    "claudeMd": "CLAUDE.md",
+    "copilotInstructions": ".github/copilot-instructions.md",
+    "cursorRulesDir": ".cursor/rules"
+  }
+}

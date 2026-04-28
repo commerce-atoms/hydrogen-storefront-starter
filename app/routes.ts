@@ -1,3 +1,6 @@
+// SYNCED FROM @commerce-atoms/hydrogen-storefront-starter — modify upstream, never in this fork.
+// See docs/core-vs-app.md.
+
 import {
   type RouteConfig,
   route,
