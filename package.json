@@ -47,6 +47,7 @@
     "isbot": "^5.1.39",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-intersection-observer": "^9.10.3",
     "react-router": "7.14.0"
   },
   "devDependencies": {
@@ -87,7 +88,7 @@
     "vitest": "^4.1.5"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": "^22 || ^24"
   },
   "overrides": {
     "valibot": "1.2.0"

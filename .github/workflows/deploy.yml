@@ -1,0 +1,82 @@
+name: Deploy
+
+# Doctrine: the agent prepares and validates, CI deploys.
+# See AGENTS.md §0 sub-doctrine and docs/deploy.md.
+#
+# Triggers:
+#   - push to main: continuous deployment.
+#   - tag push (v*): explicit release; CI tags the deploy with the SemVer.
+#   - workflow_dispatch: manual rerun (no normal use case; keep behind a guard).
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  deploy:
+    name: Build + deploy to Oxygen
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install
+        run: npm ci
+
+      - name: Codegen
+        run: npm run codegen
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test:smoke
+
+      - name: Validate architecture
+        run: npx --yes @commerce-atoms/agents validate-architecture
+
+      - name: Build
+        run: npm run build
+        env:
+          PUBLIC_STOREFRONT_ID: ${{ secrets.SHOPIFY_STOREFRONT_ID }}
+          PUBLIC_STOREFRONT_API_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_API_TOKEN }}
+          PUBLIC_STOREFRONT_API_VERSION: ${{ secrets.PUBLIC_STOREFRONT_API_VERSION }}
+          PUBLIC_STORE_DOMAIN: ${{ secrets.PUBLIC_STORE_DOMAIN }}
+          PUBLIC_CHECKOUT_DOMAIN: ${{ secrets.PUBLIC_CHECKOUT_DOMAIN }}
+
+      - name: Deploy to Oxygen
+        uses: shopify/hydrogen/actions/deploy@stable
+        with:
+          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN }}
+          environment_branch: ${{ github.ref_type == 'tag' && 'production' || 'main' }}
+          deployment_metadata: |
+            {
+              "ref": "${{ github.ref }}",
+              "sha": "${{ github.sha }}",
+              "actor": "${{ github.actor }}"
+            }
