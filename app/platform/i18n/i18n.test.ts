@@ -21,7 +21,7 @@ describe('getLocaleFromRequest', () => {
     expect(locale).toEqual({
       language: 'EN',
       country: 'CA',
-      pathPrefix: '/EN-CA', // Uppercased by implementation
+      pathPrefix: '/en-ca', // Preserves original URL casing
     });
   });
 
@@ -43,7 +43,7 @@ describe('getLocaleFromRequest', () => {
     expect(locale).toEqual({
       language: 'DE',
       country: 'DE',
-      pathPrefix: '/DE-DE', // Uppercased by implementation
+      pathPrefix: '/de-de', // Preserves original URL casing
     });
   });
 
@@ -78,7 +78,7 @@ describe('getLocaleFromRequest', () => {
     expect(locale).toEqual({
       language: 'FR',
       country: 'CA',
-      pathPrefix: '/FR-CA', // Uppercased by implementation
+      pathPrefix: '/fr-ca', // Preserves original URL casing
     });
   });
 });

@@ -5,7 +5,7 @@ import {getPaginationVariables} from '@shopify/hydrogen';
 import {buildCollectionMeta} from '@commerce-atoms/seo/meta/buildCollectionMeta';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
 
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
@@ -16,16 +16,12 @@ import {mapSortToShopify} from './utils/sortMapping';
 
 import type {Route} from './+types/collection-handle.route';
 
-export const meta: Route.MetaFunction = ({data, ...args}) => {
-  const request = (args as {request?: Request}).request;
+export const meta: Route.MetaFunction = ({data, location, matches}) => {
   if (!data?.collection) {
     return [{title: 'Collection'}];
   }
 
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url
-    ? `${url.origin}/collections/${data.collection.handle}`
-    : undefined;
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildCollectionMeta(data.collection, {
     canonicalUrl,
   });

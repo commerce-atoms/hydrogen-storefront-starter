@@ -4,17 +4,15 @@ import {CartForm} from '@shopify/hydrogen';
 
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl,buildMetaTags} from '@platform/seo/meta';
 
 import {CartView} from './cart.view';
 
 import type {Route} from './+types/cart.route';
 import type {CartQueryDataReturn} from '@shopify/hydrogen';
 
-export const meta: Route.MetaFunction = ({...args}) => {
-  const request = (args as {request?: Request}).request;
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url ? `${url.origin}/cart` : undefined;
+export const meta: Route.MetaFunction = ({location, matches}) => {
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildPageMeta({
     title: 'Cart',
     canonicalUrl,

@@ -4,17 +4,15 @@ import {getPaginationVariables} from '@shopify/hydrogen';
 
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
 
 import {CollectionsAllView} from './collections-all.view';
 import {CATALOG_QUERY} from './graphql/queries';
 
 import type {Route} from './+types/collections-all.route';
 
-export const meta: Route.MetaFunction = ({...args}) => {
-  const request = (args as {request?: Request}).request;
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url ? `${url.origin}/collections/all` : undefined;
+export const meta: Route.MetaFunction = ({location, matches}) => {
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildPageMeta({
     title: 'Products',
     canonicalUrl,

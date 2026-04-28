@@ -4,7 +4,7 @@ import {buildProductMeta} from '@commerce-atoms/seo/meta/buildProductMeta';
 import {getSelectedOptionsFromUrl} from '@commerce-atoms/variants/getSelectedOptionsFromUrl';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl,buildMetaTags} from '@platform/seo/meta';
 
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
@@ -16,16 +16,12 @@ import {ProductView} from './product-handle.view';
 
 import type {Route} from './+types/product-handle.route';
 
-export const meta: Route.MetaFunction = ({data, ...args}) => {
-  const request = (args as {request?: Request}).request;
+export const meta: Route.MetaFunction = ({data, location, matches}) => {
   if (!data?.product) {
     return [{title: 'Product'}];
   }
 
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url
-    ? `${url.origin}/products/${data.product.handle}`
-    : undefined;
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildProductMeta(data.product, {
     canonicalUrl,
     brandName: data.product.vendor || undefined,
