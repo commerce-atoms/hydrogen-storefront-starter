@@ -7,7 +7,7 @@ globs:
 alwaysApply: true
 ---
 
-This is a Cursor-specific overlay. **Canonical source: [`rules/core/styling.md`](../../rules/core/styling.md).**
+This is a Cursor-specific overlay. **Canonical source: [`rules/core/styling.md`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/styling.md).**
 
 ## Rules
 

@@ -6,7 +6,7 @@ globs:
 alwaysApply: true
 ---
 
-This is a Cursor-specific overlay. **Canonical source: [`rules/core/imports.md`](../../rules/core/imports.md).**
+This is a Cursor-specific overlay. **Canonical source: [`rules/core/imports.md`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/imports.md).**
 
 ## Forbidden
 
