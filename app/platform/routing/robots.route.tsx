@@ -1,16 +1,17 @@
 import {parseGid} from '@shopify/hydrogen';
 
+import {getStorefrontOrigin} from '../i18n/urls';
+
 import {ROBOTS_QUERY} from './robots.queries';
 
 import type {Route} from './+types/robots.route';
 
 export async function loader({request, context}: Route.LoaderArgs) {
-  const url = new URL(request.url);
-
   const {shop} = await context.storefront.query(ROBOTS_QUERY);
 
   const shopId = parseGid(shop.id).id;
-  const body = robotsTxtData({url: url.origin, shopId});
+  const origin = getStorefrontOrigin(request, context.env);
+  const body = robotsTxtData({url: origin, shopId});
 
   return new Response(body, {
     status: 200,

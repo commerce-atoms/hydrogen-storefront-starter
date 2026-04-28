@@ -2,7 +2,7 @@ import {useLoaderData} from 'react-router';
 
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl,buildMetaTags} from '@platform/seo/meta';
 
 import {
   FEATURED_COLLECTION_QUERY,
@@ -12,10 +12,8 @@ import {HomeView} from './home.view';
 
 import type {Route} from './+types/home.route';
 
-export const meta: Route.MetaFunction = ({...args}) => {
-  const request = (args as {request?: Request}).request;
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url ? url.origin : undefined;
+export const meta: Route.MetaFunction = ({location, matches}) => {
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildPageMeta({
     title: 'Home',
     canonicalUrl,

@@ -3,27 +3,23 @@ import {useLoaderData} from 'react-router';
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
+import {getPageByHandle} from '@platform/shopify/storefront/pages';
 
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
-import {PAGE_QUERY} from './graphql/queries';
 import {PageHandleView} from './page-handle.view';
 
 import type {Route} from './+types/page-handle.route';
 
-export const meta: Route.MetaFunction = ({data, ...args}) => {
-  const request = (args as {request?: Request}).request;
+export const meta: Route.MetaFunction = ({data, location, matches}) => {
   if (!data?.page) {
     return [{title: 'Page'}];
   }
 
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url
-    ? `${url.origin}/pages/${data.page.handle}`
-    : undefined;
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildPageMeta({
-    title: data.page.title || 'Page',
+    title: data.page.seo?.title || data.page.title || 'Page',
     description: data.page.seo?.description || undefined,
     canonicalUrl,
   });
@@ -36,52 +32,26 @@ export const handle = {
     breadcrumb(data.page.title, `/pages/${data.page.handle}`),
 };
 
-export async function loader(args: Route.LoaderArgs) {
-  // Start fetching non-critical data without blocking time to first byte
-  const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
-  const criticalData = await loadCriticalData(args);
-
-  return {...deferredData, ...criticalData};
-}
-
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- */
-async function loadCriticalData({context, request, params}: Route.LoaderArgs) {
-  if (!params.handle) {
-    throw new Error('Missing page handle');
+export async function loader({params, context, request}: Route.LoaderArgs) {
+  if (!params.handle || typeof params.handle !== 'string') {
+    throw new Response('Not Found', {status: 404});
   }
 
-  const [{page}] = await Promise.all([
-    context.storefront.query(PAGE_QUERY, {
-      variables: {
-        handle: params.handle,
-      },
-    }),
-    // Add other queries here, so that they are loaded in parallel
-  ]);
+  // Validate handle is safe (non-empty, no path separators)
+  const handle = params.handle.trim();
+  if (handle === '' || handle.includes('/')) {
+    throw new Response('Not Found', {status: 404});
+  }
+
+  const page = await getPageByHandle(context.storefront, handle);
 
   if (!page) {
     throw new Response('Not Found', {status: 404});
   }
 
-  redirectIfHandleIsLocalized(request, {handle: params.handle, data: page});
+  redirectIfHandleIsLocalized(request, {handle, data: page});
 
-  return {
-    page,
-  };
-}
-
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
-function loadDeferredData({context}: Route.LoaderArgs) {
-  return {};
+  return {page};
 }
 
 export default function Page() {

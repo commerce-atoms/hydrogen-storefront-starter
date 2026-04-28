@@ -4,7 +4,7 @@ import {type Shop} from '@shopify/hydrogen/storefront-api-types';
 
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl,buildMetaTags} from '@platform/seo/meta';
 
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
@@ -18,15 +18,11 @@ type SelectedPolicies = keyof Pick<
   'privacyPolicy' | 'shippingPolicy' | 'termsOfService' | 'refundPolicy'
 >;
 
-export const meta: Route.MetaFunction = ({data, ...args}) => {
-  const request = (args as {request?: Request}).request;
+export const meta: Route.MetaFunction = ({data, location, matches}) => {
   if (!data?.policy) {
     return [{title: 'Policy'}];
   }
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url
-    ? `${url.origin}/policies/${data.policy.handle}`
-    : undefined;
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildPageMeta({
     title: data.policy.title || 'Policy',
     canonicalUrl,

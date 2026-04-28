@@ -83,7 +83,7 @@ cd my-storefront
 npm install
 
 # Set up environment variables
-cp .env .env.local  # Or create .env with your Shopify credentials
+cp .env.example .env.local  # Copy example and add your Shopify credentials
 
 # Start development
 npm run dev
@@ -124,7 +124,6 @@ npm run ci  # ✅ Lint + TypeCheck + Architectural Tests
 - No cross-module imports
 - No dumping ground folders (app/lib, app/common, etc.)
 - Platform cannot import modules
-- Layout cannot import modules
 - Test selector convention
 
 # Smoke test suites validate:

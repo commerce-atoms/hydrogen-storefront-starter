@@ -1,71 +1,118 @@
-import type {MetaOutput} from '@commerce-atoms/seo/types/meta';
+import type {MetaDescriptor} from 'react-router';
 
-export type MetaTag =
-  | {title: string}
-  | {name: string; content: string}
-  | {rel: string; href: string}
-  | {property: string; content: string}
-  | {'script:ld+json': string};
+/**
+ * Extracts env from route matches for use in meta functions.
+ * Request is not serializable, so we only extract env.
+ */
+export function getMetaRuntime(
+  matches: ReadonlyArray<{data?: unknown} | undefined>,
+): {env?: Env} {
+  // Try to get env from root loader data
+  const rootMatch = matches[0];
+  if (!rootMatch) return {};
+  const rootData = rootMatch.data as {env?: Env} | undefined;
+  return {env: rootData?.env};
+}
 
-export function buildMetaTags(meta: MetaOutput): MetaTag[] {
-  const metaTags: MetaTag[] = [{title: meta.title}];
+/**
+ * Builds a canonical URL using location.pathname (preserves locale prefixes).
+ * - Server-side: Uses PUBLIC_STORE_FRONTEND_DOMAIN or request origin
+ * - Client-side: Uses location.origin (window.location.origin)
+ */
+export function buildCanonicalUrl(
+  location: {pathname: string; origin?: string},
+  matches: ReadonlyArray<{data?: unknown} | undefined>,
+): string | undefined {
+  const {env} = getMetaRuntime(matches);
+  const pathname = location.pathname;
 
-  if (meta.description) {
-    metaTags.push({name: 'description', content: meta.description});
+  // Prefer configured domain (server-side only, but works if env is available)
+  if (env?.PUBLIC_STORE_FRONTEND_DOMAIN?.trim()) {
+    const configured = env.PUBLIC_STORE_FRONTEND_DOMAIN.trim();
+    const withScheme =
+      configured.startsWith('http://') || configured.startsWith('https://')
+        ? configured
+        : `https://${configured}`;
+    const origin = withScheme.replace(/\/+$/, '');
+    const normalized = pathname.startsWith('/') ? pathname : `/${pathname}`;
+    return new URL(normalized, origin).toString();
   }
 
-  if (meta.canonicalUrl) {
-    metaTags.push({rel: 'canonical', href: meta.canonicalUrl});
+  // Fallback: use location.origin (available on both server and client)
+  if (location.origin) {
+    const normalized = pathname.startsWith('/') ? pathname : `/${pathname}`;
+    return new URL(normalized, location.origin).toString();
   }
 
-  if (meta.openGraph) {
-    if (meta.openGraph.title) {
-      metaTags.push({property: 'og:title', content: meta.openGraph.title});
-    }
-    if (meta.openGraph.description) {
-      metaTags.push({
-        property: 'og:description',
-        content: meta.openGraph.description,
-      });
-    }
-    if (meta.openGraph.url) {
-      metaTags.push({property: 'og:url', content: meta.openGraph.url});
-    }
-    if (meta.openGraph.images) {
-      meta.openGraph.images.forEach((image) => {
-        metaTags.push({property: 'og:image', content: image.url});
-        if (image.alt) {
-          metaTags.push({property: 'og:image:alt', content: image.alt});
-        }
-      });
-    }
+  // Last resort: return undefined (shouldn't happen in practice)
+  return undefined;
+}
+
+/**
+ * Converts SEO meta object to React Router MetaDescriptor array.
+ * Handles title, description, canonical URL, Open Graph, and Twitter Card tags.
+ */
+export function buildMetaTags(seoMeta: {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  ogType?: string;
+  ogUrl?: string;
+  twitterCard?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
+  twitterImage?: string;
+}): MetaDescriptor[] {
+  const tags: MetaDescriptor[] = [];
+
+  if (seoMeta.title) {
+    tags.push({title: seoMeta.title});
   }
 
-  if (meta.twitter) {
-    if (meta.twitter.card) {
-      metaTags.push({name: 'twitter:card', content: meta.twitter.card});
-    }
-    if (meta.twitter.title) {
-      metaTags.push({name: 'twitter:title', content: meta.twitter.title});
-    }
-    if (meta.twitter.description) {
-      metaTags.push({
-        name: 'twitter:description',
-        content: meta.twitter.description,
-      });
-    }
-    if (meta.twitter.images) {
-      meta.twitter.images.forEach((imageUrl) => {
-        metaTags.push({name: 'twitter:image', content: imageUrl});
-      });
-    }
+  if (seoMeta.description) {
+    tags.push({name: 'description', content: seoMeta.description});
   }
 
-  if (meta.jsonLd) {
-    metaTags.push({
-      'script:ld+json': JSON.stringify(meta.jsonLd),
+  if (seoMeta.canonicalUrl) {
+    tags.push({tagName: 'link', rel: 'canonical', href: seoMeta.canonicalUrl});
+  }
+
+  // Open Graph tags
+  if (seoMeta.ogTitle) {
+    tags.push({property: 'og:title', content: seoMeta.ogTitle});
+  }
+  if (seoMeta.ogDescription) {
+    tags.push({property: 'og:description', content: seoMeta.ogDescription});
+  }
+  if (seoMeta.ogImage) {
+    tags.push({property: 'og:image', content: seoMeta.ogImage});
+  }
+  if (seoMeta.ogType) {
+    tags.push({property: 'og:type', content: seoMeta.ogType});
+  }
+  if (seoMeta.ogUrl) {
+    tags.push({property: 'og:url', content: seoMeta.ogUrl});
+  }
+
+  // Twitter Card tags
+  if (seoMeta.twitterCard) {
+    tags.push({name: 'twitter:card', content: seoMeta.twitterCard});
+  }
+  if (seoMeta.twitterTitle) {
+    tags.push({name: 'twitter:title', content: seoMeta.twitterTitle});
+  }
+  if (seoMeta.twitterDescription) {
+    tags.push({
+      name: 'twitter:description',
+      content: seoMeta.twitterDescription,
     });
   }
+  if (seoMeta.twitterImage) {
+    tags.push({name: 'twitter:image', content: seoMeta.twitterImage});
+  }
 
-  return metaTags;
+  return tags;
 }

@@ -1,9 +1,11 @@
 import styles from './page-handle.view.module.css';
 
-import type {PageQuery} from 'storefrontapi.generated';
+import type {getPageByHandle} from '@platform/shopify/storefront/pages';
+
+type Page = NonNullable<Awaited<ReturnType<typeof getPageByHandle>>>;
 
 interface PageHandleViewProps {
-  page: PageQuery['page'];
+  page: Page;
 }
 
 export function PageHandleView({page}: PageHandleViewProps) {
@@ -13,7 +15,10 @@ export function PageHandleView({page}: PageHandleViewProps) {
       <header className={styles.pageHeader}>
         <h1>{page.title}</h1>
       </header>
-      <main className={styles.pageContent} dangerouslySetInnerHTML={{__html: page.body}} />
+      <main
+        className={styles.pageContent}
+        dangerouslySetInnerHTML={{__html: page.body}}
+      />
     </div>
   );
 }

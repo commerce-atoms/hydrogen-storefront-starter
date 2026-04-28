@@ -1,6 +1,6 @@
 import {createHydrogenContext} from '@shopify/hydrogen';
 
-import {getLocaleFromRequest} from '../i18n/i18n';
+import {getLocaleFromRequest, type I18nLocale} from '../i18n/i18n';
 import {AppSession} from '../session/session';
 
 // Define the additional context object
@@ -17,6 +17,30 @@ type AdditionalContextType = typeof additionalContext;
 
 declare global {
   interface HydrogenAdditionalContext extends AdditionalContextType {}
+}
+
+/**
+ * Parses default locale from environment variables.
+ * Supports PUBLIC_DEFAULT_LOCALE (format: "en-US") or separate PUBLIC_DEFAULT_COUNTRY.
+ */
+function parseDefaultLocale(env: Env): {
+  language?: I18nLocale['language'];
+  country?: I18nLocale['country'];
+} {
+  const raw = env.PUBLIC_DEFAULT_LOCALE?.trim();
+  if (raw && /^[a-z]{2}-[a-z]{2}$/i.test(raw)) {
+    const [language, country] = raw.split('-');
+    return {
+      language: language.toUpperCase() as I18nLocale['language'],
+      country: country.toUpperCase() as I18nLocale['country'],
+    };
+  }
+  return {
+    language: undefined,
+    country: env.PUBLIC_DEFAULT_COUNTRY?.trim()?.toUpperCase() as
+      | I18nLocale['country']
+      | undefined,
+  };
 }
 
 /**
@@ -44,6 +68,8 @@ export async function createHydrogenRouterContext(
     AppSession.init(request, [env.SESSION_SECRET]),
   ]);
 
+  const defaults = parseDefaultLocale(env);
+
   const hydrogenContext = createHydrogenContext(
     {
       env,
@@ -51,8 +77,8 @@ export async function createHydrogenRouterContext(
       cache,
       waitUntil,
       session,
-      // Or detect from URL path based on locale subpath, cookies, or any other strategy
-      i18n: getLocaleFromRequest(request),
+      // Detect locale from URL path, falling back to env defaults
+      i18n: getLocaleFromRequest(request, defaults),
       cart: {
         queryFragment: cartQueryFragment,
       },

@@ -3,7 +3,7 @@ import {useLoaderData} from 'react-router';
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
 
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
@@ -12,16 +12,12 @@ import {ARTICLE_QUERY} from './graphql/queries';
 
 import type {Route} from './+types/article-handle.route';
 
-export const meta: Route.MetaFunction = ({data, ...args}) => {
-  const request = (args as {request?: Request}).request;
+export const meta: Route.MetaFunction = ({data, location, matches}) => {
   if (!data?.article) {
     return [{title: 'Article'}];
   }
 
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url
-    ? `${url.origin}/blogs/${data.blog.handle}/${data.article.handle}`
-    : undefined;
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildPageMeta({
     title: data.article.title || 'Article',
     description: data.article.seo?.description || undefined,
