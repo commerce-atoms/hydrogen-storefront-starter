@@ -4,8 +4,9 @@ import {useNavigate} from 'react-router';
 
 import {Pagination} from '@shopify/hydrogen';
 
-import {useInfiniteScroll} from '@hooks/catalog/useInfiniteScroll';
 import {Loading} from '@components/primitives/Loading';
+
+import {useInfiniteScroll} from '@hooks/catalog/useInfiniteScroll';
 
 interface PaginatedResourceSectionProps<NodesType> {
   connection: React.ComponentProps<typeof Pagination<NodesType>>['connection'];
@@ -39,10 +40,11 @@ export function PaginatedResourceSection<NodesType>({
       {(pagination) => (
         <PaginatedResourceSectionInner
           pagination={pagination}
-          children={children}
           resourcesClassName={resourcesClassName}
           infinite={infinite}
-        />
+        >
+          {children}
+        </PaginatedResourceSectionInner>
       )}
     </Pagination>
   );
