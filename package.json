@@ -36,7 +36,7 @@
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
-    "@shopify/hydrogen": "2025.7.0",
+    "@shopify/hydrogen": "2026.4.2",
     "@commerce-atoms/filters": "^0.0.3",
     "@commerce-atoms/money": "^0.0.3",
     "@commerce-atoms/seo": "^0.0.3",
