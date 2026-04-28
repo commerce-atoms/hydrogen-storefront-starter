@@ -1,3 +1,6 @@
+// SYNCED FROM @commerce-atoms/hydrogen-storefront-starter — modify upstream, never in this fork.
+// See docs/core-vs-app.md.
+
 import {Outlet} from 'react-router';
 
 import type {Route} from './+types/locale.route';

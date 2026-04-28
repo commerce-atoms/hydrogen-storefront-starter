@@ -1,3 +1,5 @@
+// SYNCED FROM @commerce-atoms/hydrogen-storefront-starter — modify upstream, never in this fork.
+// See docs/core-vs-app.md.
 {
   "include": [
     "env.d.ts",
