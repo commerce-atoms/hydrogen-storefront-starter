@@ -5,7 +5,7 @@ globs:
 alwaysApply: true
 ---
 
-This is a Cursor-specific overlay. **Canonical source: [`rules/core/routing.md`](../../rules/core/routing.md).**
+This is a Cursor-specific overlay. **Canonical source: [`rules/core/routing.md`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/routing.md).**
 
 ## Single source of truth
 

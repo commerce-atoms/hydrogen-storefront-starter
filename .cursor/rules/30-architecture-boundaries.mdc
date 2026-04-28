@@ -6,7 +6,7 @@ globs:
 alwaysApply: true
 ---
 
-This is a Cursor-specific overlay. **Canonical source: [`rules/core/architecture.md`](../../rules/core/architecture.md).**
+This is a Cursor-specific overlay. **Canonical source: [`rules/core/architecture.md`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/architecture.md).**
 
 ## Module boundaries — non-negotiable
 

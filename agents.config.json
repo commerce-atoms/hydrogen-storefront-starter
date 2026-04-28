@@ -1,5 +1,5 @@
 {
-  "agentsVersion": "0.1.0",
+  "agentsVersion": "0.1.2",
   "audience": "store-fork",
   "tools": {
     "cursor": true,

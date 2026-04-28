@@ -82,6 +82,9 @@ cd my-storefront
 # Install dependencies
 npm install
 
+# Sync AI/editor overlays from @commerce-atoms/agents (matches agents.config.json)
+npm run agents:sync
+
 # Set up environment variables
 cp .env.example .env.local  # Copy example and add your Shopify credentials
 
@@ -90,6 +93,20 @@ npm run dev
 ```
 
 Visit `http://localhost:3000` 🎉
+
+### AI kit (`@commerce-atoms/agents`)
+
+[`@commerce-atoms/agents`](https://www.npmjs.com/package/@commerce-atoms/agents) is a dev dependency. It syncs `AGENTS.md`, Cursor rules, Copilot instructions, and Claude overlay into this repo (pinned in `agents.config.json`). After upgrading the package:
+
+```bash
+npm run agents:sync
+```
+
+Run architecture boundary checks (same validator as CI):
+
+```bash
+npm run agents:validate
+```
 
 > **💡 First time?** Read [`docs/README.md`](docs/README.md) for architecture overview
 
