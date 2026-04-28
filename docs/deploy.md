@@ -19,7 +19,7 @@ The pipeline runs:
 3. TypeScript (`npm run typecheck`)
 4. Lint (`npm run lint`)
 5. Tests (`npm run test:smoke`)
-6. **Architecture validation** (`npx @commerce-atoms/agents validate-architecture`) — fails the build on any boundary violation.
+6. **Architecture validation** (`npx commerce-atoms validate-architecture`) — fails the build on any boundary violation.
 7. Build (`npm run build`)
 8. Deploy to Oxygen (`shopify/hydrogen/actions/deploy@stable`).
 
@@ -66,7 +66,7 @@ npm run codegen
 npm run typecheck
 npm run lint
 npm run test:smoke
-npx @commerce-atoms/agents validate-architecture
+npx commerce-atoms validate-architecture
 npm run build
 ```
 

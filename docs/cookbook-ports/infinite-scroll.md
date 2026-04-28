@@ -130,8 +130,8 @@ Drawing from F1–F6 and G1–G3, the skill should:
 ## Validator output
 
 ```text
-$ npx @commerce-atoms/agents validate-architecture --out .
-commerce-atoms-agents validate-architecture
+$ npx commerce-atoms validate-architecture --out .
+commerce-atoms validate-architecture
   root: /…/hydrogen-storefront-starter
   result: PASS — no violations found.
 ```

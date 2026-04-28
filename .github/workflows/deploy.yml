@@ -68,7 +68,7 @@ jobs:
         run: npm run test:smoke
 
       - name: Validate architecture
-        run: npx --yes @commerce-atoms/agents validate-architecture
+        run: npx commerce-atoms validate-architecture
 
       - name: Build
         run: npm run build

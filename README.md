@@ -96,7 +96,7 @@ Visit `http://localhost:3000` 🎉
 
 ### AI kit (`@commerce-atoms/agents`)
 
-[`@commerce-atoms/agents`](https://www.npmjs.com/package/@commerce-atoms/agents) is a dev dependency. It syncs `AGENTS.md`, Cursor rules, Copilot instructions, and Claude overlay into this repo (pinned in `agents.config.json`). After upgrading the package:
+[`@commerce-atoms/agents`](https://www.npmjs.com/package/@commerce-atoms/agents) **≥0.2.0** is a dev dependency (CLI binary: **`commerce-atoms`**). It syncs `AGENTS.md`, Cursor rules, Copilot instructions, and Claude overlay into this repo (pinned in `agents.config.json`). After upgrading the package:
 
 ```bash
 npm run agents:sync

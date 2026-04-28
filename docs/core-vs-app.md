@@ -26,7 +26,7 @@
 
    ```bash
    npm i -D @commerce-atoms/agents@<new-version>
-   npx @commerce-atoms/agents sync
+   npx commerce-atoms sync
    ```
 
    This updates `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `.cursor/rules/*.mdc` — the documents AI tools read.
