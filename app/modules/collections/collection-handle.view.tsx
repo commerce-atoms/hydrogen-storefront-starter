@@ -54,6 +54,7 @@ export function CollectionHandleView({
       <PaginatedResourceSection<ProductItemFragment>
         connection={collection.products}
         resourcesClassName={styles.productsGrid}
+        infinite
       >
         {({node: product, index}) => {
           return (
