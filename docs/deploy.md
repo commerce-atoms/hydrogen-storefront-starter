@@ -21,7 +21,7 @@ The pipeline runs:
 5. Tests (`npm run test:smoke`)
 6. **Architecture validation** (`npx @commerce-atoms/agents validate-architecture`) — fails the build on any boundary violation.
 7. Build (`npm run build`)
-8. Deploy to Oxygen (`npx shopify hydrogen deploy` — Shopify's canonical CLI command, no third-party GitHub Action needed; reads `SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN` from env).
+8. Deploy to Oxygen (`shopify/hydrogen/actions/deploy@stable`).
 
 Any failure halts the deploy. The build never reaches Oxygen if validation fails.
 

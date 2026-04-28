@@ -80,11 +80,13 @@ jobs:
           PUBLIC_CHECKOUT_DOMAIN: ${{ secrets.PUBLIC_CHECKOUT_DOMAIN }}
 
       - name: Deploy to Oxygen
-        # Canonical Shopify path — no third-party GitHub Action needed.
-        # Pushes to `main` deploy to production; tag pushes deploy to production
-        # with the SemVer attached. Other branches would create previews if
-        # the workflow trigger included them (we keep it scoped to main + tags).
-        # See https://shopify.dev/docs/storefronts/headless/hydrogen/deployments/github
-        run: npx shopify hydrogen deploy
-        env:
-          SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN }}
+        uses: shopify/hydrogen/actions/deploy@stable
+        with:
+          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN }}
+          environment_branch: ${{ github.ref_type == 'tag' && 'production' || 'main' }}
+          deployment_metadata: |
+            {
+              "ref": "${{ github.ref }}",
+              "sha": "${{ github.sha }}",
+              "actor": "${{ github.actor }}"
+            }
