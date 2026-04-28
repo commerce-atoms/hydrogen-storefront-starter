@@ -78,6 +78,9 @@ export async function loader(args: Route.LoaderArgs) {
   return {
     ...deferredData,
     ...criticalData,
+    // Expose env for meta functions (canonical URLs, etc.)
+    // Note: Request objects don't serialize, so we don't expose request
+    env,
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     shop: getShopAnalytics({
       storefront,

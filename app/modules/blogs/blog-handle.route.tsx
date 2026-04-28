@@ -5,7 +5,7 @@ import {getPaginationVariables} from '@shopify/hydrogen';
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
 
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
@@ -14,15 +14,11 @@ import {BLOG_QUERY} from './graphql/queries';
 
 import type {Route} from './+types/blog-handle.route';
 
-export const meta: Route.MetaFunction = ({data, ...args}) => {
-  const request = (args as {request?: Request}).request;
+export const meta: Route.MetaFunction = ({data, location, matches}) => {
   if (!data?.blog) {
     return [{title: 'Blog'}];
   }
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url
-    ? `${url.origin}/blogs/${data.blog.handle}`
-    : undefined;
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildPageMeta({
     title: data.blog.seo?.title || data.blog.title || 'Blog',
     description: data.blog.seo?.description || undefined,

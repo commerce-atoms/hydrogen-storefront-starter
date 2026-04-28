@@ -1,10 +1,14 @@
 /// <reference types="vitest" />
 import react from '@vitejs/plugin-react';
-import tsconfigPaths from 'vite-tsconfig-paths';
 import {defineConfig} from 'vitest/config';
 
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [react()],
+  // Vite 8 supports tsconfig paths natively, so the
+  // `vite-tsconfig-paths` plugin is no longer required.
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     // Node environment for fast test execution without DOM overhead
     environment: 'node',

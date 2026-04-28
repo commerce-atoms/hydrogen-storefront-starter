@@ -2,7 +2,7 @@ import {useLoaderData} from 'react-router';
 
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
-import {buildMetaTags} from '@platform/seo/meta';
+import {buildCanonicalUrl,buildMetaTags} from '@platform/seo/meta';
 
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
@@ -12,10 +12,8 @@ import {PoliciesIndexView} from './policies-index.view';
 import type {Route} from './+types/policies-index.route';
 import type {PoliciesQuery, PolicyItemFragment} from 'storefrontapi.generated';
 
-export const meta: Route.MetaFunction = ({...args}) => {
-  const request = (args as {request?: Request}).request;
-  const url = request ? new URL(request.url) : null;
-  const canonicalUrl = url ? `${url.origin}/policies` : undefined;
+export const meta: Route.MetaFunction = ({location, matches}) => {
+  const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildPageMeta({
     title: 'Policies',
     canonicalUrl,
