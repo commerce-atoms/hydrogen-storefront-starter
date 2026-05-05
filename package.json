@@ -57,7 +57,7 @@
     "@eslint/compat": "^1.4.1",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
-    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/cli": "7.0.0",
     "@react-router/dev": "7.14.0",
     "@react-router/fs-routes": "7.14.0",
     "@shopify/cli": "3.94.2",
