@@ -53,7 +53,7 @@
     "react-router": "7.14.0"
   },
   "devDependencies": {
-    "@commerce-atoms/agents": "^0.1.2",
+    "@commerce-atoms/agents": "^0.3.0",
     "@eslint/compat": "^1.4.1",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
