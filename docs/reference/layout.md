@@ -108,17 +108,29 @@ The layout system uses `useMatches()` to access all matched routes and resolves 
 
 ---
 
-## Future Extensibility
+## Layout variants
 
-The `layoutVariant` field is provided for future layout switching (e.g., different layouts for shop vs. account areas). The mechanism is in place, but no UI changes are required until needed.
+The resolved `layoutVariant` is emitted on the `<main>` element as
+`data-layout-variant="<value>"` (defaulting to `"default"`). That means CSS
+in your fork can target it without touching `PageLayout` at all:
 
-**To add a new layout variant:**
+```css
+main[data-layout-variant='shop'] {
+  padding-inline: 0;
+}
+```
 
-1. Add the variant to the `LayoutHandle` type union
-2. Update `ResolvedLayoutData` type
-3. Add conditional rendering in `PageLayout` based on `layoutData.layoutVariant`
+**To add a new variant:**
 
-**Do not add variants until there's a concrete need.**
+1. Add it to the `LayoutHandle` type union (`app/layout/types/handle.ts`).
+2. Update `ResolvedLayoutData` (`app/layout/types/resolvedLayout.ts`).
+3. Set `layoutVariant: '<value>'` in the target route's `handle` export.
+4. Style it via `main[data-layout-variant='<value>']` or, if you need
+   different JSX / different components, branch on
+   `layoutData.layoutVariant` inside `PageLayout`.
+
+**Do not add JSX branches until there is a concrete need — the CSS hook
+covers most cases without further wiring.**
 
 ---
 
