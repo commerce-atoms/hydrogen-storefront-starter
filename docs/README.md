@@ -56,14 +56,17 @@ A **module-driven architecture** for Shopify Hydrogen storefronts built on React
 
 Core concepts and constraints that define the architecture.
 
-| Document                                             | Purpose                                           |
-| ---------------------------------------------------- | ------------------------------------------------- |
-| [**modules.md**](reference/modules.md)               | Module structure, scaling, and import rules       |
-| [**routing.md**](reference/routing.md)               | Explicit routing conventions and URL patterns     |
-| [**layout.md**](reference/layout.md)                 | Layout metadata and route handle contract         |
-| [**graphql.md**](reference/graphql.md)               | GraphQL organization, caching, and type safety    |
-| [**platform.md**](reference/platform.md)             | Platform layer rules and what belongs there       |
-| [**test-selectors.md**](reference/test-selectors.md) | Test selector convention and E2E testing patterns |
+| Document                                                     | Purpose                                                               |
+| ------------------------------------------------------------ | --------------------------------------------------------------------- |
+| [**modules.md**](reference/modules.md)                       | Module structure, scaling, and import rules                           |
+| [**routing.md**](reference/routing.md)                       | Explicit routing conventions and URL patterns                         |
+| [**layout.md**](reference/layout.md)                         | Layout metadata and route handle contract                             |
+| [**graphql.md**](reference/graphql.md)                       | GraphQL organization, caching, and type safety                        |
+| [**platform.md**](reference/platform.md)                     | Platform layer rules and what belongs there                           |
+| [**metaobjects.md**](reference/metaobjects.md)               | Metaobjects, transformers, and the metafield-backed feature pattern   |
+| [**setup-scripts.md**](reference/setup-scripts.md)           | Idempotent Admin API provisioning for custom-data schema              |
+| [**collection-theming.md**](reference/collection-theming.md) | Per-collection theming — reference implementation of the pattern      |
+| [**test-selectors.md**](reference/test-selectors.md)         | Test selector convention and E2E testing patterns                     |
 
 ### 🔧 Guides (How To Build)
 
