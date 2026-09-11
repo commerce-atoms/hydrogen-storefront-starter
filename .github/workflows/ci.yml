@@ -41,6 +41,13 @@ jobs:
       - name: Test
         run: npm run test:smoke
 
+      # Architecture boundary check. Kept in ci.yml (not the deploy workflow)
+      # because Shopify's auto-provisioned oxygen-deployment-*.yml has no
+      # pre-deploy validation of its own; ci.yml + branch protection are the
+      # safety net.
+      - name: Validate architecture
+        run: npx --yes @commerce-atoms/agents validate-architecture
+
       # TODO: Uncomment this when needed
       # - name: Build
       #   run: npm run build
