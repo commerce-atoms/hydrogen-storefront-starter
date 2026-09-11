@@ -6,14 +6,15 @@ import type {SearchSchema} from '@commerce-atoms/urlstate/types/schema';
 import type {SearchState} from '@commerce-atoms/urlstate/types/searchState';
 
 /**
- * Hook to simplify the common pattern of updating search state and navigating.
- * Reduces boilerplate: update state -> patch params -> navigate
+ * Update the URL search state and navigate in one call.
+ *
+ * Wraps the common pattern of patching the current search params against a
+ * `SearchSchema` and pushing the result via `useNavigate`. Unknown params
+ * are preserved.
  *
  * @example
- * ```ts
  * const updateSearchState = useSearchStateNavigation(schema);
- * updateSearchState(newState);
- * ```
+ * updateSearchState({page: 2});
  */
 export function useSearchStateNavigation(schema: SearchSchema) {
   const navigate = useNavigate();
