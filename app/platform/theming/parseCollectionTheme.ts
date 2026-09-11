@@ -1,10 +1,8 @@
-import {getMetafieldValue} from '@commerce-atoms/metafield/metafields/getMetafieldValue';
-
 import {
-  THEME_METAFIELD_KEYS,
-  THEME_METAFIELD_NAMESPACE,
+  THEME_METAOBJECT_TYPE,
+  THEME_PALETTE_FIELD_MAP,
   type CollectionTheme,
-  type ThemeMetafieldSource,
+  type ThemePresetSource,
 } from './types';
 
 /**
@@ -33,50 +31,53 @@ function isSafeCssColor(value: string): boolean {
 }
 
 /**
- * Read `themeMetafields` (the alias created by `COLLECTION_THEME_FRAGMENT`)
- * and produce a strongly typed `CollectionTheme`, or `null` if the collection
- * has no theme configured.
+ * Resolve a `theme.preset` metafield reference into a typed `CollectionTheme`,
+ * or `null` if the collection has no palette assigned (or the assigned
+ * palette contains no usable values).
  *
  * A value is included only if:
- *   1. the metafield is present and non-empty
+ *   1. the metaobject field is present and non-empty
  *   2. its value passes `isSafeCssColor`
  *
  * Rejected values are silently dropped — merchants get an unstyled token
- * instead of a broken page. Consider logging in a store fork if you want
- * feedback in the admin.
+ * instead of a broken page.
  */
 export function parseCollectionTheme(
-  themeMetafields:
-    | ReadonlyArray<ThemeMetafieldSource | null | undefined>
-    | null
-    | undefined,
+  themePreset: ThemePresetSource | null | undefined,
 ): CollectionTheme | null {
-  if (!themeMetafields || themeMetafields.length === 0) return null;
+  const metaobject = themePreset?.reference;
+  if (!metaobject) return null;
 
-  // `getMetafieldValue` from `@commerce-atoms/metafield` expects an owner
-  // shape (`{metafields: [...]}`). Normalise `undefined` entries to `null`
-  // to satisfy `MetafieldOwnerLike`.
-  const owner = {
-    metafields: themeMetafields.map((m) => m ?? null),
-  };
+  // Defence-in-depth: the fragment already scopes to `theme_palette`, but if
+  // someone points the metafield at a different metaobject type via admin
+  // we still want to bail cleanly rather than pretend it's a palette.
+  if (metaobject.type && metaobject.type !== THEME_METAOBJECT_TYPE) {
+    return null;
+  }
+
+  const fields = metaobject.fields;
+  if (!fields || fields.length === 0) return null;
+
+  const byKey = new Map<string, string>();
+  for (const field of fields) {
+    if (!field?.key) continue;
+    if (typeof field.value !== 'string') continue;
+    byKey.set(field.key, field.value);
+  }
 
   const theme: CollectionTheme = {};
   let matched = 0;
 
-  for (const [field, key] of Object.entries(THEME_METAFIELD_KEYS) as Array<
-    [keyof CollectionTheme, string]
-  >) {
-    const raw = getMetafieldValue<string>(
-      owner,
-      THEME_METAFIELD_NAMESPACE,
-      key,
-    );
+  for (const [themeKey, fieldKey] of Object.entries(
+    THEME_PALETTE_FIELD_MAP,
+  ) as Array<[keyof CollectionTheme, string]>) {
+    const raw = byKey.get(fieldKey);
     if (typeof raw !== 'string') continue;
 
     const trimmed = raw.trim();
     if (!isSafeCssColor(trimmed)) continue;
 
-    theme[field] = trimmed;
+    theme[themeKey] = trimmed;
     matched += 1;
   }
 

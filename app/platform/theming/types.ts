@@ -6,17 +6,21 @@
  * global tokens in `app/styles/tokens.css` under the `[data-collection-theme]`
  * attribute selector. When absent, pages render with the global brand tokens.
  *
- * Adding a new themed collection is a Shopify metafield edit — no code change.
+ * Palettes are modelled as Shopify Metaobjects of type `theme_palette`, and
+ * a Collection selects a palette via the `theme.preset` metafield (a
+ * `metaobject_reference`). Adding a new themed collection is a dropdown
+ * change in Shopify admin — no code change.
+ *
  * See `docs/reference/collection-theming.md`.
  */
 
 /**
- * Design tokens that a collection is allowed to override.
+ * Design tokens a palette is allowed to override.
  *
- * This list is intentionally a *subset* of the global tokens:
- * we override colours only. Typography, spacing, radii, motion, and layout
- * stay consistent across the whole storefront so navigation, cards, and
- * interactions remain recognisably "one storefront".
+ * Intentionally a *subset* of the global tokens: colours only. Typography,
+ * spacing, radii, motion, and layout stay consistent across the whole
+ * storefront so navigation, cards, and interactions remain recognisably
+ * "one storefront".
  */
 export interface CollectionTheme {
   /** Page background — maps to `--color-background`. */
@@ -67,15 +71,27 @@ export const THEME_TOKEN_MAP: Readonly<Record<keyof CollectionTheme, string>> =
   };
 
 /**
- * Metafield namespace + keys the storefront reads from Shopify.
- *
- * The `key` is the underscored form of the `CollectionTheme` field name.
- * Keeping the mapping declarative lets the fragment + parser share one source
- * of truth.
+ * Metaobject type the storefront resolves for palettes. Must match the type
+ * created by `scripts/setup-theming.ts` (or by an admin who provisions the
+ * definition by hand).
  */
-export const THEME_METAFIELD_NAMESPACE = 'theme' as const;
+export const THEME_METAOBJECT_TYPE = 'theme_palette' as const;
 
-export const THEME_METAFIELD_KEYS: Readonly<
+/**
+ * Collection metafield identifiers for the palette reference. One value per
+ * collection: which palette to apply.
+ */
+export const THEME_PRESET_METAFIELD = {
+  namespace: 'theme',
+  key: 'preset',
+} as const;
+
+/**
+ * Mapping from `CollectionTheme` field → metaobject field key (snake_case
+ * matches Shopify's convention for metaobject field keys). Both the setup
+ * script and the parser use this list, so palette schema stays in one place.
+ */
+export const THEME_PALETTE_FIELD_MAP: Readonly<
   Record<keyof CollectionTheme, string>
 > = {
   background: 'background',
@@ -91,12 +107,23 @@ export const THEME_METAFIELD_KEYS: Readonly<
 };
 
 /**
- * Minimal shape of a metafield value returned by the Storefront API.
- * We depend only on `namespace`, `key`, and `value` so the parser stays
- * decoupled from generated GraphQL types.
+ * Minimal shape of a metaobject field returned by the Storefront API.
+ * The parser depends only on `key` and `value`, so it stays decoupled from
+ * generated GraphQL types.
  */
-export interface ThemeMetafieldSource {
-  namespace: string;
+export interface MetaobjectFieldSource {
   key: string;
-  value: string;
+  value?: string | null;
+}
+
+/**
+ * Minimal shape of the `themePreset` metafield with its resolved
+ * `metaobject_reference`.
+ */
+export interface ThemePresetSource {
+  reference?: {
+    type?: string | null;
+    handle?: string | null;
+    fields?: ReadonlyArray<MetaobjectFieldSource | null | undefined>;
+  } | null;
 }

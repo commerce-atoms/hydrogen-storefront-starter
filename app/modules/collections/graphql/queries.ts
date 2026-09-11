@@ -23,7 +23,7 @@ export const COLLECTION_QUERY = `#graphql
       handle
       title
       description
-      ...CollectionThemeMetafields
+      ...CollectionThemeReference
       products(
         first: $first,
         last: $last,

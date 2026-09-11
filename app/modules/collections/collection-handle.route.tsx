@@ -82,10 +82,11 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
   // The API handle might be localized, so redirect to the localized handle
   redirectIfHandleIsLocalized(request, {handle, data: collection});
 
-  // Optional per-collection theme derived from `theme.*` metafields.
-  // Returns null if the collection has no theme configured, in which case
-  // the page renders with the global brand tokens from `styles/tokens.css`.
-  const theme = parseCollectionTheme(collection.themeMetafields);
+  // Optional per-collection theme derived from the `theme.preset` metafield
+  // reference. Returns null if the collection has no palette assigned, in
+  // which case the page renders with the global brand tokens from
+  // `styles/tokens.css`.
+  const theme = parseCollectionTheme(collection.themePreset);
 
   return {
     collection,

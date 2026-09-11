@@ -12,10 +12,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Optional per-collection **theming module** (`app/platform/theming/`).
-  Data-driven from Shopify collection metafields (`theme.*` namespace),
-  applies scoped `--color-*` overrides via an SSR-rendered `<style>` block.
-  New docs: `docs/reference/collection-theming.md`. Adds
-  `@commerce-atoms/metafield@^0.4.1` as a runtime dependency.
+  Data-driven from a `theme_palette` Shopify Metaobject referenced by a
+  `theme.preset` metafield on Collection — reusable palettes, dropdown
+  assignment in Shopify admin, zero code per themed collection. Applies
+  scoped `--color-*` overrides via an SSR-rendered `<style>` block. New
+  docs: `docs/reference/collection-theming.md`.
+- **`npm run setup:theming`** (`scripts/setup-theming.mjs`). Idempotent
+  Admin-API script that provisions the `theme_palette` metaobject
+  definition and the `theme.preset` metafield on Collection with
+  `PUBLIC_READ` storefront access. Extends the metaobject in place when
+  fields are added to `THEME_PALETTE_FIELD_MAP`. Requires
+  `PRIVATE_ADMIN_API_ACCESS_TOKEN` (scopes: `write_metaobject_definitions`,
+  `write_metaobjects`).
+- `PRIVATE_ADMIN_API_ACCESS_TOKEN` slot in `.env.example` (build-time only,
+  not read by the running app).
+- `@commerce-atoms/metafield@^0.4.1` — pre-installed for the metaobject
+  transformer pattern documented in `docs/reference/metaobjects.md`.
 - Brand meta helper `app/platform/seo/brandMeta.ts` — emits `og:site_name`,
   `og:locale`, and (when set) `twitter:site` from `brand.ts` at the root
   route; cascades to every page.
