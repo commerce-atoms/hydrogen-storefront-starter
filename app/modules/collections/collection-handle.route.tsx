@@ -7,6 +7,8 @@ import {buildCollectionMeta} from '@commerce-atoms/seo/meta/buildCollectionMeta'
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
 import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
 
+import {parseCollectionTheme} from '@platform/theming/parseCollectionTheme';
+
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
 import {CollectionHandleView} from './collection-handle.view';
@@ -80,13 +82,22 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
   // The API handle might be localized, so redirect to the localized handle
   redirectIfHandleIsLocalized(request, {handle, data: collection});
 
+  // Optional per-collection theme derived from the `theme.preset` metafield
+  // reference. Returns null if the collection has no palette assigned, in
+  // which case the page renders with the global brand tokens from
+  // `styles/tokens.css`.
+  const theme = parseCollectionTheme(collection.themePreset);
+
   return {
     collection,
     sort: sortParam,
+    theme,
   };
 }
 
 export default function Collection() {
-  const {collection, sort} = useLoaderData<typeof loader>();
-  return <CollectionHandleView collection={collection} sort={sort} />;
+  const {collection, sort, theme} = useLoaderData<typeof loader>();
+  return (
+    <CollectionHandleView collection={collection} sort={sort} theme={theme} />
+  );
 }
