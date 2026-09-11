@@ -10,7 +10,7 @@ generates:
 
 # Architecture boundaries and policies
 
-> Canonical source. Mirror edits into `.cursor/rules/30-architecture-boundaries.mdc` by hand until automated overlay generation lands ([ADR 001](https://github.com/commerce-atoms/agents/blob/main/kit/docs/decisions/001-agents-distribution-mechanism.md)). Consumers pull kit updates with `npx commerce-atoms-agents sync`.
+> Canonical source. Mirror edits into `.cursor/rules/30-architecture-boundaries.mdc` by hand until automated overlay generation lands ([ADR 001](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/docs/decisions/001-agents-distribution-mechanism.md)). Consumers pull kit updates with `npx commerce-atoms-agents sync`.
 
 ## 1. Module boundaries
 

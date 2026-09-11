@@ -121,12 +121,12 @@ main deploy to production, pushes to any other branch deploy to a preview URL.
 | `gh: command not found` | Install `gh`; the agent does not write to GitHub via raw API for deploy setup. |
 | No auto-PR from Shopify | Verify the Hydrogen storefront exists and is linked to this repo in Shopify Admin. Do not hand-author a replacement. The auto-PR carries the correct pinned SHAs and secret binding. |
 | Auto-PR appears with wrong repo/branch | Someone else linked a Hydrogen storefront to this repo. Reject the PR and reconcile in Shopify Admin before re-triggering. |
-| Kit's legacy `deploy.yml` still present | Kit versions ≤ 0.3.3 shipped a `deploy.yml` that races with Shopify's workflow. Delete it as part of the same PR that accepts Shopify's. Running both duplicates every prod deploy. See [CHANGELOG 0.3.4](https://github.com/commerce-atoms/agents/blob/main/kit/CHANGELOG.md). |
+| Kit's legacy `deploy.yml` still present | Kit versions ≤ 0.3.3 shipped a `deploy.yml` that races with Shopify's workflow. Delete it as part of the same PR that accepts Shopify's. Running both duplicates every prod deploy. See [CHANGELOG 0.3.4](https://github.com/commerce-atoms/agents/blob/main/kit/commands/CHANGELOG.md). |
 | Preview URL doesn't render | Runtime env not pushed to Oxygen or missing per-env override. Set via Shopify Admin or `shopify hydrogen env push`. |
 
 ## See also
 
 - [`commands/deploy-check.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-check.md). Runs locally before every push.
 - [`commands/release.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/release.md). Versioned release.
-- [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md). Deploy doctrine.
+- [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/AGENTS.md). Deploy doctrine.
 - [Shopify. Continuous deployment with Hydrogen and Oxygen](https://shopify.dev/docs/custom-storefronts/hydrogen/deployments).

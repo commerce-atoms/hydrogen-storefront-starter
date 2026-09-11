@@ -30,7 +30,7 @@ Draft a PR description from a diff and / or a commit list. Output should be revi
    - **Test plan**. Checkboxes of what was verified locally + what the reviewer should sanity-check. Don't fabricate; only list what was actually run.
 
 3. **Surface doctrine when applicable:**
-   - Touches a Shopify cookbook surface → confirm it's a port, not a reimplementation ([`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md)).
+   - Touches a Shopify cookbook surface → confirm it's a port, not a reimplementation ([`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/prompts/AGENTS.md)).
    - Touches `app/platform/*`, `app/routes.ts`, or shared `app/components/*` → mention `validate-architecture` was run.
    - Release / version bump → confirm `CHANGELOG.md` updated.
 

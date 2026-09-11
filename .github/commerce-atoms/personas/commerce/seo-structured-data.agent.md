@@ -110,7 +110,7 @@ The underlying GraphQL shape comes from `personas/shopify/storefront-api-special
 
 ## Execution discipline
 
-All [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md) doctrine and [`RUN_PROTOCOL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/RUN_PROTOCOL.md) steps apply. Persona-specific:
+All [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/personas/commerce/AGENTS.md) doctrine and [`RUN_PROTOCOL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/personas/commerce/RUN_PROTOCOL.md) steps apply. Persona-specific:
 
 - JSON-LD-emitting code MUST have shape-snapshot tests in the consumer repo (or in `@commerce-atoms/seo`'s test suite if reused).
 - Never hardcode brand strings into meta. Always read from `app/config/brand.ts` (`rules/stores.md`).

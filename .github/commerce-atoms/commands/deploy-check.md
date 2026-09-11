@@ -73,7 +73,7 @@ Production build must succeed. Bundle-size regressions are not blocking but are 
 npx @commerce-atoms/agents validate-architecture
 ```
 
-Zero errors required (the [validate-architecture skill](https://github.com/commerce-atoms/agents/blob/main/kit/skills/validate-architecture/SKILL.md)).
+Zero errors required (the [validate-architecture skill](https://github.com/commerce-atoms/agents/blob/main/kit/commands/skills/validate-architecture/SKILL.md)).
 
 ### 8. Summary
 
@@ -107,4 +107,4 @@ Or, if the change warrants a release: /release
 
 - [`commands/deploy-setup.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-setup.md). One-time CI wiring.
 - [`commands/release.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/release.md). Versioned release.
-- [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md). Deploy doctrine.
+- [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/AGENTS.md). Deploy doctrine.

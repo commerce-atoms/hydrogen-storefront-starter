@@ -100,8 +100,8 @@ The corresponding GraphQL shape comes from `personas/shopify/storefront-api-spec
 
 ## Execution discipline
 
-All [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md) doctrine and [`RUN_PROTOCOL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/RUN_PROTOCOL.md) steps apply. Persona-specific:
+All [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/personas/commerce/AGENTS.md) doctrine and [`RUN_PROTOCOL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/personas/commerce/RUN_PROTOCOL.md) steps apply. Persona-specific:
 
 - Selection logic must be **pure**. No React, no fetch, no DOM. UI consumes the result.
-- Reach for `@commerce-atoms/variants` and `@commerce-atoms/urlstate` before authoring new logic; the cross-module reuse ladder ([`AGENTS.md §4`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md)) ends in those packages for these patterns.
+- Reach for `@commerce-atoms/variants` and `@commerce-atoms/urlstate` before authoring new logic; the cross-module reuse ladder ([`AGENTS.md §4`](https://github.com/commerce-atoms/agents/blob/main/kit/personas/commerce/AGENTS.md)) ends in those packages for these patterns.
 - New filtering logic that's reused across modules belongs in `@commerce-atoms/filters` (in `shoppy`), not the consumer repo.

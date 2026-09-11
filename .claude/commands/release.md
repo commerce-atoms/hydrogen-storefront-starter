@@ -105,5 +105,5 @@ Do **not** invoke `shopify hydrogen deploy`. Do **not** poll the Oxygen API dire
 
 - [`commands/deploy-setup.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-setup.md)
 - [`commands/deploy-check.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-check.md)
-- [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md). Deploy doctrine.
-- [Shopify. Continuous deployment with Hydrogen and Oxygen](https://shopify.dev/docs/custom-storefronts/hydrogen/deployments) — the deploy workflow is Shopify-provisioned, not kit-shipped (see [CHANGELOG 0.3.4](https://github.com/commerce-atoms/agents/blob/main/kit/CHANGELOG.md)).
+- [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/AGENTS.md). Deploy doctrine.
+- [Shopify. Continuous deployment with Hydrogen and Oxygen](https://shopify.dev/docs/custom-storefronts/hydrogen/deployments) — the deploy workflow is Shopify-provisioned, not kit-shipped (see [CHANGELOG 0.3.4](https://github.com/commerce-atoms/agents/blob/main/kit/commands/CHANGELOG.md)).

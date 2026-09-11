@@ -19,11 +19,11 @@ post_conditions:
 
 # `validate-architecture`
 
-> Replacement for the architecture-validation tool that lived in `mcp-hydrogen-kit`. Per [ADR 003](https://github.com/commerce-atoms/agents/blob/main/kit/docs/decisions/003-mcp-hydrogen-kit-archive-path.md), the validator logic now lives inside `@commerce-atoms/agents` and is exposed as both a Skill and a slash command.
+> Replacement for the architecture-validation tool that lived in `mcp-hydrogen-kit`. Per [ADR 003](https://github.com/commerce-atoms/agents/blob/main/kit/skills/validate-architecture/docs/decisions/003-mcp-hydrogen-kit-archive-path.md), the validator logic now lives inside `@commerce-atoms/agents` and is exposed as both a Skill and a slash command.
 
 ## What it does
 
-Walks the target project's `app/` directory, parses imports, and reports violations of the architecture rules in [`AGENTS.md`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md) §3 and the canonical sources under [`rules/core/`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/).
+Walks the target project's `app/` directory, parses imports, and reports violations of the architecture rules in [`AGENTS.md`](https://github.com/commerce-atoms/agents/blob/main/kit/skills/validate-architecture/AGENTS.md) §3 and the canonical sources under [`rules/core/`](https://github.com/commerce-atoms/agents/blob/main/kit/skills/validate-architecture/rules/core/).
 
 | Code | Severity | Detects |
 |---|---|---|
@@ -75,7 +75,7 @@ Human-readable mode prints one block per violation:
     fix:  Promote the shared logic per the cross-module reuse ladder (AGENTS.md §4) or duplicate intentionally.
 ```
 
-JSON mode emits the full `ValidationReport` object. See [`src/internal/types.ts`](https://github.com/commerce-atoms/agents/blob/main/src/internal/types.ts).
+JSON mode emits the full `ValidationReport` object. See [`src/internal/types.ts`](https://github.com/commerce-atoms/agents/blob/main/kit/skills/validate-architecture/src/internal/types.ts).
 
 ## Future skills
 

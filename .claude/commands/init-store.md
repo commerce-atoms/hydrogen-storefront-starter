@@ -13,7 +13,7 @@ Initialise a new Shopify Hydrogen storefront from the canonical starter, with th
 
 ## Convention
 
-By convention (see [`rules/stores.md`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/stores.md)), run this command from `~/Projects/commerce-atoms/stores/`. The new store is created as a sibling under `stores/`, never at the top level of `commerce-atoms/`.
+By convention (see [`rules/stores.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/rules/stores.md)), run this command from `~/Projects/commerce-atoms/stores/`. The new store is created as a sibling under `stores/`, never at the top level of `commerce-atoms/`.
 
 ## Workflow
 
@@ -68,5 +68,5 @@ By convention (see [`rules/stores.md`](https://github.com/commerce-atoms/agents/
 ## See also
 
 - [`commands/deploy-setup.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-setup.md). The next step after a fresh `init`.
-- [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md). The doctrine the kit operates under.
-- [`QUICKSTART.md`](https://github.com/commerce-atoms/agents/blob/main/kit/QUICKSTART.md). End-to-end path from `init` to first deploy.
+- [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/AGENTS.md). The doctrine the kit operates under.
+- [`QUICKSTART.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/QUICKSTART.md). End-to-end path from `init` to first deploy.

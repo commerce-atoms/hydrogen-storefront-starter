@@ -33,6 +33,6 @@ Run the architecture validators against a Hydrogen storefront project.
 
 ## See also
 
-- [`skills/validate-architecture/SKILL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/skills/validate-architecture/SKILL.md). The skill definition this command wraps.
-- [`AGENTS.md §3`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md). The rules being validated.
-- [ADR 003](https://github.com/commerce-atoms/agents/blob/main/kit/docs/decisions/003-mcp-hydrogen-kit-archive-path.md). Why this skill exists in `agents/` rather than as a separate MCP server.
+- [`skills/validate-architecture/SKILL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/skills/validate-architecture/SKILL.md). The skill definition this command wraps.
+- [`AGENTS.md §3`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/AGENTS.md). The rules being validated.
+- [ADR 003](https://github.com/commerce-atoms/agents/blob/main/kit/commands/docs/decisions/003-mcp-hydrogen-kit-archive-path.md). Why this skill exists in `agents/` rather than as a separate MCP server.

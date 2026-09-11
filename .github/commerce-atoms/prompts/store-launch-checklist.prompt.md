@@ -59,7 +59,7 @@ Use this template to produce a pre-launch report for a `commerce-atoms` storefro
 - [ ] `agents.config.json` `agentsVersion` matches the `@commerce-atoms/agents` version you installed (`npm ls @commerce-atoms/agents`).
 - [ ] No barrel files (`find app -name 'index.ts' -o -name 'index.tsx'` returns empty).
 - [ ] No `app/lib`, `app/common`, `app/shared`, `app/ui` folders.
-- [ ] All rules from [`rules/stores.md`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/stores.md) respected (brand layer, core/app split, deploy doctrine).
+- [ ] All rules from [`rules/stores.md`](https://github.com/commerce-atoms/agents/blob/main/kit/prompts/rules/stores.md) respected (brand layer, core/app split, deploy doctrine).
 
 ### 4. Build, type, lint, test
 
@@ -137,4 +137,4 @@ Use this template to produce a pre-launch report for a `commerce-atoms` storefro
 
 ## Doctrine reminder
 
-Per [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md): the agent prepares and validates; the agent does **not** flip the launch switch. After this checklist passes, the operator runs `/release` (or pushes to `main` if no version bump is needed) and CI deploys. The agent never invokes `shopify hydrogen deploy` directly.
+Per [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/prompts/AGENTS.md): the agent prepares and validates; the agent does **not** flip the launch switch. After this checklist passes, the operator runs `/release` (or pushes to `main` if no version bump is needed) and CI deploys. The agent never invokes `shopify hydrogen deploy` directly.

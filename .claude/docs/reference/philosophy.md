@@ -4,7 +4,7 @@
 
 ## Doctrine
 
-`commerce-atoms` is the **adapter layer** between Shopify upstream and a modular, AI-consistent storefront architecture. The kit does **not** write competing implementations of features Shopify already ships. Full statement in [`./AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md).
+`commerce-atoms` is the **adapter layer** between Shopify upstream and a modular, AI-consistent storefront architecture. The kit does **not** write competing implementations of features Shopify already ships. Full statement in [`./AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/AGENTS.md).
 
 This is the single most important sentence in the entire ecosystem. Internalise it before editing anything else here.
 
@@ -16,7 +16,7 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 
 ### Rules. Guardrails
 
-**Where:** [`rules/`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/), generated into `.cursor/rules/`, `copilot-instructions.md`, `CLAUDE.md` overlays.
+**Where:** [`rules/`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/rules/), generated into `.cursor/rules/`, `copilot-instructions.md`, `CLAUDE.md` overlays.
 
 **What:** Always-on, passive guidance. Loaded automatically by the editor.
 
@@ -26,7 +26,7 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 
 ### Personas. Expertise
 
-**Where:** [`personas/<scope>/<name>.agent.md`](https://github.com/commerce-atoms/agents/blob/main/kit/personas/).
+**Where:** [`personas/<scope>/<name>.agent.md`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/personas/).
 
 **What:** Domain-expert system prompts (Hydrogen architect, Storefront API specialist, etc.).
 
@@ -36,7 +36,7 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 
 ### Skills. Capabilities
 
-**Where:** [`skills/<name>/SKILL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/skills/).
+**Where:** [`skills/<name>/SKILL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/skills/).
 
 **What:** Reusable AI workflows the agent can invoke (`validate-architecture`, `port-hydrogen-cookbook-recipe`, …).
 
@@ -46,7 +46,7 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 
 ### Commands. Workflows
 
-**Where:** [`commands/<name>.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/).
+**Where:** [`commands/<name>.md`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/commands/).
 
 **What:** Short, named workflows (`/init-store`, `/deploy-check`, `/release`).
 
@@ -56,7 +56,7 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 
 ### Prompts. Templates
 
-**Where:** [`prompts/<name>.prompt.md`](https://github.com/commerce-atoms/agents/blob/main/kit/prompts/).
+**Where:** [`prompts/<name>.prompt.md`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/prompts/).
 
 **What:** Reusable task templates with placeholders (PR descriptions, release notes, retros).
 

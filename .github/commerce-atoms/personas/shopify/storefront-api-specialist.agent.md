@@ -106,8 +106,8 @@ Variant pickers in `personas/commerce/catalog-variants`'s domain consume this sh
 
 ## Execution discipline
 
-All [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md) doctrine and [`RUN_PROTOCOL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/RUN_PROTOCOL.md) steps apply. Persona-specific:
+All [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/personas/shopify/AGENTS.md) doctrine and [`RUN_PROTOCOL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/personas/shopify/RUN_PROTOCOL.md) steps apply. Persona-specific:
 
 - After authoring a new query or mutation, run `npm run codegen` in the consumer repo before declaring complete.
-- New `*.graphql.ts` files belong inside the owning module's `graphql/` folder per [`rules/core/architecture.md` §5](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/architecture.md). Cross-module GraphQL sharing is forbidden.
+- New `*.graphql.ts` files belong inside the owning module's `graphql/` folder per [`rules/core/architecture.md` §5](https://github.com/commerce-atoms/agents/blob/main/kit/personas/shopify/rules/core/architecture.md). Cross-module GraphQL sharing is forbidden.
 - For mutations, always handle `userErrors` and surface them to the caller.

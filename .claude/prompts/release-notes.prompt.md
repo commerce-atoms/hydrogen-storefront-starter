@@ -77,4 +77,4 @@ Generate consumer-facing release notes for a `commerce-atoms` package. Format fo
 {required_consumer_action_if_any_with_code_snippet}
 ```
 
-For a worked example, see [`CHANGELOG.md`](https://github.com/commerce-atoms/agents/blob/main/CHANGELOG.md). It's the canonical reference for tone and shape.
+For a worked example, see [`CHANGELOG.md`](https://github.com/commerce-atoms/agents/blob/main/kit/prompts/CHANGELOG.md). It's the canonical reference for tone and shape.
