@@ -39,13 +39,13 @@
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
-    "@shopify/hydrogen": "2026.4.2",
     "@commerce-atoms/filters": "^0.0.3",
     "@commerce-atoms/metafield": "^0.4.1",
     "@commerce-atoms/money": "^0.0.3",
     "@commerce-atoms/seo": "^0.0.3",
     "@commerce-atoms/urlstate": "^0.0.3",
     "@commerce-atoms/variants": "^0.0.3",
+    "@shopify/hydrogen": "2026.4.2",
     "graphql": "^16.13.2",
     "graphql-tag": "^2.12.6",
     "isbot": "^5.1.39",
@@ -55,7 +55,7 @@
     "react-router": "7.14.0"
   },
   "devDependencies": {
-    "@commerce-atoms/agents": "^0.3.0",
+    "@commerce-atoms/agents": "^0.3.1",
     "@eslint/compat": "^2.0.5",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
