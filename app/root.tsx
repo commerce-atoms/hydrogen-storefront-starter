@@ -12,7 +12,7 @@ import {
 
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 
-import favicon from '~/assets/favicon.svg';
+import favicon from '~/assets/brand/favicon.svg';
 
 import {AppErrorBoundary, RouteErrorBoundary} from '@layout/ErrorBoundary';
 import {FOOTER_QUERY, HEADER_QUERY} from '@layout/graphql/queries';

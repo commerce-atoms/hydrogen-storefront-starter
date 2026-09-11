@@ -1,28 +1,44 @@
 # Brand assets
 
-> Per-store visual assets. Drop your real assets into this directory; the storefront reads from them by convention. Pair with `app/config/brand.ts` for typed identity values (name, locales, colours, fonts).
+> Per-store visual assets. Pair with `app/config/brand.ts` for typed identity
+> values (name, locales, colours, fonts). Both are the two authoritative
+> per-store surfaces — everything else in the starter stays brand-neutral.
 
-## Required assets
+## Ships with the starter
 
-| File | Purpose | Notes |
-|---|---|---|
-| `logo.svg` | Primary logo. Rendered in the header, footer, and OG fallback. | SVG strongly preferred; falls back to PNG if absent. |
-| `favicon.svg` | Browser favicon. | Use a square crop of the logo with no padding. |
-| `og-default.png` | Default OpenGraph image used when a page has no specific OG image. | 1200 × 630 px. |
-| `tokens.css` | CSS custom properties for runtime theming. Mirrors values in `app/config/brand.ts#colours`. | See "Token mirroring" below. |
+| File          | Wired in            | Notes |
+|---------------|---------------------|-------|
+| `favicon.svg` | `app/root.tsx` (`~/assets/brand/favicon.svg`) | Neutral placeholder. Replace with a square crop of your logo — no padding. |
 
-## Token mirroring
+## Drop-in slots for your fork
 
-`app/config/brand.ts` is the source of truth for colour and font values; `tokens.css` exposes the same values as CSS custom properties so non-component CSS (the global stylesheet, third-party widgets) can reference them. Keep the two in sync — when you change a colour in `brand.ts`, update the matching `--brand-colour-primary` etc. in `tokens.css`.
+These are conventional filenames the agent kit and prompts reference. **The
+starter does not wire them itself** — add the file, then wire it in the store
+component that consumes it. Delete the row if your fork does not need it.
 
-A future codegen step in `@commerce-atoms/agents` will generate `tokens.css` from `brand.ts` automatically; until then it is hand-maintained.
+| File            | Suggested use                                                   | Wire it from |
+|-----------------|-----------------------------------------------------------------|--------------|
+| `logo.svg`      | Header wordmark / OG fallback                                   | `app/layout/components/Header.tsx`, meta functions |
+| `og-default.png`| Default OpenGraph image (1200 × 630)                            | `app/root.tsx` meta or `@platform/seo/brandMeta.ts` |
+
+## Where colour tokens live
+
+Global colour tokens do **not** live in this directory — they live in
+`app/styles/tokens.css` (loaded once from `app/root.tsx`). `brand.ts` holds
+the typed identity values; `tokens.css` is the runtime CSS variable surface.
+Keep the two in sync when you change a brand colour.
+
+Per-collection overrides layer on top through the optional
+[collection theming module](../../platform/theming/README.md).
 
 ## What does NOT belong here
 
-- Product images — those live on Shopify CDN.
-- UI icons used inside components — colocate with the component.
-- Per-page OG images — use the page's own meta override, not this default.
+- Product / campaign imagery — those live on Shopify CDN.
+- UI icons colocated with a specific component — colocate with the component.
+- Per-page OG images — use the page's own meta override, not the global default.
 
 ## Forks
 
-Each store fork replaces these placeholders with real assets. The starter ships with neutral / placeholder values so forks always start from a clean baseline.
+Each store fork replaces `favicon.svg` with a real asset and, if needed, adds
+the drop-in slots above. Everything the starter itself imports resolves to a
+real file — no dangling paths.
