@@ -23,7 +23,7 @@ Help developers build storefronts that scale without architectural rewrites, mai
 ### Module architecture
 
 - Vertical domain slices (routes → UI → data → logic).
-- Zero cross-module imports — non-negotiable.
+- Zero cross-module imports. Non-negotiable.
 - When to duplicate vs. promote to shared (cross-module reuse ladder, [`AGENTS.md §4`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md)).
 
 ### Route / view separation
@@ -34,15 +34,15 @@ Help developers build storefronts that scale without architectural rewrites, mai
 
 ### Shared code policies
 
-- `app/components/{primitives,catalog,commerce,pagination}/` — domain-agnostic UI only.
-- `app/hooks/{primitives,<domain>}/*` — generic UI hooks only.
-- `app/platform/*` — infrastructure glue only, never domain logic.
+- `app/components/{primitives,catalog,commerce,pagination}/`. Domain-agnostic UI only.
+- `app/hooks/{primitives,<domain>}/*`. Generic UI hooks only.
+- `app/platform/*`. Infrastructure glue only, never domain logic.
 - When code graduates from module to shared, and when it should stay duplicated.
 
 ### Scaling patterns
 
 - Start flat; add folders when friction appears.
-- GraphQL organisation (consolidated → split) — see [`rules/core/architecture.md` §5](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/architecture.md).
+- GraphQL organisation (consolidated → split). See [`rules/core/architecture.md` §5](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/architecture.md).
 - When modules need internal structure vs. when they should split.
 
 ## How you help
@@ -83,4 +83,4 @@ When asked about architecture:
 All [`AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md) doctrine and [`RUN_PROTOCOL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/RUN_PROTOCOL.md) steps apply. Persona-specific:
 
 - After any structural change you propose or accept, recommend running [`skills/validate-architecture`](https://github.com/commerce-atoms/agents/blob/main/kit/skills/validate-architecture/SKILL.md).
-- If a request would require breaking a rule in [`rules/core/architecture.md`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/architecture.md), refuse to silently break it — surface the conflict and propose alternatives that respect the boundary.
+- If a request would require breaking a rule in [`rules/core/architecture.md`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/core/architecture.md), refuse to silently break it. Surface the conflict and propose alternatives that respect the boundary.

@@ -1,6 +1,6 @@
 # Deploy
 
-> **Doctrine.** The agent prepares and validates. CI deploys. See [`AGENTS.md` §0](../AGENTS.md). Never run `shopify hydrogen deploy` directly from your machine or from an agent session.
+> **Doctrine.** The agent prepares and validates. CI deploys. See [`AGENTS.md` §0](./AGENTS.md). Never run `shopify hydrogen deploy` directly from your machine or from an agent session.
 
 The starter does **not** ship a deploy workflow. When a Hydrogen storefront is linked to the repo in Shopify Admin, Shopify's GitHub App auto-provisions `.github/workflows/oxygen-deployment-<storefrontId>.yml` and sets a rotation-safe `OXYGEN_DEPLOYMENT_TOKEN_<storefrontId>` secret. This Shopify-provisioned workflow is the authoritative deployer.
 
@@ -10,7 +10,7 @@ Previously the starter shipped its own `deploy.yml`. Deleted in [agents 0.3.4](h
 
 Two workflows split the responsibility:
 
-### `.github/workflows/ci.yml` — validation gate
+### `.github/workflows/ci.yml`. Validation gate
 
 Runs on every PR + `push:main`. Blocks merge via branch protection. The pipeline is:
 
@@ -19,16 +19,16 @@ Runs on every PR + `push:main`. Blocks merge via branch protection. The pipeline
 3. Codegen (`npm run codegen`)
 4. Type check (`npm run typecheck`)
 5. Tests (`npm run test:smoke`)
-6. **Architecture validation** (`npx --yes @commerce-atoms/agents validate-architecture`) — fails the build on any boundary violation.
+6. **Architecture validation** (`npx --yes @commerce-atoms/agents validate-architecture`). Fails the build on any boundary violation.
 
-### `.github/workflows/oxygen-deployment-<storefrontId>.yml` — deployer
+### `.github/workflows/oxygen-deployment-<storefrontId>.yml`. Deployer
 
 Shopify-provisioned; the starter does not maintain it. Trigger: `on: [push]` (any branch).
 
 - Push to `main` → deploys to **production**.
 - Push to any other branch → deploys to a **preview URL** at `{hash}.myshopify.dev`.
 
-Steps: `npm ci` → `npx shopify hydrogen deploy`. No pre-deploy validation of its own — the safety net is `ci.yml` + branch protection on `main`.
+Steps: `npm ci` → `npx shopify hydrogen deploy`. No pre-deploy validation of its own. The safety net is `ci.yml` + branch protection on `main`.
 
 ## Setup
 
@@ -53,7 +53,7 @@ Runtime env for the Hydrogen worker (`PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_I
 npx shopify hydrogen env push --env production
 ```
 
-`.env` is gitignored; `.env.example` documents every key. Do **not** put runtime env in GitHub Actions secrets — Shopify's deploy step doesn't rebuild with them.
+`.env` is gitignored; `.env.example` documents every key. Do **not** put runtime env in GitHub Actions secrets. Shopify's deploy step doesn't rebuild with them.
 
 ## Secrets
 
@@ -82,7 +82,7 @@ npx --yes @commerce-atoms/agents validate-architecture
 npm run build
 ```
 
-If anything fails locally, fix it locally — do not push and rely on CI to catch it.
+If anything fails locally, fix it locally. Do not push and rely on CI to catch it.
 
 ## Releasing
 
@@ -114,15 +114,15 @@ If any of these comes up in chat, the agent should refuse and surface this docum
 |---|---|---|
 | `validate-architecture` fails | `ci.yml` | Resolve boundary violations per the cross-module reuse ladder (`AGENTS.md §4`). Push again. |
 | Two deploys per push | Both workflows | Legacy `deploy.yml` still present alongside Shopify's workflow. Delete `deploy.yml` (agents 0.3.4+ removed it from the starter). |
-| Auto-provisioned workflow missing | Shopify Admin | Hydrogen storefront not linked to the repo. Link it in Shopify Admin — the auto-PR arrives shortly after. |
+| Auto-provisioned workflow missing | Shopify Admin | Hydrogen storefront not linked to the repo. Link it in Shopify Admin. The auto-PR arrives shortly after. |
 | Oxygen returns auth error | Deploy step | `OXYGEN_DEPLOYMENT_TOKEN_<storefrontId>` was rotated. Re-generate in Shopify Admin and update the repository secret. |
 | Runtime env missing at runtime | Any route | Env not pushed to Oxygen. Set via Shopify Admin or `shopify hydrogen env push`. |
 | Preview URL doesn't render | Deploy step | Per-branch env not configured. Set preview env vars in Shopify Admin, or accept the production env for previews. |
 
 ## See also
 
-- [`AGENTS.md` §0](../AGENTS.md) — the doctrine.
-- [`commands/deploy-setup.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-setup.md) (`@commerce-atoms/agents`) — the slash command.
-- [`commands/deploy-check.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-check.md) — local pre-flight.
-- [`commands/release.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/release.md) — tag + push.
-- [Shopify — Continuous deployment with Hydrogen and Oxygen](https://shopify.dev/docs/custom-storefronts/hydrogen/deployments).
+- [`AGENTS.md` §0](./AGENTS.md). The doctrine.
+- [`commands/deploy-setup.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-setup.md) (`@commerce-atoms/agents`). The slash command.
+- [`commands/deploy-check.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-check.md). Local pre-flight.
+- [`commands/release.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/release.md). Tag + push.
+- [Shopify. Continuous deployment with Hydrogen and Oxygen](https://shopify.dev/docs/custom-storefronts/hydrogen/deployments).

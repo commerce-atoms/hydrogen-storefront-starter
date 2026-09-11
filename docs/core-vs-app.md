@@ -1,4 +1,4 @@
-# Core vs. app — what stays in sync, what's yours
+# Core vs. app. What stays in sync, what's yours
 
 > The starter is the canonical fork point for new stores. Per [ADR 003](https://github.com/commerce-atoms/agents/blob/main/docs/decisions/) of `@commerce-atoms/agents` and `rules/stores.md`, the starter is divided into a synced **core** (modify upstream, never in your fork) and a per-store **app** (modify freely).
 
@@ -11,8 +11,8 @@
 
 ## Why split?
 
-- **Core is invariant.** Architecture rules, route mechanics, platform integration, the `*.route.tsx` / `*.view.tsx` contract — these must not drift between stores, otherwise the AI-consistency promise breaks.
-- **App is variant.** Branding, business modules, store-specific extensions, fork-only experiments — these are why the fork exists at all.
+- **Core is invariant.** Architecture rules, route mechanics, platform integration, the `*.route.tsx` / `*.view.tsx` contract. These must not drift between stores, otherwise the AI-consistency promise breaks.
+- **App is variant.** Branding, business modules, store-specific extensions, fork-only experiments. These are why the fork exists at all.
 
 ## How a fork stays in sync
 
@@ -29,7 +29,7 @@
    npx @commerce-atoms/agents sync
    ```
 
-   This updates `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `.cursor/rules/*.mdc` — the documents AI tools read.
+   This updates `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, and `.cursor/rules/*.mdc`. The documents AI tools read.
 
 3. **Pull starter core** by rebasing or by cherry-picking specific files. A future smoke test will compare hashes of core files in your fork against the version pinned by `agents.config.json` and fail CI on divergence.
 
@@ -55,6 +55,6 @@ Three options, in order of preference:
 
 ## See also
 
-- [`AGENTS.md`](../AGENTS.md) §3 — non-negotiable architecture.
-- [`rules/stores.md`](https://github.com/commerce-atoms/agents/blob/main/rules/stores.md) in `@commerce-atoms/agents` — the canonical source for these rules.
-- `docs/deploy.md` — sibling document for the deploy contract (lands in PR S2).
+- [`AGENTS.md`](./AGENTS.md) §3. Non-negotiable architecture.
+- [`rules/stores.md`](https://github.com/commerce-atoms/agents/blob/main/rules/stores.md) in `@commerce-atoms/agents`. The canonical source for these rules.
+- `docs/deploy.md`. Sibling document for the deploy contract (lands in PR S2).

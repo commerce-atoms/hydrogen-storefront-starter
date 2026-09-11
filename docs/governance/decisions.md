@@ -15,7 +15,7 @@ This document records the key architectural decisions made for this Hydrogen sto
 
 **Consequences**:
 
-- Layout imports are `@layout/...` not `@modules/layout/...`
+- Layout imports are `@layout/..` not `@modules/layout/..`
 - Modules export handle objects for layout metadata (SEO, breadcrumbs)
 - Layout is owned by the application, not individual features
 

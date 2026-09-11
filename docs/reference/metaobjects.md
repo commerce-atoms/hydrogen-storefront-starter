@@ -214,7 +214,7 @@ export function getWork(metaobject: Metaobject | null) {
 ### Field Extraction
 
 Use `@commerce-atoms/metafield` for field extraction. The package ships as
-**per-file entry points** — there is no barrel export. Import the exact helper
+**per-file entry points**. There is no barrel export. Import the exact helper
 you need.
 
 ```typescript
@@ -285,13 +285,13 @@ export function toWork(metaobject: Metaobject | null): Work | null {
 
 **Rule:** Use `@commerce-atoms/metafield` for field extraction, not for transformation or data access.
 
-For non-string, non-media fields (rich text, integers, dates, booleans, JSON, references, lists), pair extraction with Hydrogen's `parseMetafield` for typed value coercion — see [Using Hydrogen's `parseMetafield`](#using-hydrogens-parsemetafield).
+For non-string, non-media fields (rich text, integers, dates, booleans, JSON, references, lists), pair extraction with Hydrogen's `parseMetafield` for typed value coercion. See [Using Hydrogen's `parseMetafield`](#using-hydrogens-parsemetafield).
 
 ---
 
 ## The Metafield-Backed Feature Pattern
 
-Adding a new metafield-driven capability (per-collection theming, per-product structured data, shop-level singletons, etc.) follows one repeatable pattern. Reference implementation: [`app/platform/theming/`](../../app/platform/theming/README.md).
+Adding a new metafield-driven capability (per-collection theming, per-product structured data, shop-level singletons, etc.) follows one repeatable pattern. Reference implementation: [`app/platform/theming/`](././app/platform/theming/README.md).
 
 ### Five steps
 
@@ -301,7 +301,7 @@ Adding a new metafield-driven capability (per-collection theming, per-product st
 4. **Ship a domain type** in the module's `types/` folder.
 5. **Consume the domain type** in views. Raw metaobjects never leave the parser.
 
-### Step 1 — Declare the schema
+### Step 1. Declare the schema
 
 Setup scripts live in `scripts/setup-<feature>.mjs` and use the shared helpers from `scripts/shared/admin-schema.mjs`. See [setup-scripts.md](setup-scripts.md).
 
@@ -339,9 +339,9 @@ await ensureMetafieldDefinition({
 
 The helpers are idempotent and additive. Re-running is safe. New fields extend existing definitions in place; existing fields are never modified by the script (merchant admin is the source of truth for label / description edits).
 
-### Step 2 — Own the GraphQL fragment
+### Step 2. Own the GraphQL fragment
 
-Fragments live in the module's `graphql/` folder. Aliased selections (`myFeature: metafield(...)`) keep response shapes predictable and decoupled from admin key naming.
+Fragments live in the module's `graphql/` folder. Aliased selections (`myFeature: metafield(..)`) keep response shapes predictable and decoupled from admin key naming.
 
 ```graphql
 fragment MyFeatureReference on Product {
@@ -363,9 +363,9 @@ fragment MyFeatureReference on Product {
 }
 ```
 
-`type` on every metafield / metaobject-field node is not optional — `parseMetafield` (below) needs it to dispatch. Fragments that select only `value` silently break the parser. Enforce `type + value` at fragment level, not per-caller.
+`type` on every metafield / metaobject-field node is not optional. `parseMetafield` (below) needs it to dispatch. Fragments that select only `value` silently break the parser. Enforce `type + value` at fragment level, not per-caller.
 
-### Step 3 — Parse into a domain type
+### Step 3. Parse into a domain type
 
 Two layers, each with a Shopify-standard tool:
 
@@ -393,9 +393,9 @@ export function toMyFeature(metaobject: Metaobject | null): MyFeature | null {
 }
 ```
 
-Bespoke parser instead when the field carries security implications — see the theming module for a worked example (values inlined into an SSR `<style>` block; every value passes through a CSS-injection guard before it reaches the DOM).
+Bespoke parser instead when the field carries security implications. See the theming module for a worked example (values inlined into an SSR `<style>` block; every value passes through a CSS-injection guard before it reaches the DOM).
 
-### Step 4 — Ship a domain type
+### Step 4. Ship a domain type
 
 ```typescript
 // app/platform/my-feature/types.ts
@@ -409,7 +409,7 @@ export interface MyFeature {
 
 Domain types may reference `ParsedMetafields[T]['parsedValue']` for standard Shopify types to stay aligned with Hydrogen's parsing output. For primitive types (strings, numbers, booleans), plain TypeScript primitives are cleaner.
 
-### Step 5 — Consume the domain type
+### Step 5. Consume the domain type
 
 Views and components see the domain type only. Raw metaobjects never leave the parser.
 
@@ -426,7 +426,7 @@ export function MyFeatureBlock({feature}: {feature: MyFeature | null}) {
 
 ## Using Hydrogen's `parseMetafield`
 
-`@shopify/hydrogen` ships `parseMetafield<T>` plus a `ParsedMetafields` type map — Shopify's own coercion primitive for standard metafield types. Use it in transformers whenever a field's type appears in the table below.
+`@shopify/hydrogen` ships `parseMetafield<T>` plus a `ParsedMetafields` type map. Shopify's own coercion primitive for standard metafield types. Use it in transformers whenever a field's type appears in the table below.
 
 ### Standard Shopify types covered
 
@@ -446,29 +446,29 @@ export function MyFeatureBlock({feature}: {feature: MyFeature | null}) {
 
 ### When to skip `parseMetafield`
 
-- **Security-sensitive interpolation** — values injected into `<style>`, `<script>`, `dangerouslySetInnerHTML`, URLs, or shell contexts. Wrap coercion with a domain-specific guard. Example: `parseCollectionTheme`.
-- **Domain-shape validation** — enums backed by `single_line_text_field`, integers in a specific range, etc. Coerce with `parseMetafield`, then guard.
-- **Types outside the `ParsedMetafields` map** — fall back to `parseMetafieldValue` from `@commerce-atoms/metafield/parse/parseMetafieldValue`.
+- **Security-sensitive interpolation**. Values injected into `<style>`, `<script>`, `dangerouslySetInnerHTML`, URLs, or shell contexts. Wrap coercion with a domain-specific guard. Example: `parseCollectionTheme`.
+- **Domain-shape validation**. Enums backed by `single_line_text_field`, integers in a specific range, etc. Coerce with `parseMetafield`, then guard.
+- **Types outside the `ParsedMetafields` map**. Fall back to `parseMetafieldValue` from `@commerce-atoms/metafield/parse/parseMetafieldValue`.
 
 ### Fragment shape requirement
 
-`parseMetafield` reads `type + value` on every node. Fragment selections must include both (or `jsonValue` for JSON-ish types). Do not omit `type` — the parser silently returns the raw shape when it cannot dispatch, which shows up as runtime type errors far from the source.
+`parseMetafield` reads `type + value` on every node. Fragment selections must include both (or `jsonValue` for JSON-ish types). Do not omit `type`. The parser silently returns the raw shape when it cannot dispatch, which shows up as runtime type errors far from the source.
 
 ---
 
 ## What Shopify ships vs What this starter adds
 
-Being explicit about the boundary avoids reinventing Shopify's primitives and stops the starter drifting into a private mini-framework.
+The boundary avoids reinventing Shopify's primitives and stops the starter drifting into a private mini-framework.
 
 | Concern | Shopify ships | This starter adds |
 |---|---|---|
-| **Schema declaration** | `metafieldDefinitionCreate` / `metaobjectDefinitionCreate` (Admin API GraphQL). Docs recommend the admin UI for one-off setup. | Idempotent, version-controlled `scripts/setup-*.mjs` wrappers via `scripts/shared/admin-schema.mjs` — schema lives in code, reproducible across environments. |
-| **Value coercion** | `parseMetafield<ParsedMetafields[T]>` in `@shopify/hydrogen`. | Nothing — use Shopify's directly. |
+| **Schema declaration** | `metafieldDefinitionCreate` / `metaobjectDefinitionCreate` (Admin API GraphQL). Docs recommend the admin UI for one-off setup. | Idempotent, version-controlled `scripts/setup-*.mjs` wrappers via `scripts/shared/admin-schema.mjs`. Schema lives in code, reproducible across environments. |
+| **Value coercion** | `parseMetafield<ParsedMetafields[T]>` in `@shopify/hydrogen`. | Nothing. Use Shopify's directly. |
 | **Metaobject field lookup** | Nothing purpose-built. | `@commerce-atoms/metafield` per-file helpers (`getMetaobjectString`, `getMetaobjectMediaImage`, `getMetaobjectReferenceFromMetafield`, `getMetaobjectStringList`, `getMetaobjectMediaImageList`, `parseMetafieldValue`). |
 | **Module placement** | No opinion. | `platform/*` for cross-cutting features, module-owned for feature-specific data. Enforced by the architecture validator. |
-| **Type boundary** | No opinion. | Enforced transformer boundary — views consume domain types, never raw metaobjects. |
+| **Type boundary** | No opinion. | Enforced transformer boundary. Views consume domain types, never raw metaobjects. |
 | **Fragment shape** | No opinion. | Requires `key + value + type` selection on metafield nodes so `parseMetafield` can work. |
-| **App-owned schema (`shopify.app.toml`)** | For Shopify Apps only. | N/A. A Hydrogen storefront is not a Shopify App — there is no `shopify.app.toml` to write into. |
+| **App-owned schema (`shopify.app.toml`)** | For Shopify Apps only. | N/A. A Hydrogen storefront is not a Shopify App. There is no `shopify.app.toml` to write into. |
 
 ### Why not `shopify.app.toml`
 
@@ -478,11 +478,11 @@ Being explicit about the boundary avoids reinventing Shopify's primitives and st
 
 ## Compatibility with Shopify Hydrogen cookbook recipes
 
-The [Shopify Hydrogen cookbook](https://shopify.dev/docs/storefronts/headless/hydrogen/cookbook) ships recipes that touch metaobjects — most notably **Dynamic Content with Metaobjects**. That recipe is complementary to this starter, not in conflict, but there are two adaptation points to be aware of when porting a recipe in.
+The [Shopify Hydrogen cookbook](https://shopify.dev/docs/storefronts/headless/hydrogen/cookbook) ships recipes that touch metaobjects. Most **Dynamic Content with Metaobjects**. That recipe is complementary to this starter, not in conflict, but there are two adaptation points to be aware of when porting a recipe in.
 
 ### File placement
 
-Recipes are written against the default Hydrogen skeleton (`app/components/`, `app/sections/`, `app/utils/`, `app/routes/` — flat). This starter enforces `app/modules/<module>/` and `app/platform/<module>/`. When adopting a recipe:
+Recipes are written against the default Hydrogen skeleton (`app/components/`, `app/sections/`, `app/utils/`, `app/routes/`. Flat). This starter enforces `app/modules/<module>/` and `app/platform/<module>/`. When adopting a recipe:
 
 | Recipe location | This starter's location |
 |---|---|
@@ -495,7 +495,7 @@ Move files, do not rewrite them. The recipe code itself is fine.
 
 ### Parsing location: cookbook `parseSection` vs the transformer boundary
 
-The **Dynamic Content with Metaobjects** recipe parses metafields **inside the section component** via `parseSection<Fragment, Overrides>(props)`. That is legitimate for **section-based CMS content** — many parallel shapes rendered by a dispatch component, each section a self-contained view over one metaobject. Do not fight it. Adopt the recipe's pattern as-is for section systems:
+The **Dynamic Content with Metaobjects** recipe parses metafields **inside the section component** via `parseSection<Fragment, Overrides>(props)`. That is legitimate for **section-based CMS content**. Many parallel shapes rendered by a dispatch component, each section a self-contained view over one metaobject. Do not fight it. Adopt the recipe's pattern as-is for section systems:
 
 ```typescript
 // app/modules/sections/SectionHero.tsx
@@ -521,7 +521,7 @@ The distinction: section CMS content is a one-off view shell over one shape; dom
 
 ### What the cookbook does not provide (and this starter adds)
 
-- **Idempotent, code-driven schema provisioning.** Recipes assume manual admin UI setup. Our `scripts/setup-*.mjs` provision the same definitions from code — see [setup-scripts.md](setup-scripts.md).
+- **Idempotent, code-driven schema provisioning.** Recipes assume manual admin UI setup. Our `scripts/setup-*.mjs` provision the same definitions from code. See [setup-scripts.md](setup-scripts.md).
 - **Module boundaries.** Recipes are flat; this starter enforces vertical slices.
 - **Domain-type discipline for core entities.** Recipes optimise for section-render loops; this starter's transformer boundary protects long-lived domain data from Shopify schema drift.
 

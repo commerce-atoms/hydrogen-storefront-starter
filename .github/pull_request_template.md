@@ -13,7 +13,7 @@
 ## Checklist
 
 - [ ] Tests pass (`npm run ci`)
-- [ ] No new architectural violations (see [CONTRIBUTING.md](../CONTRIBUTING.md))
+- [ ] No new architectural violations (see [CONTRIBUTING.md](./CONTRIBUTING.md))
 - [ ] TypeScript compiles without errors
 - [ ] Documentation updated if needed
 - [ ] No cross-module imports introduced

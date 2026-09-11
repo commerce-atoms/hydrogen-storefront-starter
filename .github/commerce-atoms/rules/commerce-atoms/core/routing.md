@@ -4,7 +4,7 @@ applies_to:
   - "app/routes.ts"
 canonical: true
 generates:
-  - .cursor/rules/20-routing.mdc
+  -.cursor/rules/20-routing.mdc
 ---
 
 # Routing manifest rules (`app/routes.ts`)
@@ -47,16 +47,16 @@ Examples:
 
 Use conventional storefront paths unless there is a project-specific reason to deviate:
 
-| Path                   | Purpose           |
+| Path | Purpose |
 | ---------------------- | ----------------- |
-| `/`                    | home              |
-| `/products/:handle`    | product detail    |
+| `/` | home |
+| `/products/:handle` | product detail |
 | `/collections/:handle` | collection detail |
-| `/cart`                | cart              |
-| `/search`              | search            |
-| `/policies/:handle`    | policy pages      |
-| `/account/*`           | account area      |
-| `/blogs/*`             | blogs             |
+| `/cart` | cart |
+| `/search` | search |
+| `/policies/:handle` | policy pages |
+| `/account/*` | account area |
+| `/blogs/*` | blogs |
 
 ## Stability
 

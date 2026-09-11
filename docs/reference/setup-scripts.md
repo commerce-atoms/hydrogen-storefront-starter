@@ -8,8 +8,8 @@ How to provision Shopify custom-data schema (metaobjects, metafields) from code,
 
 - [metaobjects.md](metaobjects.md) - The metafield-backed feature pattern (setup scripts are step 1 of 5)
 - [collection-theming.md](collection-theming.md) - Reference implementation
-- [Shopify Admin API — metafield definitions](https://shopify.dev/docs/api/admin-graphql/latest/mutations/metafieldDefinitionCreate)
-- [Shopify Admin API — metaobject definitions](https://shopify.dev/docs/api/admin-graphql/latest/mutations/metaobjectDefinitionCreate)
+- [Shopify Admin API. Metafield definitions](https://shopify.dev/docs/api/admin-graphql/latest/mutations/metafieldDefinitionCreate)
+- [Shopify Admin API. Metaobject definitions](https://shopify.dev/docs/api/admin-graphql/latest/mutations/metaobjectDefinitionCreate)
 
 ---
 
@@ -24,7 +24,7 @@ Shopify's own documentation for Hydrogen storefronts recommends creating metafie
 
 Setup scripts fill that gap. They wrap the same Admin API mutations Shopify calls when a merchant clicks "Save" in the admin, but drive them from code that lives beside the module that consumes the schema.
 
-Setup scripts are **not** a replacement for admin UI — merchants still edit labels, descriptions, and validations in admin. Scripts guarantee the schema exists in a known shape; humans curate everything past that.
+Setup scripts are **not** a replacement for admin UI. Merchants still edit labels, descriptions, and validations in admin. Scripts guarantee the schema exists in a known shape; humans curate everything past that.
 
 ---
 
@@ -34,7 +34,7 @@ Write `scripts/setup-<feature>.mjs` when a new module needs Shopify custom-data 
 
 - **One script per module.** `setup-theming.mjs` provisions everything the theming module needs.
 - **Definitions only, never entries.** Scripts create the schema (the "table"). Merchants populate entries (the "rows") in admin.
-- **Idempotent.** Re-running must be safe. The shared helpers handle this — the script author only declares the schema.
+- **Idempotent.** Re-running must be safe. The shared helpers handle this. The script author only declares the schema.
 - **Named after the module, not the concept.** `setup-<module>.mjs` matches `app/platform/<module>/` (or `app/modules/<module>/`).
 
 Skip a setup script when:
@@ -123,7 +123,7 @@ npm run setup:my-feature
 
 ## The shared helpers
 
-All helpers live in [`scripts/shared/admin-schema.mjs`](../../scripts/shared/admin-schema.mjs). They are domain-agnostic — no colours, no compliance, no anything specific. Callers pass fully-declared schema.
+All helpers live in [`scripts/shared/admin-schema.mjs`](././scripts/shared/admin-schema.mjs). They are domain-agnostic. No colours, no compliance, no anything specific. Callers pass fully-declared schema.
 
 ### `requireEnv()`
 
@@ -144,7 +144,7 @@ Idempotent metaobject definition upsert.
 - If the definition does not exist, creates it with the given fields.
 - If it exists and matches, no-op.
 - If it exists but is missing fields the caller has since declared, adds those fields in place.
-- Existing fields are never modified — merchant admin owns label / description / validation edits.
+- Existing fields are never modified. Merchant admin owns label / description / validation edits.
 
 Returns the definition's Shopify ID (useful for `metaobject_reference` validations).
 
@@ -160,7 +160,7 @@ Idempotent metafield definition upsert.
 
 ### `assertNoUserErrors(errs, opName)`
 
-Throws when a Shopify mutation returns `userErrors`. Missing or empty arrays are ignored. Callers rarely need this directly — the ensure-\* helpers use it internally.
+Throws when a Shopify mutation returns `userErrors`. Missing or empty arrays are ignored. Callers rarely need this directly. The ensure-\* helpers use it internally.
 
 ### `ADMIN_API_VERSION`
 
@@ -179,7 +179,7 @@ Setup scripts read two environment variables:
 
 Both are loaded from `process.env`. Scripts do not shell out to Shopify CLI. Set them however secrets are already managed (`.env`, `direnv`, a secret manager). `.env` is git-ignored; the token must never enter version control.
 
-The Admin API token is separate from the Storefront API token — the Storefront token cannot mutate definitions. Create a private app / custom app in the store's admin (Settings → Apps and sales channels → Develop apps) with the necessary Admin API scopes, install it on the store, and copy the token.
+The Admin API token is separate from the Storefront API token. The Storefront token cannot mutate definitions. Create a private app / custom app in the store's admin (Settings → Apps and sales channels → Develop apps) with the necessary Admin API scopes, install it on the store, and copy the token.
 
 ---
 
@@ -188,7 +188,7 @@ The Admin API token is separate from the Storefront API token — the Storefront
 Once a definition exists, adding a field is three coordinated edits plus a re-run:
 
 1. Add the field to the domain type in `app/platform/<feature>/types.ts`.
-2. Add the mapping (if any) — e.g. a `FIELD_MAP` constant.
+2. Add the mapping (if any). E.g. a `FIELD_MAP` constant.
 3. Add the field to the setup script's `FIELDS` array.
 4. Re-run the setup script (`npm run setup:<feature>`). The helper extends the definition in place.
 5. If the fragment queries specific field keys, add the key there too.
@@ -211,10 +211,10 @@ To remove a field:
 
 ## Testing setup scripts
 
-Setup scripts run against a real Shopify store — there is no cheap local mock of the Admin API. The pragmatic strategy:
+Setup scripts run against a real Shopify store. There is no cheap local mock of the Admin API. The pragmatic strategy:
 
-- **Development / preview stores** — run the script freely. Idempotency makes iteration safe.
-- **Production** — run once per feature launch. The additive contract means later runs are no-ops unless fields are being added.
-- **CI** — do not run automatically. Definition mutations are the merchant's schema; automated CI runs would fight with merchant intent.
+- **Development / preview stores**. Run the script freely. Idempotency makes iteration safe.
+- **Production**. Run once per feature launch. The additive contract means later runs are no-ops unless fields are being added.
+- **CI**. Do not run automatically. Definition mutations are the merchant's schema; automated CI runs would fight with merchant intent.
 
 Unit-test the schema declarations (the `FIELDS` array) with the module's parser tests, not with API round-trips. A round-trip smoke test against a preview store is fine for a launch checklist, not fine for every PR.

@@ -6,8 +6,8 @@ This document defines **process rules** for maintaining architectural consistenc
 
 **See Also:**
 
-- [../reference/modules.md](../reference/modules.md) - Module structure and import rules
-- [../reference/test-selectors.md](../reference/test-selectors.md) - Testing selector convention
+- [./reference/modules.md](./reference/modules.md) - Module structure and import rules
+- [./reference/test-selectors.md](./reference/test-selectors.md) - Testing selector convention
 - [enforcement.md](enforcement.md) - Tooling and automation
 - [decisions.md](decisions.md) - Architectural decision records
 
@@ -29,7 +29,7 @@ These rules apply to the boilerplate and projects cloned from it (unless explici
 
 Violating these changes the architecture and must be treated as a conscious decision.
 
-**For detailed technical rules, see [../reference/modules.md](../reference/modules.md#module-import-rules)**
+**For detailed technical rules, see [./reference/modules.md](./reference/modules.md#module-import-rules)**
 
 ### Summary
 
@@ -90,7 +90,7 @@ Apply during code review for any structural change.
 - [ ] Interactive elements have `data-testid` attributes
 - [ ] Test selectors follow naming convention (kebab-case, domain-prefixed)
 - [ ] No class-based or text-based selectors in tests
-- [ ] See [../reference/test-selectors.md](../reference/test-selectors.md) for details
+- [ ] See [./reference/test-selectors.md](./reference/test-selectors.md) for details
 
 ---
 
@@ -203,7 +203,7 @@ Before making major changes:
 **Key artifacts:**
 
 - This file - Process and review rules
-- [modules.md](../reference/modules.md) - Module structure and import rules
+- [modules.md](./reference/modules.md) - Module structure and import rules
 - [enforcement.md](enforcement.md) - Automation and tooling
 - [decisions.md](decisions.md) - Architectural decisions
 
