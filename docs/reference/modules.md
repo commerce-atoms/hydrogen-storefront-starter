@@ -6,8 +6,8 @@ This document defines how feature modules are structured and how they evolve ove
 
 **See Also:**
 
-- [../governance/governance.md](../governance/governance.md) - Non-negotiable constraints and review process
-- [../guides/scale_module.md](../guides/scale_module.md) - Step-by-step scaling guide
+- [./governance/governance.md](./governance/governance.md) - Non-negotiable constraints and review process
+- [./guides/scale_module.md](./guides/scale_module.md) - Step-by-step scaling guide
 
 ---
 
@@ -556,12 +556,12 @@ Modules are expected to evolve over time.
 
 Modules evolve based on complexity:
 
-| Maturity     | Characteristics              | When to Introduce Folders            |
+| Maturity | Characteristics | When to Introduce Folders |
 | ------------ | ---------------------------- | ------------------------------------ |
-| **Minimal**  | 1 route, flat structure      | None - keep flat                     |
-| **Simple**   | 2-3 routes, flat structure   | Consider `graphql/` if queries exist |
-| **Moderate** | 3-5 routes, some complexity  | Add `components/` if UI is reused    |
-| **Complex**  | 5+ routes, rich domain logic | Add `hooks/`, `utils/` as needed     |
+| **Minimal** | 1 route, flat structure | None - keep flat |
+| **Simple** | 2-3 routes, flat structure | Consider `graphql/` if queries exist |
+| **Moderate** | 3-5 routes, some complexity | Add `components/` if UI is reused |
+| **Complex** | 5+ routes, rich domain logic | Add `hooks/`, `utils/` as needed |
 
 **Examples from this boilerplate:**
 

@@ -7,7 +7,7 @@ This document defines how routing works and the constraints that apply to route 
 **See Also:**
 
 - [modules.md](modules.md) - Module structure and route file responsibilities
-- [../guides/add_feature.md](../guides/add_feature.md) - How to add new routes
+- [./guides/add_feature.md](./guides/add_feature.md) - How to add new routes
 
 ---
 
@@ -162,19 +162,19 @@ The boilerplate follows **standard commerce URL patterns.**
 
 ### Recommended Patterns
 
-| Route             | URL Pattern                         | Purpose                             |
+| Route | URL Pattern | Purpose |
 | ----------------- | ----------------------------------- | ----------------------------------- |
-| Home              | `/`                                 | Homepage                            |
-| Product Detail    | `/products/:handle`                 | Individual product                  |
-| Collection        | `/collections/:handle`              | Collection page                     |
-| Collections Index | `/collections`                      | All collections                     |
-| Cart              | `/cart`                             | Shopping cart                       |
-| Search            | `/search`                           | Search results                      |
-| Policies          | `/policies/:handle`                 | Policy pages (privacy, terms, etc.) |
-| Pages             | `/pages/:handle`                    | CMS pages                           |
-| Blogs             | `/blogs`                            | Blog index                          |
-| Blog              | `/blogs/:blogHandle`                | Individual blog                     |
-| Article           | `/blogs/:blogHandle/:articleHandle` | Individual article                  |
+| Home | `/` | Homepage |
+| Product Detail | `/products/:handle` | Individual product |
+| Collection | `/collections/:handle` | Collection page |
+| Collections Index | `/collections` | All collections |
+| Cart | `/cart` | Shopping cart |
+| Search | `/search` | Search results |
+| Policies | `/policies/:handle` | Policy pages (privacy, terms, etc.) |
+| Pages | `/pages/:handle` | CMS pages |
+| Blogs | `/blogs` | Blog index |
+| Blog | `/blogs/:blogHandle` | Individual blog |
+| Article | `/blogs/:blogHandle/:articleHandle` | Individual article |
 
 ### Locale-Prefixed Routes (Optional)
 
@@ -196,22 +196,22 @@ Route filenames inside modules are **explicit and descriptive.**
 
 **Pattern:** `{resource}-{action}.route.tsx`
 
-| Pattern                           | Example                       | Purpose                    |
+| Pattern | Example | Purpose |
 | --------------------------------- | ----------------------------- | -------------------------- |
-| `{resource}-handle.route.tsx`     | `product-handle.route.tsx`    | Dynamic handle-based route |
-| `{resource}-index.route.tsx`      | `collections-index.route.tsx` | List/index page            |
-| `{resource}.route.tsx`            | `cart.route.tsx`              | Single resource page       |
-| `{resource}-{modifier}.route.tsx` | `collections-all.route.tsx`   | Variation                  |
+| `{resource}-handle.route.tsx` | `product-handle.route.tsx` | Dynamic handle-based route |
+| `{resource}-index.route.tsx` | `collections-index.route.tsx` | List/index page |
+| `{resource}.route.tsx` | `cart.route.tsx` | Single resource page |
+| `{resource}-{modifier}.route.tsx` | `collections-all.route.tsx` | Variation |
 
 ### Route Parameters
 
 Use **descriptive parameter names** in URLs:
 
-| Parameter | Use Case                   | Example                       |
+| Parameter | Use Case | Example |
 | --------- | -------------------------- | ----------------------------- |
-| `:handle` | SEO-friendly identifiers   | Products, collections, blogs  |
-| `:id`     | Internal identifiers       | When handles aren't available |
-| `:slug`   | Human-readable identifiers | Custom pages                  |
+| `:handle` | SEO-friendly identifiers | Products, collections, blogs |
+| `:id` | Internal identifiers | When handles aren't available |
+| `:slug` | Human-readable identifiers | Custom pages |
 
 **Important:** Filenames do not need to mirror URL structure. The route manifest maps URLs to files.
 

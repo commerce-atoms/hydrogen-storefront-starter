@@ -1,9 +1,9 @@
 # Collection theming
 
 Per-collection art direction, layered on top of the global brand tokens.
-One storefront, many palettes — no forked templates, no per-collection code.
+One storefront, many palettes. No forked templates, no per-collection code.
 
-- **Where it lives:** `app/platform/theming/` (see [module README](../../app/platform/theming/README.md)).
+- **Where it lives:** `app/platform/theming/` (see [module README](././app/platform/theming/README.md)).
 - **How it's wired:** `app/modules/collections/collection-handle.route.tsx`
   reads the `themePreset` reference via `parseCollectionTheme` and the view
   wraps its output in `<ThemeStyle>`.
@@ -15,7 +15,7 @@ One storefront, many palettes — no forked templates, no per-collection code.
 
 Two custom-data definitions in Shopify:
 
-1. **Metaobject definition** `theme_palette` — a reusable palette. 10 optional
+1. **Metaobject definition** `theme_palette`. A reusable palette. 10 optional
    `color` fields covering surfaces, text, borders, and accents. Marketing /
    design can create as many palette entries as they want.
 2. **Metafield definition** on Collection: namespace `theme`, key `preset`,
@@ -36,7 +36,7 @@ also create them by hand in Shopify admin.
 npm run setup:theming
 ```
 
-The script is idempotent — re-running it is safe. If the `theme_palette`
+The script is idempotent. Re-running it is safe. If the `theme_palette`
 metaobject already exists but is missing fields you have since added to
 `THEME_PALETTE_FIELD_MAP`, the script will extend it in place.
 
@@ -57,7 +57,7 @@ If you would rather not run a script:
 **Content → Metaobjects → Theme palette → Add entry.** Pick a handle
 (e.g. `dark-industrial`, `high-contrast-yellow`, `warm-pumpkin`,
 `cool-cyan`) and fill in the
-color fields the palette should override. Leave unused fields empty — they
+color fields the palette should override. Leave unused fields empty. They
 will fall back to the global tokens.
 
 Palettes are reusable across collections. Change a palette once and every
@@ -157,21 +157,21 @@ automatically. No context, no provider, no re-render, no hydration mismatch.
 
 Palette values are attacker-controlled from the merchant admin's perspective.
 `parseCollectionTheme` runs each value through a strict CSS-colour regex
-(hex, `rgb`/`rgba`/`hsl`/`hsla`/`oklab`/`oklch`/`color(...)`, or named
+(hex, `rgb`/`rgba`/`hsl`/`hsla`/`oklab`/`oklch`/`color(..)`, or named
 colours) and rejects anything containing `;`, `{`, `}`, `<`, `>`, `@`,
-backticks, or newlines. Rejected values are silently dropped — the token
+backticks, or newlines. Rejected values are silently dropped. The token
 falls back to the global default rather than shipping a broken page.
 
 ## Fallback semantics
 
-| Situation                                                       | Result                                     |
+| Situation | Result |
 |-----------------------------------------------------------------|--------------------------------------------|
-| No `theme.preset` set on the collection                         | Global tokens; no `<style>` block emitted  |
-| `theme.preset` points at a metaobject of a different type       | Treated as "no theme"                      |
-| The palette exists but has no fields set                        | Treated as "no theme"                      |
-| Some fields set, some empty                                     | Empty ones fall back to the global token   |
-| A single field fails validation                                 | That token falls back; others apply        |
-| **All** fields fail validation                                  | Treated as "no theme"                      |
+| No `theme.preset` set on the collection | Global tokens; no `<style>` block emitted |
+| `theme.preset` points at a metaobject of a different type | Treated as "no theme" |
+| The palette exists but has no fields set | Treated as "no theme" |
+| Some fields set, some empty | Empty ones fall back to the global token |
+| A single field fails validation | That token falls back; others apply |
+| **All** fields fail validation | Treated as "no theme" |
 
 ## Extending
 
@@ -182,7 +182,7 @@ To add a new theme token (say `--color-button-bg`):
    (both in the same file).
 3. Add `{key: 'button_bg', name: 'Button bg'}` to `PALETTE_FIELDS` in
    `scripts/setup-theming.mjs`.
-4. Re-run `npm run setup:theming` — it extends the metaobject definition in place.
+4. Re-run `npm run setup:theming`. It extends the metaobject definition in place.
 5. `npm run codegen` to refresh generated types.
 
 ## Product pages
@@ -195,7 +195,7 @@ theme by default. Two paths for a per-store extension:
 - A "primary collection" metafield on the product.
 
 Both reuse `COLLECTION_THEME_FRAGMENT`, `parseCollectionTheme`, and
-`<ThemeStyle>` — the module is deliberately designed to be dropped in
+`<ThemeStyle>`. The module is deliberately designed to be dropped in
 anywhere a page needs a theme.
 
 ## Non-goals

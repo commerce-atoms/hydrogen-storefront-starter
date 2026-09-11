@@ -3,7 +3,7 @@
 Optional, data-driven **per-collection theming**. One recognisable storefront,
 different art direction per collection.
 
-Lives in `platform/` — not `modules/` — because it is a cross-cutting
+Lives in `platform/`. Not `modules/` — because it is a cross-cutting
 service (any module can consume it) rather than a vertical-slice module.
 Sibling to `platform/seo/` and `platform/i18n/`. This placement respects
 the architecture validator: modules cannot import from other modules, but
@@ -19,19 +19,19 @@ and interactions identical.
 
 ## Shape
 
-- `types.ts` — `CollectionTheme`, `THEME_TOKEN_MAP`, `THEME_PALETTE_FIELD_MAP`,
+- `types.ts`. `CollectionTheme`, `THEME_TOKEN_MAP`, `THEME_PALETTE_FIELD_MAP`,
   `THEME_METAOBJECT_TYPE`, `THEME_PRESET_METAFIELD`.
-- `collectionThemeFragment.ts` — `CollectionThemeReference` GraphQL fragment;
+- `collectionThemeFragment.ts`. `CollectionThemeReference` GraphQL fragment;
   resolves the `theme.preset` metafield to its `theme_palette` metaobject.
-- `parseCollectionTheme.ts` — validates the metaobject fields and returns a
+- `parseCollectionTheme.ts`. Validates the metaobject fields and returns a
   typed `CollectionTheme | null`.
-- `ThemeStyle.tsx` — SSR-safe wrapper that renders `data-collection-theme`
+- `ThemeStyle.tsx`. SSR-safe wrapper that renders `data-collection-theme`
   on the element and, when a theme is present, a scoped `<style>` block
   built from pre-validated `parseCollectionTheme` output.
 
 ## Data model
 
-- **Metaobject** `theme_palette` — a reusable palette (10 optional `color`
+- **Metaobject** `theme_palette`. A reusable palette (10 optional `color`
   fields). Marketing / design creates as many as they want in Shopify admin.
 - **Metafield** on Collection: `theme.preset`, a `metaobject_reference` to a
   `theme_palette` entry. Each collection either picks a palette from a
@@ -43,7 +43,7 @@ Both definitions are provisioned by `npm run setup:theming` (see
 ## How it wires in
 
 1. Include `COLLECTION_THEME_FRAGMENT` in your collection query and spread
-   `...CollectionThemeReference` on the `Collection` selection.
+   `..CollectionThemeReference` on the `Collection` selection.
 2. In the loader, call `parseCollectionTheme(collection.themePreset)`.
 3. In the view, wrap output in
    `<ThemeStyle theme={theme} handle={collection.handle}>…</ThemeStyle>`.
@@ -72,7 +72,7 @@ See "Extending" in `docs/reference/collection-theming.md`. Requires updating
 - No JS theme provider / context. The theme is CSS custom properties applied
   by a single SSR-rendered `<style>` block. No re-renders, no hydration
   mismatch.
-- No per-collection layout / typography / spacing overrides — those stay
+- No per-collection layout / typography / spacing overrides. Those stay
   global on purpose.
 - No dark-mode toggling. If you need runtime switching, layer it on top of
   these tokens; do not push it into this module.

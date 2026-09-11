@@ -1,6 +1,6 @@
-# Cookbook port — Infinite scroll for collections
+# Cookbook port. Infinite scroll for collections
 
-> **Goal of this doc.** Capture the actual experience of porting a single Shopify Hydrogen cookbook recipe ([`infinite-scroll`](https://github.com/Shopify/hydrogen/tree/main/cookbook/recipes/infinite-scroll)) into the modular shape. Surface friction, repeated operations, decisions, and gaps. Seed the upcoming `port-hydrogen-cookbook-recipe` skill in `@commerce-atoms/agents` ([`PLAN.md` §1.4](../../review/PLAN.md)).
+> **Goal of this doc.** Capture the actual experience of porting a single Shopify Hydrogen cookbook recipe ([`infinite-scroll`](https://github.com/Shopify/hydrogen/tree/main/cookbook/recipes/infinite-scroll)) into the modular shape. Surface friction, repeated operations, decisions, and gaps. Seed the upcoming `port-hydrogen-cookbook-recipe` skill in `@commerce-atoms/agents` ([`PLAN.md` §1.4](././review/PLAN.md)).
 
 ## Recipe summary
 
@@ -14,13 +14,13 @@ The skeleton template the recipe targets uses different conventions than this st
 
 | Recipe assumes (skeleton) | This starter (modular) | Friction |
 |---|---|---|
-| `app/routes/collections.$handle.tsx` (filesystem routing) | `app/modules/collections/collection-handle.{route,view}.tsx` (module + route/view split) | None — the route mapping was already in `app/routes.ts`. |
+| `app/routes/collections.$handle.tsx` (filesystem routing) | `app/modules/collections/collection-handle.{route,view}.tsx` (module + route/view split) | None. The route mapping was already in `app/routes.ts`. |
 | `~/components/PaginatedResourceSection` | `@components/pagination/PaginatedResourceSection` | Path-alias rewrite. Mechanical. |
 | `~/components/ProductItem` | `@components/commerce/ProductCard` | Renamed in the modular shape. Trivial. |
 | `~/lib/redirect` | `@platform/i18n/redirects` | The starter pulls i18n logic into platform; the recipe assumes a flat `lib/`. Trivial. |
-| Inline `LoadMoreProductsGrid` component | `app/hooks/catalog/useInfiniteScroll` | **Architectural decision** — see "Decisions" below. |
+| Inline `LoadMoreProductsGrid` component | `app/hooks/catalog/useInfiniteScroll` | **Architectural decision**. See "Decisions" below. |
 | `useInView` from `react-intersection-observer` | Same; new `package.json` dependency | None. |
-| `loading={index < 8 ? 'eager' : 'lazy'}` | Already present in `collection-handle.view.tsx` | The eager-loading optimisation was already done in this starter. |
+| `loading={index < 8? 'eager': 'lazy'}` | Already present in `collection-handle.view.tsx` | The eager-loading optimisation was already done in this starter. |
 
 ## Decisions
 
@@ -30,15 +30,15 @@ The recipe inlines a new `LoadMoreProductsGrid` component into the route file. T
 
 | Option | Pros | Cons |
 |---|---|---|
-| A — Inline in `collection-handle.view.tsx` | Smallest diff. | Not reusable in `app/modules/search`. Couples scroll behaviour to one view. |
-| B — Hook in `app/hooks/catalog/useInfiniteScroll` | Reusable across catalog modules. Hook policy already documented in `architecture.md` §2. | Each caller has to wire the sentinel `ref`. |
-| C — `infinite` prop on `PaginatedResourceSection` | Most ergonomic — opt-in by one prop. | Behaviour creeps into a presentational primitive. |
+| A. Inline in `collection-handle.view.tsx` | Smallest diff. | Not reusable in `app/modules/search`. Couples scroll behaviour to one view. |
+| B. Hook in `app/hooks/catalog/useInfiniteScroll` | Reusable across catalog modules. Hook policy already documented in `architecture.md` §2. | Each caller has to wire the sentinel `ref`. |
+| C. `infinite` prop on `PaginatedResourceSection` | Most ergonomic — opt-in by one prop. | Behaviour creeps into a presentational primitive. |
 
 **Chosen: B + C.** The hook is the reusable atom; `PaginatedResourceSection` opts into the hook when `infinite={true}`. This:
 
-- Keeps the hook independently consumable from any catalog module that does NOT use `<Pagination>` (e.g. search — see "Gaps" below).
+- Keeps the hook independently consumable from any catalog module that does NOT use `<Pagination>` (e.g. search. See "Gaps" below).
 - Concentrates the "load more on scroll" wiring in one shared component so every caller benefits with `infinite` rather than each duplicating the sentinel ref / `loadMore` plumbing.
-- Preserves backward compatibility — `infinite` defaults to `false`, existing call sites are unaffected.
+- Preserves backward compatibility. `infinite` defaults to `false`, existing call sites are unaffected.
 
 ### 2. URL state policy
 
@@ -46,7 +46,7 @@ Recipe uses `navigate(nextPageUrl, {replace: true, preventScrollReset: true, sta
 
 ### 3. Where the sentinel attaches
 
-Recipe attaches the `useInView` ref to `<NextLink ref={...}>`. We do the same — the existing "Load more" link is the natural sentinel. No new DOM element needed.
+Recipe attaches the `useInView` ref to `<NextLink ref={..}>`. We do the same. The existing "Load more" link is the natural sentinel. No new DOM element needed.
 
 ### 4. New dependency (`react-intersection-observer`)
 
@@ -54,7 +54,7 @@ The recipe pins `^8.34.0`; we pin `^9.10.3` (current major). React 18-compatible
 
 ## Steps actually taken
 
-The literal sequence — captures repeated operations a future skill would automate.
+The literal sequence. Captures repeated operations a future skill would automate.
 
 1. **Read the upstream recipe** ([`README.md`](https://raw.githubusercontent.com/Shopify/hydrogen/main/cookbook/recipes/infinite-scroll/README.md)). Identify the diff scope: 1 route file + 1 dependency.
 2. **Map skeleton paths to modular paths** (the table above). This step is mechanical but unavoidable on every port.
@@ -63,44 +63,44 @@ The literal sequence — captures repeated operations a future skill would autom
 5. **Modify `PaginatedResourceSection.tsx`** to expose an `infinite` prop. Wrap the inner render in a sub-component so we can use hooks against the `Pagination` render-prop value.
 6. **Add `react-intersection-observer` to `package.json#dependencies`**. Pin to current major.
 7. **Opt collection-handle in** by passing `infinite` to the existing `<PaginatedResourceSection>`.
-8. **Run `validate-architecture`** — clean. No new boundary violations.
+8. **Run `validate-architecture`**. Clean. No new boundary violations.
 9. **Document the port** (this file).
 
 ## Friction observed
 
 A future `port-hydrogen-cookbook-recipe` skill needs to handle these explicitly:
 
-### F1 — Path-alias drift
+### F1. Path-alias drift
 
 Every `~/components/*` and `~/lib/*` reference needs rewriting. The skill should map the canonical aliases (`@components/*`, `@platform/*`, `@hooks/*`, `@modules/*`) and rewrite imports automatically.
 
-### F2 — Skeleton-style filesystem routing
+### F2. Skeleton-style filesystem routing
 
-The recipe diffs against `app/routes/collections.$handle.tsx` — a filesystem route. In this starter, that file does not exist; the equivalent route module is `app/modules/collections/collection-handle.route.tsx`. The skill must resolve the route name from `app/routes.ts` rather than assuming filesystem layout.
+The recipe diffs against `app/routes/collections.$handle.tsx`. A filesystem route. In this starter, that file does not exist; the equivalent route module is `app/modules/collections/collection-handle.route.tsx`. The skill must resolve the route name from `app/routes.ts` rather than assuming filesystem layout.
 
-### F3 — Route/view split unawareness
+### F3. Route/view split unawareness
 
 Recipes intermix loaders and UI in one file. The starter splits them. The skill must know that JSX changes belong in `*.view.tsx` and loader/meta changes belong in `*.route.tsx`.
 
-### F4 — Reuse opportunities the recipe doesn't surface
+### F4. Reuse opportunities the recipe doesn't surface
 
 The recipe targets exactly one route. But the underlying behaviour (intersection-observer-driven load more) is useful in any catalog surface. The skill should ask: *"Are there sibling modules that would benefit from this?"* and propose promotion to `app/hooks/<scope>/` per the cross-module reuse ladder.
 
-### F5 — Component-shape creep
+### F5. Component-shape creep
 
-The recipe's `LoadMoreProductsGrid` is a new component that combines product card rendering with intersection-observer wiring. In the modular shape we separate the two — rendering stays where it was, behaviour goes into a hook. The skill needs a heuristic: *"if the new component is a thin wrapper around an existing one + behaviour, prefer extracting the behaviour."*
+The recipe's `LoadMoreProductsGrid` is a new component that combines product card rendering with intersection-observer wiring. In the modular shape we separate the two. Rendering stays where it was, behaviour goes into a hook. The skill needs a heuristic: *"if the new component is a thin wrapper around an existing one + behaviour, prefer extracting the behaviour."*
 
-### F6 — Overlap with starter-specific optimisations
+### F6. Overlap with starter-specific optimisations
 
-The recipe re-introduces `loading={index < 8 ? 'eager' : 'lazy'}`. This optimisation was already present in the starter. Re-applying the diff would have no effect, but a careless port could double-handle it. The skill should diff first against the starter's existing state and skip changes that are already applied.
+The recipe re-introduces `loading={index < 8? 'eager': 'lazy'}`. This optimisation was already present in the starter. Re-applying the diff would have no effect, but a careless port could double-handle it. The skill should diff first against the starter's existing state and skip changes that are already applied.
 
-## Gaps — the recipe doesn't ship
+## Gaps. The recipe doesn't ship
 
-### G1 — Search
+### G1. Search
 
-`app/modules/search` does NOT use Hydrogen's `<Pagination>` — it builds its own pagination URLs and uses `<Link prefetch="intent">`. The cookbook recipe assumes `<Pagination>`, so applying it to search would require a deeper refactor of search's pagination shape (or duplication of the hook with a search-specific `loadMore`). For S3 we surface this as a gap rather than fix it; the hook is generic enough that a future search-pagination refactor can adopt it without changes.
+`app/modules/search` does NOT use Hydrogen's `<Pagination>`. It builds its own pagination URLs and uses `<Link prefetch="intent">`. The cookbook recipe assumes `<Pagination>`, so applying it to search would require a deeper refactor of search's pagination shape (or duplication of the hook with a search-specific `loadMore`). For S3 we surface this as a gap rather than fix it; the hook is generic enough that a future search-pagination refactor can adopt it without changes.
 
-### G2 — Loading sentinel UX
+### G2. Loading sentinel UX
 
 The recipe relies on the existing "Load more ↓" link as the sentinel. When infinite scroll is enabled, that affordance becomes invisible / redundant. A future iteration could:
 
@@ -110,13 +110,13 @@ The recipe relies on the existing "Load more ↓" link as the sentinel. When inf
 
 Out of scope here.
 
-### G3 — Tests
+### G3. Tests
 
 The recipe ships no tests for the new behaviour. The starter has Vitest; a follow-up should add a smoke test that asserts the hook fires `loadMore` exactly once when the sentinel intersects.
 
 ## Recommendations for the `port-hydrogen-cookbook-recipe` skill
 
-Drawing from F1–F6 and G1–G3, the skill should:
+Drawing from F1-F6 and G1-G3, the skill should:
 
 1. **Pre-flight diff.** Compare every file the recipe touches against this starter's current state; flag already-applied chunks (F6).
 2. **Path-alias rewrite step.** Map skeleton paths to modular aliases automatically (F1, F2).
@@ -148,8 +148,8 @@ commerce-atoms-agents validate-architecture
 
 ## Conclusion
 
-The doctrine in `AGENTS.md` §0 (`commerce-atoms` ports cookbook recipes; it does not write its own implementations) holds for this recipe. The port took roughly 30 minutes of focused work plus 30 minutes to write the learnings doc, of which the actual *adaptation* is small — a hook extraction and a prop on a shared component. Most of the time was spent in the translation matrix (F1–F3) and surfacing reuse opportunities (F4).
+The doctrine in `AGENTS.md` §0 (`commerce-atoms` ports cookbook recipes; it does not write its own implementations) holds for this recipe. The port took roughly 30 minutes of focused work plus 30 minutes to write the learnings doc, of which the actual *adaptation* is small. A hook extraction and a prop on a shared component. Most of the time was spent in the translation matrix (F1-F3) and surfacing reuse opportunities (F4).
 
-The skill, when it lands, can compress the translation matrix to seconds. The cross-module promotion check (F4) is the part that needs human judgement — and is exactly where the starter's architectural rules become valuable: they make the right answer obvious. *Promote the hook to `app/hooks/catalog/` because that's where the rules say catalog-shared hooks live.*
+The skill, when it lands, can compress the translation matrix to seconds. The cross-module promotion check (F4) is the part that needs human judgement. And is exactly where the starter's architectural rules become valuable: they make the right answer obvious. *Promote the hook to `app/hooks/catalog/` because that's where the rules say catalog-shared hooks live.*
 
 The doctrine survives this test.

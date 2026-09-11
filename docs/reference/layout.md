@@ -23,12 +23,12 @@ This starter uses React Router's `handle` mechanism to let routes declare layout
 
 Routes can export a `handle` object with the following fields:
 
-| Handle field    | Purpose                       | Resolution rule    |
+| Handle field | Purpose | Resolution rule |
 | --------------- | ----------------------------- | ------------------ |
-| `pageTitle`     | Document title                | deepest route wins |
-| `pageHeader`    | Page header content           | deepest route wins |
-| `breadcrumb`    | Breadcrumb entries            | root → leaf merged |
-| `seo`           | SEO metadata                  | deepest route wins |
+| `pageTitle` | Document title | deepest route wins |
+| `pageHeader` | Page header content | deepest route wins |
+| `breadcrumb` | Breadcrumb entries | root → leaf merged |
+| `seo` | SEO metadata | deepest route wins |
 | `layoutVariant` | Layout mode hint (shop, etc.) | deepest route wins |
 
 **This is important: it defines governance.** Only these fields are supported. Adding new fields requires updating the layout system.
@@ -129,7 +129,7 @@ main[data-layout-variant='shop'] {
    different JSX / different components, branch on
    `layoutData.layoutVariant` inside `PageLayout`.
 
-**Do not add JSX branches until there is a concrete need — the CSS hook
+**Do not add JSX branches until there is a concrete need. The CSS hook
 covers most cases without further wiring.**
 
 ---

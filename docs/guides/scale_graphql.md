@@ -10,8 +10,8 @@ Step-by-step guide for organizing GraphQL queries as they grow.
 
 **See Also:**
 
-- [../reference/graphql.md](../reference/graphql.md) - GraphQL rules and caching
-- [../reference/modules.md](../reference/modules.md) - Module structure
+- [./reference/graphql.md](./reference/graphql.md) - GraphQL rules and caching
+- [./reference/modules.md](./reference/modules.md) - Module structure
 
 ---
 
@@ -46,12 +46,12 @@ app/modules/products/graphql/
 
 Split **only** when you experience real friction:
 
-| Signal                 | Threshold                            | Action             |
+| Signal | Threshold | Action |
 | ---------------------- | ------------------------------------ | ------------------ |
-| File length            | `queries.ts` > 250-400 LOC           | Consider splitting |
-| Scanning difficulty    | Hard to find specific queries        | Split by concern   |
-| Import noise           | Many routes import different subsets | Split by usage     |
-| Fragment proliferation | Unclear which fragment owns what     | Split by domain    |
+| File length | `queries.ts` > 250-400 LOC | Consider splitting |
+| Scanning difficulty | Hard to find specific queries | Split by concern |
+| Import noise | Many routes import different subsets | Split by usage |
+| Fragment proliferation | Unclear which fragment owns what | Split by domain |
 
 ### Example: When NOT to Split
 
@@ -424,13 +424,13 @@ app/modules/products/graphql/
 
 ## Decision Matrix
 
-| Module State | File Count   | Total LOC | Action                   |
+| Module State | File Count | Total LOC | Action |
 | ------------ | ------------ | --------- | ------------------------ |
-| New module   | 0-1 queries  | < 50      | Single `queries.ts` file |
-| Growing      | 2-5 queries  | 50-150    | Keep consolidated        |
-| Mature       | 5-10 queries | 150-250   | Still consolidated       |
-| Large        | 10+ queries  | 250-400   | Consider splitting       |
-| Very large   | 15+ queries  | 400+      | Split into subfolders    |
+| New module | 0-1 queries | < 50 | Single `queries.ts` file |
+| Growing | 2-5 queries | 50-150 | Keep consolidated |
+| Mature | 5-10 queries | 150-250 | Still consolidated |
+| Large | 10+ queries | 250-400 | Consider splitting |
+| Very large | 15+ queries | 400+ | Split into subfolders |
 
 **Default Answer:** Keep it consolidated.
 

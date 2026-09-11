@@ -14,15 +14,15 @@
 
 A foundation for **large, long-lived Shopify storefronts** with:
 
-- ⚡ **Vertical domain slices** — Modules own routes, UI, data, and logic end-to-end
-- 🛡️ **Automated boundary enforcement** — ESLint + tests block coupling before it happens
-- 📐 **Explicit routing** — Single manifest shows all routes at a glance
-- 📚 **Documented scaling patterns** — Clear thresholds for when to add folders
-- 🧪 **Principle-based tests** — Won't break when you customize
-- 🎓 **Architecture documentation** — 5,000+ lines explaining why, not just what
-- 🔧 **CI/CD ready** — Full pipeline with automated checks
+- ⚡ **Vertical domain slices**. Modules own routes, UI, data, and logic end-to-end
+- 🛡️ **Automated boundary enforcement**. ESLint + tests block coupling before it happens
+- 📐 **Explicit routing**. Single manifest shows all routes at a glance
+- 📚 **Documented scaling patterns**. Clear thresholds for when to add folders
+- 🧪 **Principle-based tests**. Won't break when you customize
+- 🎓 **Architecture documentation**. 5,000+ lines explaining why, not just what
+- 🔧 **CI/CD ready**. Full pipeline with automated checks
 
-**Best for:** Team projects, long-term codebases, scalable architectures  
+**Best for:** Team projects, long-term codebases, scalable architectures
 **Not for:** Quick prototypes or simple stores (lighter alternatives exist)
 
 ---
@@ -46,7 +46,7 @@ app/modules/products/
 
 ### Explicit Routing
 
-Single route manifest (`app/routes.ts`) — no filesystem magic:
+Single route manifest (`app/routes.ts`). No filesystem magic:
 
 ```typescript
 export default hydrogenRoutes([
@@ -58,10 +58,10 @@ export default hydrogenRoutes([
 
 ### Automated Guardrails
 
-- **ESLint rules** — Block cross-module imports, dumping grounds, platform→module violations
-- **Smoke tests** — Protect architectural principles
-- **TypeScript strict mode** — Full type safety
-- **CI pipeline** — Automated enforcement on every push
+- **ESLint rules**. Block cross-module imports, dumping grounds, platform→module violations
+- **Smoke tests**. Protect architectural principles
+- **TypeScript strict mode**. Full type safety
+- **CI pipeline**. Automated enforcement on every push
 
 ---
 
@@ -241,9 +241,9 @@ import {buildProductUrl} from '@platform/i18n/urls'; // Infrastructure
 
 Comprehensive architecture guidance organized into:
 
-- **`docs/reference/`** — Rules (modules, routing, GraphQL, platform)
-- **`docs/guides/`** — How-to playbooks (add features, scale modules)
-- **`docs/governance/`** — Process (review, enforcement, decisions)
+- **`docs/reference/`**. Rules (modules, routing, GraphQL, platform)
+- **`docs/guides/`**. How-to playbooks (add features, scale modules)
+- **`docs/governance/`**. Process (review, enforcement, decisions)
 
 **Start here:** [`docs/README.md`](docs/README.md)
 
@@ -269,12 +269,12 @@ This repository includes AI agent rules for Cursor and Copilot.
 
 ## 📦 **What's Included**
 
-- ✅ **8 feature modules** — Products, cart, collections, search, blogs, pages, policies, home
-- ✅ **Infrastructure routes** — robots.txt, sitemap, catchall, locale validation (in `app/platform/routing/`)
-- ✅ **Shared components** — Primitives + domain components + global UI (cart/search)
-- ✅ **Architectural docs** — 12 organized files (~5,000 lines)
-- ✅ **CI/CD pipeline** — Automated lint, typecheck, smoke tests
-- ✅ **Boundary enforcement** — ESLint rules + architectural tests
+- ✅ **8 feature modules**. Products, cart, collections, search, blogs, pages, policies, home
+- ✅ **Infrastructure routes**. Robots.txt, sitemap, catchall, locale validation (in `app/platform/routing/`)
+- ✅ **Shared components**. Primitives + domain components + global UI (cart/search)
+- ✅ **Architectural docs**. 12 organized files (~5,000 lines)
+- ✅ **CI/CD pipeline**. Automated lint, typecheck, smoke tests
+- ✅ **Boundary enforcement**. ESLint rules + architectural tests
 
 ---
 
@@ -292,9 +292,9 @@ This repository includes AI agent rules for Cursor and Copilot.
 
 ### Architecture
 
-- [`docs/reference/modules.md`](docs/reference/modules.md) — Module structure
-- [`docs/reference/routing.md`](docs/reference/routing.md) — Routing patterns
-- [`docs/governance/governance.md`](docs/governance/governance.md) — Constraints
+- [`docs/reference/modules.md`](docs/reference/modules.md). Module structure
+- [`docs/reference/routing.md`](docs/reference/routing.md). Routing patterns
+- [`docs/governance/governance.md`](docs/governance/governance.md). Constraints
 
 ---
 
@@ -332,7 +332,7 @@ Compatible with other Node.js platforms (Vercel, Netlify, etc.) with minor adjus
 
 ## 📝 **License**
 
-[MIT](LICENSE) — Free to use, modify, and distribute.
+[MIT](LICENSE). Free to use, modify, and distribute.
 
 ---
 
@@ -340,10 +340,10 @@ Compatible with other Node.js platforms (Vercel, Netlify, etc.) with minor adjus
 
 Built on:
 
-- [Shopify Hydrogen](https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/hydrogen) — React framework for Shopify
-- [React Router](https://reactrouter.com/) — Modern routing
-- [Vite](https://vitejs.dev/) — Fast build tooling
-- [TypeScript](https://www.typescriptlang.org/) — Type safety
+- [Shopify Hydrogen](https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/hydrogen). React framework for Shopify
+- [React Router](https://reactrouter.com/). Modern routing
+- [Vite](https://vitejs.dev/). Fast build tooling
+- [TypeScript](https://www.typescriptlang.org/). Type safety
 
 Inspired by domain-driven design and scalable software architecture principles.
 

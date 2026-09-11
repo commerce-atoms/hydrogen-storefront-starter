@@ -7,7 +7,7 @@ This document defines how GraphQL queries are organized and cached.
 **See Also:**
 
 - [modules.md](modules.md) - When to add graphql/ folder
-- [../guides/scale_graphql.md](../guides/scale_graphql.md) - How to split large GraphQL files
+- [./guides/scale_graphql.md](./guides/scale_graphql.md) - How to split large GraphQL files
 
 ---
 
@@ -62,13 +62,13 @@ app/modules/products/graphql/
 
 Split **only** when you experience real friction:
 
-| Signal              | Threshold                            | Action             |
+| Signal | Threshold | Action |
 | ------------------- | ------------------------------------ | ------------------ |
-| File length         | `queries.ts` > 250-400 LOC           | Consider splitting |
-| Scanning difficulty | Hard to find specific queries        | Split by concern   |
-| Import noise        | Many routes import different subsets | Split by usage     |
+| File length | `queries.ts` > 250-400 LOC | Consider splitting |
+| Scanning difficulty | Hard to find specific queries | Split by concern |
+| Import noise | Many routes import different subsets | Split by usage |
 
-**See:** [../guides/scale_graphql.md](../guides/scale_graphql.md) for step-by-step splitting guide.
+**See:** [./guides/scale_graphql.md](./guides/scale_graphql.md) for step-by-step splitting guide.
 
 ---
 
@@ -222,16 +222,16 @@ const MONEY_FRAGMENT = `#graphql
 
 Match cache duration to how often data changes:
 
-| Data Type           | Cache Strategy | Duration | Reasoning                     |
+| Data Type | Cache Strategy | Duration | Reasoning |
 | ------------------- | -------------- | -------- | ----------------------------- |
-| Product catalog     | `CacheLong()`  | 1+ hours | Products change infrequently  |
+| Product catalog | `CacheLong()` | 1+ hours | Products change infrequently |
 | Collection listings | `CacheShort()` | 5-15 min | May change with merchandising |
-| Individual product  | `CacheShort()` | 5-15 min | Variants/pricing may change   |
-| Cart data           | `CacheNone()`  | No cache | User-specific, real-time      |
-| Customer data       | `CacheNone()`  | No cache | Private, real-time            |
-| Search results      | `CacheNone()`  | No cache | Dynamic, personalized         |
-| Policies            | `CacheLong()`  | 1+ hours | Static content                |
-| Blog posts          | `CacheLong()`  | 1+ hours | Content rarely changes        |
+| Individual product | `CacheShort()` | 5-15 min | Variants/pricing may change |
+| Cart data | `CacheNone()` | No cache | User-specific, real-time |
+| Customer data | `CacheNone()` | No cache | Private, real-time |
+| Search results | `CacheNone()` | No cache | Dynamic, personalized |
+| Policies | `CacheLong()` | 1+ hours | Static content |
+| Blog posts | `CacheLong()` | 1+ hours | Content rarely changes |
 
 ### Cache Duration Guidelines
 

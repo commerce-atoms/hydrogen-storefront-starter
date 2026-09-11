@@ -156,11 +156,11 @@ Ask these questions:
 
 3. **Is it domain-specific?**
    - Yes → Module or `@shoppy/*`
-   - No → Continue...
+   - No → Continue..
 
 4. **Is it reusable pure logic?**
    - Yes → `@shoppy/*` or `app/utils/*`
-   - No → Continue...
+   - No → Continue..
 
 5. **Is it a tiny app-local helper?**
    - Yes → `app/utils/*`

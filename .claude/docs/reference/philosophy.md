@@ -4,7 +4,7 @@
 
 ## Doctrine
 
-`commerce-atoms` is the **adapter layer** between Shopify upstream and a modular, AI-consistent storefront architecture. The kit does **not** write competing implementations of features Shopify already ships. Full statement in [`../AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/AGENTS.md).
+`commerce-atoms` is the **adapter layer** between Shopify upstream and a modular, AI-consistent storefront architecture. The kit does **not** write competing implementations of features Shopify already ships. Full statement in [`./AGENTS.md §0`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/AGENTS.md).
 
 This is the single most important sentence in the entire ecosystem. Internalise it before editing anything else here.
 
@@ -14,9 +14,9 @@ This is the single most important sentence in the entire ecosystem. Internalise 
 
 This repo ships five distinct kinds of AI assistance. They are not interchangeable.
 
-### Rules — guardrails
+### Rules. Guardrails
 
-**Where:** [`rules/`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/), generated into `.cursor/rules/`, `copilot-instructions.md`, `CLAUDE.md` overlays.
+**Where:** [`rules/`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/rules/), generated into `.cursor/rules/`, `copilot-instructions.md`, `CLAUDE.md` overlays.
 
 **What:** Always-on, passive guidance. Loaded automatically by the editor.
 
@@ -24,9 +24,9 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 
 **Lifecycle:** Synced into consumer repos via the `commerce-atoms-agents` package. Versioned and pinned.
 
-### Personas — expertise
+### Personas. Expertise
 
-**Where:** [`personas/<scope>/<name>.agent.md`](https://github.com/commerce-atoms/agents/blob/main/kit/personas/).
+**Where:** [`personas/<scope>/<name>.agent.md`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/personas/).
 
 **What:** Domain-expert system prompts (Hydrogen architect, Storefront API specialist, etc.).
 
@@ -34,9 +34,9 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 
 **Lifecycle:** Pasted into a fresh chat. Not editor-loaded; invoked on demand.
 
-### Skills — capabilities
+### Skills. Capabilities
 
-**Where:** [`skills/<name>/SKILL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/skills/).
+**Where:** [`skills/<name>/SKILL.md`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/skills/).
 
 **What:** Reusable AI workflows the agent can invoke (`validate-architecture`, `port-hydrogen-cookbook-recipe`, …).
 
@@ -44,9 +44,9 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 
 **Lifecycle:** Native to GitHub Copilot's Skills format; consumed as long-form prompts by Claude Code and Cursor.
 
-### Commands — workflows
+### Commands. Workflows
 
-**Where:** [`commands/<name>.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/).
+**Where:** [`commands/<name>.md`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/commands/).
 
 **What:** Short, named workflows (`/init-store`, `/deploy-check`, `/release`).
 
@@ -54,9 +54,9 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 
 **Lifecycle:** Native to Claude Code; surfaced as snippets / refs in Cursor and Copilot.
 
-### Prompts — templates
+### Prompts. Templates
 
-**Where:** [`prompts/<name>.prompt.md`](https://github.com/commerce-atoms/agents/blob/main/kit/prompts/).
+**Where:** [`prompts/<name>.prompt.md`](https://github.com/commerce-atoms/agents/blob/main/kit/reference/prompts/).
 
 **What:** Reusable task templates with placeholders (PR descriptions, release notes, retros).
 
@@ -76,7 +76,7 @@ This repo ships five distinct kinds of AI assistance. They are not interchangeab
 | Wrap CI deploy preparation behind one keystroke | Command (`/deploy-setup`) |
 | Generate release notes from a changeset | Prompt (`release-notes.prompt.md`) |
 
-If a primitive starts pulling toward another category — e.g. a rule that grew into a multi-step workflow — split it. Misclassification is the most common smell in this repo.
+If a primitive starts pulling toward another category. E.g. a rule that grew into a multi-step workflow — split it. Misclassification is the most common smell in this repo.
 
 ---
 
@@ -102,4 +102,4 @@ Platform-specific: Storefront API, Customer Account API, Cart, Checkout.
 
 ### `personas/commerce/`
 
-Framework-agnostic: variants, pricing, SEO, search, merchandising — patterns that work in any storefront, not just Hydrogen.
+Framework-agnostic: variants, pricing, SEO, search, merchandising. Patterns that work in any storefront, not just Hydrogen.

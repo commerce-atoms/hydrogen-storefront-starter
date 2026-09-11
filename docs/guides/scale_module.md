@@ -11,8 +11,8 @@ Step-by-step guide for refactoring and evolving modules as they grow.
 
 **See Also:**
 
-- [../reference/modules.md](../reference/modules.md) - Module structure and import rules
-- [../governance/governance.md](../governance/governance.md) - Review checklist
+- [./reference/modules.md](./reference/modules.md) - Module structure and import rules
+- [./governance/governance.md](./governance/governance.md) - Review checklist
 
 ---
 
