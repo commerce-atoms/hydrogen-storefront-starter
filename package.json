@@ -32,7 +32,7 @@
     "test": "vitest",
     "test:smoke": "vitest run --reporter=verbose",
     "test:ui": "vitest --ui",
-    "ci": "npm run lint && npm run typecheck && npm run test:smoke",
+    "ci": "npm run lint && npm run codegen -s && npm run typecheck && npm run test:smoke",
     "agents:sync": "commerce-atoms-agents sync",
     "agents:validate": "commerce-atoms-agents validate-architecture",
     "setup:theming": "node scripts/setup-theming.mjs"
