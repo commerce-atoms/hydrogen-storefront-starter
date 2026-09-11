@@ -2,7 +2,7 @@
 
 > A structured, production-ready foundation for building scalable Shopify Hydrogen storefronts.
 
-<!-- [![CI](https://github.com/doctor-undefined/hydrogen-storefront-base/actions/workflows/ci.yml/badge.svg)](https://github.com/doctor-undefined/hydrogen-storefront-base/actions/workflows/ci.yml) -->
+<!-- [![CI](https://github.com/commerce-atoms/hydrogen-storefront-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/commerce-atoms/hydrogen-storefront-starter/actions/workflows/ci.yml) -->
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](package.json)
@@ -76,7 +76,7 @@ export default hydrogenRoutes([
 
 ```bash
 # Clone this repository
-git clone https://github.com/doctor-undefined/hydrogen-storefront-base.git my-storefront
+git clone https://github.com/commerce-atoms/hydrogen-storefront-starter.git my-storefront
 cd my-storefront
 
 # Install dependencies
@@ -352,8 +352,8 @@ Inspired by domain-driven design and scalable software architecture principles.
 ## 💬 **Community & Support**
 
 - 📖 **Docs:** [`docs/README.md`](docs/README.md)
-- 🐛 **Issues:** [GitHub Issues](https://github.com/doctor-undefined/hydrogen-storefront-base/issues)
-- 💡 **Discussions:** [GitHub Discussions](https://github.com/doctor-undefined/hydrogen-storefront-base/discussions)
+- 🐛 **Issues:** [GitHub Issues](https://github.com/commerce-atoms/hydrogen-storefront-starter/issues)
+- 💡 **Discussions:** [GitHub Discussions](https://github.com/commerce-atoms/hydrogen-storefront-starter/discussions)
 - 📝 **Contributing:** [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---

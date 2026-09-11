@@ -37,7 +37,7 @@ This is **not a framework**. It's a structured starting point for building Shopi
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/doctor-undefined/hydrogen-storefront-base.git
+   git clone https://github.com/commerce-atoms/hydrogen-storefront-starter.git
    cd hydrogen-storefront-base
    ```
 
