@@ -57,7 +57,12 @@ export function PageLayout({
         publicStoreDomain={publicStoreDomain}
       />
       <Breadcrumb breadcrumb={layoutData.breadcrumb} />
-      <main className={styles.main}>{children}</main>
+      <main
+        className={styles.main}
+        data-layout-variant={layoutData.layoutVariant ?? 'default'}
+      >
+        {children}
+      </main>
       <Footer
         footer={footer}
         header={header}

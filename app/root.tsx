@@ -12,7 +12,10 @@ import {
 
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
 
-import favicon from '~/assets/favicon.svg';
+import favicon from '~/assets/brand/favicon.svg';
+import {brand} from '~/config/brand';
+
+import {buildBrandMeta} from '@platform/seo/brandMeta';
 
 import {AppErrorBoundary, RouteErrorBoundary} from '@layout/ErrorBoundary';
 import {FOOTER_QUERY, HEADER_QUERY} from '@layout/graphql/queries';
@@ -47,6 +50,15 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   // For more details see: https://reactrouter.com/en/main/route/should-revalidate
   return false;
 };
+
+/**
+ * Site-wide meta descriptors sourced from `app/config/brand.ts`.
+ *
+ * These cascade to every route via React Router's meta concatenation. Only
+ * *additive* descriptors live here (og:site_name, og:locale, twitter:site) —
+ * per-page descriptors like `<title>` are still owned by the individual route.
+ */
+export const meta: Route.MetaFunction = () => buildBrandMeta(brand);
 
 /**
  * Stylesheets are added manually to the head to prevent HMR crashes
@@ -149,7 +161,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
 
   return (
-    <html lang="en">
+    <html lang={brand.defaultLocale}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />

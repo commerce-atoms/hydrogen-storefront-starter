@@ -7,7 +7,14 @@ import type {SearchState} from '@commerce-atoms/urlstate/types/searchState';
 
 /**
  * Hook to simplify the common pattern of updating search state and navigating.
- * Reduces boilerplate: update state -> patch params -> navigate
+ * Reduces boilerplate: update state -> patch params -> navigate.
+ *
+ * @remarks
+ * **Reference implementation, not currently consumed in the starter.** Kept
+ * because agent personas (see `personas/commerce/catalog-variants.agent.md`)
+ * point at `@commerce-atoms/urlstate` as the source of truth for URL state,
+ * and this hook shows the wiring pattern. Delete both this file and the
+ * `@commerce-atoms/urlstate` dependency if your fork does not need it.
  *
  * @example
  * ```ts
