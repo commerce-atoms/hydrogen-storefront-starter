@@ -15,7 +15,7 @@
  * - Rich text editor links
  *
  * @param url - The URL from Shopify (menu item, CMS, metaobject, etc.)
- * @param storeDomain - The store domain (e.g., "doctor-undefined-dev.myshopify.com")
+ * @param storeDomain - The store domain (e.g., "my-shop.myshopify.com")
  * @param locale - Optional locale (e.g., "en-gb"). If provided, prepends to paths without locale.
  * @returns Normalized URL path for Hydrogen routing, or original URL if external
  */
