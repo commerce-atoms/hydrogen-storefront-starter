@@ -1,6 +1,8 @@
 import {Suspense} from 'react';
 import {Await} from 'react-router';
 
+import {brand} from '~/config/brand';
+
 import {FALLBACK_FOOTER_MENU} from '../utils/navigation';
 
 import styles from './footer.module.css';
@@ -19,6 +21,8 @@ export function Footer({
   header,
   publicStoreDomain,
 }: FooterProps) {
+  const year = new Date().getFullYear();
+
   return (
     <Suspense>
       <Await resolve={footerPromise}>
@@ -35,6 +39,14 @@ export function Footer({
                 testId="footer-menu"
               />
             )}
+            <div className={styles.footerMeta} data-testid="layout-footer-meta">
+              <span
+                className={styles.footerBrand}
+                data-testid="layout-footer-brand"
+              >
+                © {year} {brand.name}
+              </span>
+            </div>
           </footer>
         )}
       </Await>
