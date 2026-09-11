@@ -211,19 +211,22 @@ export function getWork(metaobject: Metaobject | null) {
 
 ### Field Extraction
 
-Use `@commerce-atoms/metafield` for field extraction:
+Use `@commerce-atoms/metafield` for field extraction. The package ships as
+**per-file entry points** — there is no barrel export. Import the exact helper
+you need.
 
 ```typescript
-import {extractString} from '@commerce-atoms/metafield';
+import {getMetaobjectString} from '@commerce-atoms/metafield/metaobjects/getMetaobjectString';
+import {getMetaobjectMediaImage} from '@commerce-atoms/metafield/metaobjects/getMetaobjectMediaImage';
 import type {Work} from '../types/work';
 
 export function toWork(metaobject: Metaobject | null): Work | null {
   if (!metaobject) return null;
 
   return {
-    title: extractString(metaobject, 'title') || '',
-    description: extractString(metaobject, 'description') || '',
-    image: extractString(metaobject, 'image') || null,
+    title: getMetaobjectString(metaobject, 'title') ?? '',
+    description: getMetaobjectString(metaobject, 'description') ?? '',
+    image: getMetaobjectMediaImage(metaobject, 'image'),
   };
 }
 ```
@@ -236,10 +239,21 @@ export function toWork(metaobject: Metaobject | null): Work | null {
 
 ### What It Is
 
-- Field extraction utilities (`extractString`, `extractNumber`, `extractFile`, etc.)
+- Per-file field extraction utilities exposed as subpath imports, e.g.
+  `@commerce-atoms/metafield/metafields/getMetafield`,
+  `@commerce-atoms/metafield/metafields/getMetafieldValue`,
+  `@commerce-atoms/metafield/metaobjects/getMetaobjectString`,
+  `@commerce-atoms/metafield/metaobjects/getMetaobjectStringList`,
+  `@commerce-atoms/metafield/metaobjects/getMetaobjectMediaImage`,
+  `@commerce-atoms/metafield/metaobjects/getMetaobjectMediaImageList`,
+  `@commerce-atoms/metafield/metaobjects/getMetaobjectReferenceFromMetafield`,
+  `@commerce-atoms/metafield/parse/parseMetafieldValue`.
 - Type-safe field access
 - No knowledge of GraphQL, routes, or modules
 - Pure functions with no side effects
+
+> There is intentionally **no root barrel** (`from '@commerce-atoms/metafield'`).
+> Import the exact helper to keep tree-shaking honest.
 
 ### What It Is Not
 
@@ -251,7 +265,8 @@ export function toWork(metaobject: Metaobject | null): Work | null {
 ### Usage Pattern
 
 ```typescript
-import {extractString} from '@commerce-atoms/metafield';
+import {getMetaobjectString} from '@commerce-atoms/metafield/metaobjects/getMetaobjectString';
+import {getMetaobjectMediaImage} from '@commerce-atoms/metafield/metaobjects/getMetaobjectMediaImage';
 import type {Work} from '../types/work';
 
 // Use in module transformers with toX() naming
@@ -259,9 +274,9 @@ export function toWork(metaobject: Metaobject | null): Work | null {
   if (!metaobject) return null;
 
   return {
-    title: extractString(metaobject, 'title') || '',
-    description: extractString(metaobject, 'description') || '',
-    image: extractString(metaobject, 'image') || null,
+    title: getMetaobjectString(metaobject, 'title') ?? '',
+    description: getMetaobjectString(metaobject, 'description') ?? '',
+    image: getMetaobjectMediaImage(metaobject, 'image'),
   };
 }
 ```
@@ -293,10 +308,10 @@ export async function loader({params, context}: LoaderFunctionArgs) {
 
 ```typescript
 // ❌ BAD: Using metafield package to query
-import {fetchMetaobject} from '@commerce-atoms/metafield'; // Doesn't exist
+import {fetchMetaobject} from '@commerce-atoms/metafield/metafields/fetchMetaobject'; // Doesn't exist
 
-// ✅ GOOD: Use in transformers only
-import {extractString} from '@commerce-atoms/metafield';
+// ✅ GOOD: Use in transformers only, import from a per-file entry
+import {getMetaobjectString} from '@commerce-atoms/metafield/metaobjects/getMetaobjectString';
 ```
 
 ### ❌ Introduce Adapters or Services

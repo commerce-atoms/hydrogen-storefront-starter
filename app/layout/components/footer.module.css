@@ -15,3 +15,15 @@
   color: var(--color-background);
   min-width: fit-content;
 }
+
+.footerMeta {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-4) var(--space-6);
+}
+
+.footerBrand {
+  color: var(--color-background);
+  font-size: var(--font-size-sm);
+  opacity: 0.7;
+}
