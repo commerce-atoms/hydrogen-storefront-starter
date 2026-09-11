@@ -44,10 +44,10 @@ or line breaks, is rejected.
 
 ## Sample palettes
 
-Doctor Undefined-style presets. Copy the values into each collection's
-metafields — no other change required.
+Illustrative only. Copy the values into a collection's metafields to see
+the wiring end-to-end.
 
-### Doctor Undefined (default dark / industrial)
+### Dark / industrial
 
 ```
 theme.background       = #0b0b0d
@@ -126,12 +126,12 @@ automatically. No context, no provider, no re-render, no hydration mismatch.
 
 ## Fallback semantics
 
-| Situation                                    | Result                                    |
-|----------------------------------------------|-------------------------------------------|
-| No metafields set on the collection          | Global tokens; `data-theme-active="false"` |
-| Some metafields set, some empty              | Empty ones fall back to the global token  |
+| Situation                                    | Result                                     |
+|----------------------------------------------|--------------------------------------------|
+| No metafields set on the collection          | Global tokens; no `<style>` block emitted  |
+| Some metafields set, some empty              | Empty ones fall back to the global token   |
 | A value fails validation                     | That single token falls back; others apply |
-| **All** values fail validation               | Treated as "no theme"                     |
+| **All** values fail validation               | Treated as "no theme"                      |
 
 ## Extending
 

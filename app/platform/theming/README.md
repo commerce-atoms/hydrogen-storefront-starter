@@ -24,10 +24,9 @@ components, and interactions identical.
 - `collectionThemeFragment.ts` — `CollectionThemeMetafields` GraphQL fragment.
 - `parseCollectionTheme.ts` — validates and normalises Storefront API
   metafields into a typed `CollectionTheme | null`.
-- `ThemeStyle.tsx` — SSR-safe wrapper that renders `data-collection-theme` on
-  the wrapper element and, when a theme is present, a scoped `<style>` block.
-  Uses a plain `<style>{css}</style>` — no `dangerouslySetInnerHTML`, because
-  the CSS is fully controlled and pre-validated.
+- `ThemeStyle.tsx` — SSR-safe wrapper that renders `data-collection-theme`
+  on the element and, when a theme is present, a scoped `<style>` block
+  built from pre-validated `parseCollectionTheme` output.
 
 ## How it wires in
 
@@ -41,9 +40,9 @@ inherits the global tokens with zero DOM overhead.
 
 ## Adding a new themed collection
 
-No code change. In Shopify admin, set the `theme.*` metafields on the
-collection (see `docs/reference/collection-theming.md` for the metafield
-definitions and CSV shortcut).
+No code change. Define the `theme.*` metafields on the Collection resource
+(one-time, per store), then set values on the specific collection in
+Shopify admin. See `docs/reference/collection-theming.md`.
 
 ## Adding a new theme token
 

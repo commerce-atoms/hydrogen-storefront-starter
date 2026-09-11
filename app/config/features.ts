@@ -8,20 +8,14 @@
 // Flags are static (compile-time). Do not flip them at runtime — the goal is
 // build-time pruning, not feature-gating live traffic.
 //
-// ⚠️ Turning a flag off is NOT a one-line change. It requires three edits in
-//    the fork so the pruning is consistent end-to-end:
-//
-//    1. Set the flag to `false` here. Routes stop registering.
-//    2. **Delete the module folder** (e.g. `app/modules/search/`). Leaving
-//       it in place fails typecheck because `react-router typegen` no longer
-//       emits the module's route types, but its source files still import
-//       them (e.g. `./+types/search.route`).
-//    3. Remove the UI entry points that point at the disabled feature:
-//       - enableSearch → `Header` search icon, `SearchAside`, footer search links
-//       - enableBlog → any blog links in menus / footers
-//       - enableCollections → collection nav, "Shop all" links
-//       - enablePolicies → footer policy links
-//       - enableAccount → header "Account" CTA (not yet implemented)
+// Disabling a flag requires three edits so the pruning is consistent:
+//   1. Set the flag to `false` here.
+//   2. Delete the module folder (e.g. `app/modules/search/`). Leaving it
+//      in place fails typecheck because `react-router typegen` no longer
+//      emits the module's route types, but its source files still import
+//      them (e.g. `./+types/search.route`).
+//   3. Remove UI entry points for the disabled feature (header/footer
+//      links, aside components, etc.).
 
 export interface FeatureFlags {
   /** Search module — `/search` + predictive search endpoint. */
