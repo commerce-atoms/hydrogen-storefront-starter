@@ -1,3 +1,5 @@
+import {COLLECTION_THEME_FRAGMENT} from '@platform/theming/collectionThemeFragment';
+
 import {
   PRODUCT_ITEM_FRAGMENT,
   COLLECTION_ITEM_FRAGMENT,
@@ -21,6 +23,7 @@ export const COLLECTION_QUERY = `#graphql
       handle
       title
       description
+      ...CollectionThemeReference
       products(
         first: $first,
         last: $last,
@@ -42,6 +45,7 @@ export const COLLECTION_QUERY = `#graphql
     }
   }
   ${PRODUCT_ITEM_FRAGMENT}
+  ${COLLECTION_THEME_FRAGMENT}
 ` as const;
 
 export const CATALOG_QUERY = `#graphql
