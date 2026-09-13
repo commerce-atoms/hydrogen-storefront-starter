@@ -291,7 +291,7 @@ For non-string, non-media fields (rich text, integers, dates, booleans, JSON, re
 
 ## The Metafield-Backed Feature Pattern
 
-Adding a new metafield-driven capability (per-collection theming, per-product structured data, shop-level singletons, etc.) follows one repeatable pattern. Reference implementation: [`app/platform/theming/`](././app/platform/theming/README.md).
+Adding a new metafield-driven capability (per-collection theming, per-product structured data, shop-level singletons, etc.) follows one repeatable pattern. Reference implementation: [`app/platform/theming/`](./collection-theming.md).
 
 ### Five steps
 
@@ -446,7 +446,7 @@ export function MyFeatureBlock({feature}: {feature: MyFeature | null}) {
 
 ### When to skip `parseMetafield`
 
-- **Security-sensitive interpolation**. Values injected into `<style>`, `<script>`, `dangerouslySetInnerHTML`, URLs, or shell contexts. Wrap coercion with a domain-specific guard. Example: `parseCollectionTheme`.
+- **Security-sensitive interpolation**. Values injected into `<style>`, `<script>`, `dangerouslySetInnerHTML`, URLs, or shell contexts. Wrap coercion with a domain-specific guard. Example: `parseTheme`.
 - **Domain-shape validation**. Enums backed by `single_line_text_field`, integers in a specific range, etc. Coerce with `parseMetafield`, then guard.
 - **Types outside the `ParsedMetafields` map**. Fall back to `parseMetafieldValue` from `@commerce-atoms/metafield/parse/parseMetafieldValue`.
 

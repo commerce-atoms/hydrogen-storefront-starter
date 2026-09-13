@@ -26,8 +26,8 @@ import {
 } from './shared/admin-schema.mjs';
 
 /**
- * `field` on the `CollectionTheme` interface (camelCase) →
- * metaobject field key (snake_case, Shopify convention).
+ * `field` on the `Theme` interface (camelCase) to metaobject field key
+ * (snake_case, Shopify convention).
  *
  * Must stay in lockstep with `THEME_PALETTE_FIELD_MAP` in
  * `app/platform/theming/types.ts`.
@@ -48,10 +48,10 @@ const PALETTE_FIELDS = [
 ];
 
 async function main() {
-  const {shop, endpoint, token} = requireEnv();
-  const admin = createAdminClient({endpoint, token});
+  const env = requireEnv();
+  const admin = await createAdminClient(env);
 
-  console.log(`Provisioning theming on ${shop} (Admin API ${ADMIN_API_VERSION})`);
+  console.log(`Provisioning theming on ${env.shop} (Admin API ${ADMIN_API_VERSION})`);
 
   const metaobjectDefinitionId = await ensureMetaobjectDefinition({
     admin,

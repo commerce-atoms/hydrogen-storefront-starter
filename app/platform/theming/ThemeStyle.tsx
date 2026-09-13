@@ -1,21 +1,25 @@
-import {THEME_TOKEN_MAP, type CollectionTheme} from './types';
+import {THEME_TOKEN_MAP, type Theme} from './types';
 
 /**
  * The attribute used to scope the collection theme.
  *
+ * Only Collections use this component today; when PDPs, Pages, or the Shop
+ * default need theming, add a matching attribute (e.g. `data-page-theme`)
+ * and thread it here rather than repurposing this one.
+ *
  * Always present on the wrapper. Exported so store forks can write theme-aware
  * CSS in their own stylesheets, e.g.:
  *
- *   [data-collection-theme="new-arrivals"] .my-hero { … }
+ *   [data-collection-theme="new-arrivals"] .my-hero { ... }
  */
 export const COLLECTION_THEME_ATTR = 'data-collection-theme';
 
 interface ThemeStyleProps {
   /** Parsed theme, or `null` for the global default. */
-  theme: CollectionTheme | null;
+  theme: Theme | null;
   /**
    * Collection handle used as the attribute value. Purely informational for
-   * devtools / per-handle store CSS — the scoping mechanism is attribute
+   * devtools / per-handle store CSS. The scoping mechanism is attribute
    * presence, not value.
    */
   handle: string;
@@ -24,16 +28,16 @@ interface ThemeStyleProps {
 }
 
 /**
- * SSR-safe wrapper that applies a collection theme via a scoped `<style>`
- * block plus `data-collection-theme` on the wrapper element.
+ * SSR-safe wrapper that applies a theme via a scoped `<style>` block plus
+ * `data-collection-theme` on the wrapper element.
  *
  * When `theme` is `null`, this component still renders the wrapper (so
  * downstream CSS can rely on the attribute being present) but skips the
- * `<style>` block entirely — the page inherits the global tokens from
+ * `<style>` block entirely. The page inherits the global tokens from
  * `app/styles/tokens.css`.
  *
- * Values are validated by `parseCollectionTheme` before reaching here, so
- * inlining them into a `<style>` cannot be used as a CSS injection vector.
+ * Values are validated by `parseTheme` before reaching here, so inlining
+ * them into a `<style>` cannot be used as a CSS injection vector.
  */
 export function ThemeStyle({theme, handle, children}: ThemeStyleProps) {
   const css = theme ? buildThemeCss(theme) : '';
@@ -46,11 +50,11 @@ export function ThemeStyle({theme, handle, children}: ThemeStyleProps) {
   );
 }
 
-function buildThemeCss(theme: CollectionTheme): string {
+function buildThemeCss(theme: Theme): string {
   const declarations: string[] = [];
 
   for (const [field, cssVar] of Object.entries(THEME_TOKEN_MAP) as Array<
-    [keyof CollectionTheme, string]
+    [keyof Theme, string]
   >) {
     const value = theme[field];
     if (!value) continue;

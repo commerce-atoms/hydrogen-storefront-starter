@@ -11,7 +11,7 @@ import {PaginatedResourceSection} from '@components/pagination/PaginatedResource
 import styles from './collection-handle.view.module.css';
 import {DEFAULT_COLLECTION_SORT, COLLECTION_SORT_OPTIONS} from './sort';
 
-import type {CollectionTheme} from '@platform/theming/types';
+import type {Theme} from '@platform/theming/types';
 
 import type {
   CollectionQuery,
@@ -21,7 +21,7 @@ import type {
 interface CollectionHandleViewProps {
   collection: CollectionQuery['collection'];
   sort: string;
-  theme: CollectionTheme | null;
+  theme: Theme | null;
 }
 
 export function CollectionHandleView({

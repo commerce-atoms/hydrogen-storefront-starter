@@ -29,7 +29,7 @@ the typed identity values; `tokens.css` is the runtime CSS variable surface.
 Keep the two in sync when you change a brand colour.
 
 Per-collection overrides layer on top through the optional
-[collection theming module](././platform/theming/README.md).
+[collection theming module](../../../docs/reference/collection-theming.md).
 
 ## What does NOT belong here
 

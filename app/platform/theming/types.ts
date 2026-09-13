@@ -1,15 +1,15 @@
 /**
- * Optional per-collection theming.
+ * Optional storefront theming.
  *
- * A `CollectionTheme` is a bag of CSS custom property overrides that scope
- * to a single collection page. When present, it re-declares a subset of the
- * global tokens in `app/styles/tokens.css` under the `[data-collection-theme]`
- * attribute selector. When absent, pages render with the global brand tokens.
+ * A `Theme` is a bag of CSS custom property overrides. Any owner type that
+ * carries a `theme.preset` metafield can select a palette (Shopify
+ * Metaobject of type `theme_palette`); adding a themed entity is a dropdown
+ * change in admin, no code change.
  *
- * Palettes are modelled as Shopify Metaobjects of type `theme_palette`, and
- * a Collection selects a palette via the `theme.preset` metafield (a
- * `metaobject_reference`). Adding a new themed collection is a dropdown
- * change in Shopify admin — no code change.
+ * Today only Collections consume this module. The metaobject, parser, and
+ * `Theme` type are owner-agnostic. When PDPs, Pages, or the Shop default
+ * need theming, add the matching per-owner fragment (see
+ * `collectionThemeFragment.ts` for the template) and a resolution helper.
  *
  * See `docs/reference/collection-theming.md`.
  */
@@ -22,7 +22,7 @@
  * storefront so navigation, cards, and interactions remain recognisably
  * "one storefront".
  */
-export interface CollectionTheme {
+export interface Theme {
   /** Page background — maps to `--color-background`. */
   background?: string;
   /** Card / panel surface — maps to `--color-surface`. */
@@ -51,12 +51,12 @@ export interface CollectionTheme {
 }
 
 /**
- * Mapping from `CollectionTheme` field → CSS custom property name.
+ * Mapping from `Theme` field to CSS custom property name.
  *
  * Kept as data (not string interpolation in the renderer) so it is trivial
  * to grep, extend, and validate against `tokens.css`.
  */
-export const THEME_TOKEN_MAP: Readonly<Record<keyof CollectionTheme, string>> =
+export const THEME_TOKEN_MAP: Readonly<Record<keyof Theme, string>> =
   {
     background: '--color-background',
     surface: '--color-surface',
@@ -77,8 +77,9 @@ export const THEME_TOKEN_MAP: Readonly<Record<keyof CollectionTheme, string>> =
 export const THEME_METAOBJECT_TYPE = 'theme_palette' as const;
 
 /**
- * Collection metafield identifiers for the palette reference. One value per
- * collection: which palette to apply.
+ * Metafield identifiers for the palette reference. Currently only used on
+ * `Collection`; the same namespace and key work on any owner type when we
+ * add per-owner fragments.
  */
 export const THEME_PRESET_METAFIELD = {
   namespace: 'theme',
@@ -86,12 +87,12 @@ export const THEME_PRESET_METAFIELD = {
 } as const;
 
 /**
- * Mapping from `CollectionTheme` field → metaobject field key (snake_case
- * matches Shopify's convention for metaobject field keys). Both the setup
- * script and the parser use this list, so palette schema stays in one place.
+ * Mapping from `Theme` field to metaobject field key (snake_case matches
+ * Shopify's convention for metaobject field keys). Both the setup script
+ * and the parser use this list, so palette schema stays in one place.
  */
 export const THEME_PALETTE_FIELD_MAP: Readonly<
-  Record<keyof CollectionTheme, string>
+  Record<keyof Theme, string>
 > = {
   background: 'background',
   surface: 'surface',
@@ -123,6 +124,6 @@ export interface ThemePresetSource {
   reference?: {
     type?: string | null;
     handle?: string | null;
-    fields?: ReadonlyArray<MetaobjectFieldSource | null | undefined>;
+    fields?: ReadonlyArray<MetaobjectFieldSource | null> | null;
   } | null;
 }
