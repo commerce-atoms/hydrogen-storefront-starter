@@ -435,6 +435,12 @@ function fieldToCreateInput(f) {
  *                                         Storefront API can resolve it. Set
  *                                         `NONE` for admin-only fields (rare
  *                                         in a storefront starter).
+ * @property {boolean} [pin]               Defaults to `true`. When pinned,
+ *                                         Shopify renders the definition as
+ *                                         a dedicated block on the owner's
+ *                                         admin page (e.g. product editor).
+ *                                         Unpinned definitions still exist
+ *                                         but are hidden under "Show all".
  */
 
 /**
@@ -457,12 +463,13 @@ export async function ensureMetafieldDefinition({
   type,
   validations,
   storefrontAccess = 'PUBLIC_READ',
+  pin = true,
 }) {
   const existing = /** @type {any} */ (
     await admin(
       `query ExistingDef($ownerType: MetafieldOwnerType!, $namespace: String!, $key: String!) {
         metafieldDefinitions(first: 1, ownerType: $ownerType, namespace: $namespace, key: $key) {
-          nodes { id access { storefront } }
+          nodes { id pinnedPosition access { storefront } }
         }
       }`,
       {ownerType, namespace, key},
@@ -482,6 +489,9 @@ export async function ensureMetafieldDefinition({
       console.log(
         `  ${namespace}.${key} metafield definition already present`,
       );
+    }
+    if (pin && node.pinnedPosition == null) {
+      await pinMetafieldDefinition(admin, node.id, `${namespace}.${key}`);
     }
     return;
   }
@@ -508,6 +518,7 @@ export async function ensureMetafieldDefinition({
           type,
           ...(validations && validations.length > 0 ? {validations} : {}),
           access: {storefront: storefrontAccess},
+          pin,
         },
       },
     )
@@ -516,5 +527,33 @@ export async function ensureMetafieldDefinition({
   assertNoUserErrors(
     created?.metafieldDefinitionCreate?.userErrors,
     `metafieldDefinitionCreate(${namespace}.${key})`,
+  );
+}
+
+/**
+ * Pin an existing metafield definition so it renders as a dedicated block
+ * on the owner's admin editor page. Idempotent-safe: caller checks
+ * `pinnedPosition == null` first.
+ *
+ * @param {(query: string, variables?: Record<string, unknown>) => Promise<any>} admin
+ * @param {string} id
+ * @param {string} label   For log output only.
+ */
+async function pinMetafieldDefinition(admin, id, label) {
+  console.log(`  pinning ${label} to the editor sidebar`);
+  const res = /** @type {any} */ (
+    await admin(
+      `mutation PinDef($id: ID!) {
+        metafieldDefinitionPin(definitionId: $id) {
+          pinnedDefinition { pinnedPosition }
+          userErrors { field message code }
+        }
+      }`,
+      {id},
+    )
+  );
+  assertNoUserErrors(
+    res?.metafieldDefinitionPin?.userErrors,
+    `metafieldDefinitionPin(${label})`,
   );
 }
