@@ -7,7 +7,7 @@ This document defines how architectural constraints are enforced through tooling
 **See Also:**
 
 - [governance.md](governance.md) - Non-negotiable constraints and review process
-- [./reference/modules.md](./reference/modules.md) - Module structure and import rules
+- [./reference/modules.md](../reference/modules.md) - Module structure and import rules
 
 ---
 
@@ -97,8 +97,7 @@ Configure in `tsconfig.json` and `vite.config.ts`:
       "@hooks/*": ["./app/hooks/*"],
       "@utils/*": ["./app/utils/*"],
       "@styles/*": ["./app/styles/*"],
-      "~/*": ["./app/*"],
-      "@shoppy/*": ["@shoppy/*/src", "@shoppy/*"]
+      "~/*": ["./app/*"]
     }
   }
 }
@@ -257,7 +256,7 @@ Verifies:
 - ✅ Test selector convention is followed
 - ✅ No class-based or text-based selectors in production code
 
-See [./reference/test-selectors.md](./reference/test-selectors.md) for the full convention.
+See [./reference/test-selectors.md](../reference/test-selectors.md) for the full convention.
 
 ### Running Tests
 

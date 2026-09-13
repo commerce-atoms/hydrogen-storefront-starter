@@ -7,7 +7,7 @@ This document defines how GraphQL queries are organized and cached.
 **See Also:**
 
 - [modules.md](modules.md) - When to add graphql/ folder
-- [./guides/scale_graphql.md](./guides/scale_graphql.md) - How to split large GraphQL files
+- [./guides/scale_graphql.md](../guides/scale_graphql.md) - How to split large GraphQL files
 
 ---
 
@@ -68,7 +68,7 @@ Split **only** when you experience real friction:
 | Scanning difficulty | Hard to find specific queries | Split by concern |
 | Import noise | Many routes import different subsets | Split by usage |
 
-**See:** [./guides/scale_graphql.md](./guides/scale_graphql.md) for step-by-step splitting guide.
+**See:** [./guides/scale_graphql.md](../guides/scale_graphql.md) for step-by-step splitting guide.
 
 ---
 

@@ -123,7 +123,7 @@ npm run setup:my-feature
 
 ## The shared helpers
 
-All helpers live in [`scripts/shared/admin-schema.mjs`](././scripts/shared/admin-schema.mjs). They are domain-agnostic. No colours, no compliance, no anything specific. Callers pass fully-declared schema.
+All helpers live in [`scripts/shared/admin-schema.mjs`](../../scripts/shared/admin-schema.mjs). They are domain-agnostic. No colours, no compliance, no anything specific. Callers pass fully-declared schema.
 
 ### `requireEnv()`
 

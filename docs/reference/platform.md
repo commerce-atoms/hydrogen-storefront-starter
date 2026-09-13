@@ -37,7 +37,7 @@ Only things **inherently tied** to:
 
 ### ❌ NOT Allowed in Platform
 
-- **Generic helpers** → Move to `app/utils/*` or `@shoppy/*`
+- **Generic helpers** → Move to `app/utils/*` or `@commerce-atoms/*`
   - String formatting
   - Object shaping
   - Date/number formatting
@@ -47,7 +47,7 @@ Only things **inherently tied** to:
   - Cart calculations
   - Customer data shaping
 
-- **Business rules** → Move to modules or `@shoppy/*`
+- **Business rules** → Move to modules or `@commerce-atoms/*`
   - Variant selection logic
   - Pricing rules
   - Availability checks
@@ -155,11 +155,11 @@ Ask these questions:
    - No → NOT platform
 
 3. **Is it domain-specific?**
-   - Yes → Module or `@shoppy/*`
+   - Yes → Module or `@commerce-atoms/*`
    - No → Continue..
 
 4. **Is it reusable pure logic?**
-   - Yes → `@shoppy/*` or `app/utils/*`
+   - Yes → `@commerce-atoms/*` or `app/utils/*`
    - No → Continue..
 
 5. **Is it a tiny app-local helper?**
@@ -213,7 +213,7 @@ export class AppSession implements HydrogenSession {
 ### Platform CAN import:
 
 - ✅ Other platform files
-- ✅ `@shoppy/*` (pure utilities)
+- ✅ `@commerce-atoms/*` (pure utilities)
 - ✅ Framework/vendor libs
 
 ### Platform CANNOT import:
@@ -254,4 +254,4 @@ const context = await createHydrogenRouterContext(
 
 If it doesn't touch the request/response boundary or runtime setup, it doesn't belong in platform.
 
-Keep platform thin. Most logic belongs in modules or `@shoppy/*`.
+Keep platform thin. Most logic belongs in modules or `@commerce-atoms/*`.

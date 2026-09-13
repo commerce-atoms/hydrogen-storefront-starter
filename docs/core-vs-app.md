@@ -1,6 +1,6 @@
 # Core vs. app. What stays in sync, what's yours
 
-> The starter is the canonical fork point for new stores. Per [ADR 003](https://github.com/commerce-atoms/agents/blob/main/docs/decisions/) of `@commerce-atoms/agents` and `rules/stores.md`, the starter is divided into a synced **core** (modify upstream, never in your fork) and a per-store **app** (modify freely).
+> The starter is the canonical fork point for new stores. Per the [Core vs. app split](https://github.com/commerce-atoms/agents/blob/main/kit/rules/stores.md#core-vs-app-split) and [Starter alignment](https://github.com/commerce-atoms/agents/blob/main/kit/rules/stores.md#starter-alignment) sections of `@commerce-atoms/agents` `kit/rules/stores.md`, the starter is divided into a synced **core** (modify upstream, never in your fork) and a per-store **app** (modify freely).
 
 ## The split
 
@@ -49,12 +49,12 @@ Three options, in order of preference:
 
 1. **Push the change upstream.** Open a PR against `commerce-atoms/hydrogen-storefront-starter`. Once it merges and the next agents version pins, your fork inherits it via sync.
 
-2. **Stage it in the fork temporarily.** If you cannot wait for upstream, modify the core file in your fork. Add a fork-only ADR under `docs/decisions/fork-001-…md` capturing the rationale, expected upstream PR, and removal trigger.
+2. **Stage it in the fork temporarily.** If you cannot wait for upstream, modify the core file in your fork. Record the divergence in `docs/governance/decisions.md` with the rationale, expected upstream PR, and removal trigger.
 
 3. **Move the concern out of core.** Sometimes "I need to modify a core file" is a sign that the concern belongs in app, not core. Review the layered list above before doubling down on (2).
 
 ## See also
 
-- [`AGENTS.md`](./AGENTS.md) §3. Non-negotiable architecture.
-- [`rules/stores.md`](https://github.com/commerce-atoms/agents/blob/main/rules/stores.md) in `@commerce-atoms/agents`. The canonical source for these rules.
-- `docs/deploy.md`. Sibling document for the deploy contract (lands in PR S2).
+- [`AGENTS.md`](../AGENTS.md) §3. Non-negotiable architecture.
+- [`kit/rules/stores.md`](https://github.com/commerce-atoms/agents/blob/main/kit/rules/stores.md) in `@commerce-atoms/agents`. The canonical source for these rules.
+- [`deploy.md`](./deploy.md). Sibling document for the deploy contract.
