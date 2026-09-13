@@ -18,13 +18,9 @@ export function ProductForm({
   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
 }) {
   const navigate = useNavigate();
-
-  // Get availability map for current selection using @commerce-atoms/variants
-  const partialSelection = selectedVariant?.selectedOptions || [];
-  const availabilityMap = getAvailabilityMap(product, partialSelection, {
-    onlyAvailable: true,
-  });
   const {open} = useAside();
+
+  const currentSelection = selectedVariant?.selectedOptions ?? [];
 
   return (
     <div className={styles.productForm} data-testid="product-form">
@@ -32,8 +28,19 @@ export function ProductForm({
         // If there is only a single value, don't display
         if (option.optionValues.length === 1) return null;
 
+        // Availability is computed *per option* with the current selection
+        // for the OTHER options held fixed. Passing the full selection
+        // (including this option's own value) would filter variants down
+        // to the currently selected one and every alternative would appear
+        // unavailable. Single-option products would lock entirely.
+        const otherSelection = currentSelection.filter(
+          (opt) => opt.name !== option.name,
+        );
+        const availabilityMap = getAvailabilityMap(product, otherSelection, {
+          onlyAvailable: true,
+        });
         const availableValues = availabilityMap.get(option.name);
-        const currentValue = selectedVariant?.selectedOptions.find(
+        const currentValue = currentSelection.find(
           (opt) => opt.name === option.name,
         )?.value;
 
