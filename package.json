@@ -35,7 +35,7 @@
     "ci": "npm run lint && npm run codegen -s && npm run typecheck && npm run test:smoke",
     "agents:sync": "commerce-atoms-agents sync",
     "agents:validate": "commerce-atoms-agents validate-architecture",
-    "setup:theming": "node scripts/setup-theming.mjs"
+    "setup:theming": "node --env-file=.env scripts/setup-theming.mjs"
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {

@@ -4,7 +4,7 @@ import {parseTheme} from './parseTheme';
 
 function palette(
   fields: Array<{key: string; value: string | null} | null>,
-  type: string | null = 'theme_palette',
+  type: string | null = 'store_theme_preset',
 ) {
   return {
     reference: {
@@ -73,11 +73,22 @@ describe('parseTheme', () => {
     expect(theme).toEqual({background: '#0b0b0d'});
   });
 
-  it('bails when the referenced metaobject is not a theme_palette', () => {
+  it('bails when the referenced metaobject is not a store_theme_preset', () => {
     const theme = parseTheme(
       palette([{key: 'background', value: '#0b0b0d'}], 'seo_settings'),
     );
 
     expect(theme).toBeNull();
+  });
+
+  it('accepts the app-owned expansion Shopify returns for $app: types', () => {
+    const theme = parseTheme(
+      palette(
+        [{key: 'background', value: '#0b0b0d'}],
+        'app--422368280577--store_theme_preset',
+      ),
+    );
+
+    expect(theme).toEqual({background: '#0b0b0d'});
   });
 });

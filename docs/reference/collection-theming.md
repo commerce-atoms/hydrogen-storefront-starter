@@ -6,8 +6,8 @@ Lives in `app/platform/theming/`.
 
 ## Data model
 
-- Metaobject `theme_palette`. 10 optional colour fields. Reusable across collections.
-- Metafield `theme.preset` on `Collection`. `metaobject_reference` -> `theme_palette`.
+- Metaobject `store_theme_preset`. 10 optional colour fields. Reusable across collections.
+- Metafield `theme.preset` on `Collection`. `metaobject_reference` -> `store_theme_preset`.
 
 Both provisioned by `npm run setup:theming`. Idempotent.
 
