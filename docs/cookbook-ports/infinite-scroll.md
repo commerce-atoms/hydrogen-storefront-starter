@@ -1,6 +1,6 @@
 # Cookbook port. Infinite scroll for collections
 
-> **Goal of this doc.** Capture the actual experience of porting a single Shopify Hydrogen cookbook recipe ([`infinite-scroll`](https://github.com/Shopify/hydrogen/tree/main/cookbook/recipes/infinite-scroll)) into the modular shape. Surface friction, repeated operations, decisions, and gaps. Seed the upcoming `port-hydrogen-cookbook-recipe` skill in `@commerce-atoms/agents` ([`PLAN.md` §1.4](././review/PLAN.md)).
+> **Goal of this doc.** Capture the actual experience of porting a single Shopify Hydrogen cookbook recipe ([`infinite-scroll`](https://github.com/Shopify/hydrogen/tree/main/cookbook/recipes/infinite-scroll)) into the modular shape. Surface friction, repeated operations, decisions, and gaps. Seed a future `port-hydrogen-cookbook-recipe` skill in `@commerce-atoms/agents`.
 
 ## Recipe summary
 

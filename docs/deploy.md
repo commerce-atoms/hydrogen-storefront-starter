@@ -1,6 +1,6 @@
 # Deploy
 
-> **Doctrine.** The agent prepares and validates. CI deploys. See [`AGENTS.md` §0](./AGENTS.md). Never run `shopify hydrogen deploy` directly from your machine or from an agent session.
+> **Doctrine.** The agent prepares and validates. CI deploys. See [`AGENTS.md` §0](../AGENTS.md). Never run `shopify hydrogen deploy` directly from your machine or from an agent session.
 
 The starter does **not** ship a deploy workflow. When a Hydrogen storefront is linked to the repo in Shopify Admin, Shopify's GitHub App auto-provisions `.github/workflows/oxygen-deployment-<storefrontId>.yml` and sets a rotation-safe `OXYGEN_DEPLOYMENT_TOKEN_<storefrontId>` secret. This Shopify-provisioned workflow is the authoritative deployer.
 
@@ -121,7 +121,7 @@ If any of these comes up in chat, the agent should refuse and surface this docum
 
 ## See also
 
-- [`AGENTS.md` §0](./AGENTS.md). The doctrine.
+- [`AGENTS.md` §0](../AGENTS.md). The doctrine.
 - [`commands/deploy-setup.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-setup.md) (`@commerce-atoms/agents`). The slash command.
 - [`commands/deploy-check.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/deploy-check.md). Local pre-flight.
 - [`commands/release.md`](https://github.com/commerce-atoms/agents/blob/main/kit/commands/release.md). Tag + push.

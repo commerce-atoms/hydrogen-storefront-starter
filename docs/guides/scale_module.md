@@ -11,8 +11,8 @@ Step-by-step guide for refactoring and evolving modules as they grow.
 
 **See Also:**
 
-- [./reference/modules.md](./reference/modules.md) - Module structure and import rules
-- [./governance/governance.md](./governance/governance.md) - Review checklist
+- [./reference/modules.md](../reference/modules.md) - Module structure and import rules
+- [./governance/governance.md](../governance/governance.md) - Review checklist
 
 ---
 
@@ -278,7 +278,7 @@ export function parseSearchQuery(query: string) {
 
 If utilities grow beyond 500 LOC, consider:
 
-- Extracting to `@shoppy/*` package
+- Extracting to `@commerce-atoms/*` package
 - Breaking into more granular modules
 
 ---
@@ -301,7 +301,7 @@ When you feel pressure to import from another module, **STOP and evaluate.**
    - For truly generic, cross-domain utilities
    - Not domain-specific
 
-4. **Extract to `@shoppy/*` package**
+4. **Extract to `@commerce-atoms/*` package**
    - For reusable business logic
    - Pure functions, no React hooks
    - Can be used across different storefronts

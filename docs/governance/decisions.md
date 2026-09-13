@@ -165,20 +165,23 @@ This document records the key architectural decisions made for this Hydrogen sto
 - `@styles/*` → `app/styles/*`
 - `~/*` → `app/*` (escape hatch)
 
-## Shoppy Local Development
+## Shared Package Consumption
 
-**Decision**: Workspace-based local package development
+**Decision**: Consume shared logic through published `@commerce-atoms/*` npm packages.
 
 **Rationale**:
 
-- Enables local package development
-- Clear separation of concerns
-- TypeScript path resolution works
-- Easy to publish or keep local
+- Single source of truth per capability. `metafield`, `seo`, `filters`, `money`, `variants`, `urlstate` each have one canonical implementation.
+- Version-pinned consumption. Drift becomes impossible by construction; upgrades are explicit.
+- No workspace coupling. The starter and every fork stay independently buildable.
 
 **Setup**:
 
-- `@shoppy/*` packages in local directory
-- Workspace configuration in package.json
-- TypeScript paths configured
-- Build tools handle resolution
+- `@commerce-atoms/*` packages are declared as regular `dependencies` in `package.json`.
+- Node resolution via `node_modules`; no TypeScript path aliases required for these packages.
+- Local development against an unpublished change uses `npm link` or `file:` protocol overrides, not a monorepo workspace.
+
+**Consequences**:
+
+- Adding a new shared capability means publishing a new `@commerce-atoms/*` package first, then depending on it, not adding a local package folder.
+- The legacy `@shoppy/*` scope is deprecated (see ADR 002 in `@commerce-atoms/agents`).

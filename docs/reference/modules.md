@@ -6,8 +6,8 @@ This document defines how feature modules are structured and how they evolve ove
 
 **See Also:**
 
-- [./governance/governance.md](./governance/governance.md) - Non-negotiable constraints and review process
-- [./guides/scale_module.md](./guides/scale_module.md) - Step-by-step scaling guide
+- [./governance/governance.md](../governance/governance.md) - Non-negotiable constraints and review process
+- [./guides/scale_module.md](../guides/scale_module.md) - Step-by-step scaling guide
 
 ---
 
@@ -240,7 +240,7 @@ modules/products/
 - ✅ `app/platform/*` - Infrastructure
 - ✅ `app/hooks/*` - Generic UI hooks only
 - ✅ `app/utils/*` - Tiny generic utilities only
-- ✅ `@shoppy/*` - Pure logic packages
+- ✅ `@commerce-atoms/*` - Pure logic packages
 
 ### What Modules CANNOT Import
 
@@ -256,7 +256,7 @@ When you need to share code between modules, follow this order:
 1. **Duplicate intentionally** (< 50 lines, unstable)
 2. **Promote to `app/components/`** (shared UI, 2+ modules OR used in layout)
 3. **Promote to `app/hooks/` or `app/utils/`** (generic, domain-agnostic only)
-4. **Extract to `@shoppy/*`** (pure business logic, reusable across storefronts)
+4. **Extract to `@commerce-atoms/*`** (pure business logic, reusable across storefronts)
 5. **Create platform utility** (infrastructure helpers)
 
 **Never import directly from another module.**
@@ -327,7 +327,7 @@ modules/search/utils/
 └── search.ts    # Search-specific helpers
 ```
 
-**Don't add utils for generic helpers** - those belong in `app/utils/` or `@shoppy/*`.
+**Don't add utils for generic helpers** - those belong in `app/utils/` or `@commerce-atoms/*`.
 
 ### When to Add `transformers/` Folder
 
@@ -391,7 +391,7 @@ export function toProduct(data: ProductData | null): Product | null {
 
 - Simple data structures that don't need transformation
 - Single-use mapping logic (can live in the route loader)
-- Generic data transformations (belong in `app/utils/` or `@shoppy/*`)
+- Generic data transformations (belong in `app/utils/` or `@commerce-atoms/*`)
 
 ### When to Add `types/` Folder
 
