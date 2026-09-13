@@ -3,7 +3,7 @@
  *
  * Spread this into any Storefront API `Collection` query to receive a
  * `themePreset` field that resolves the `theme.preset` metafield's
- * `metaobject_reference` to a `theme_palette` metaobject. `parseTheme()`
+ * `metaobject_reference` to a `store_theme_preset` metaobject. `parseTheme()`
  * reads the metaobject's `fields[]` and maps them into a `Theme`.
  *
  * `parseTheme` is owner-agnostic. When PDPs, Pages, or the Shop default

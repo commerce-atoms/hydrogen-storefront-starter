@@ -74,9 +74,12 @@ async function main() {
 
   console.log(`Provisioning my-feature on ${env.shop} (Admin API ${ADMIN_API_VERSION})`);
 
+  // Dev Dashboard apps must use the `$app:` prefix on metaobject types.
+  // Shopify expands it to `app--<client-id>--my_feature` internally; the
+  // merchant admin still shows the human-readable `name`.
   const defId = await ensureMetaobjectDefinition({
     admin,
-    type: 'my_feature',
+    type: '$app:my_feature',
     name: 'My feature',
     description: 'What this metaobject represents.',
     fields: FIELDS,
@@ -194,8 +197,19 @@ This is the only path Shopify supports for stores where legacy custom apps canno
 
 Required scopes on the Dev Dashboard app:
 
-- `write_metaobject_definitions`, `read_metaobject_definitions`
-- `write_metafield_definitions`, `read_metafield_definitions`
+- `write_metaobject_definitions`, `read_metaobject_definitions` (for `$app:` metaobject types the app itself owns)
+- `write_metaobjects`, `read_metaobjects` (only needed if a script provisions entries, not just definitions)
+- `write_products`, `read_products` (required for metafield definitions on `ownerType: PRODUCT` and `ownerType: COLLECTION`; the underlying resource scope gates the definition mutation)
+
+`ownerType: SHOP` metafields do not require a resource scope. `ownerType: CUSTOMER` needs `write_customers`, `ownerType: ORDER` needs `write_orders`, etc. Match the scope to the owner.
+
+After changing scopes in the Dev Dashboard, reinstall the app on the store. Shopify requires merchant re-approval for scope changes; existing installations do not inherit new scopes automatically.
+
+### Why metaobject types need the `$app:` prefix
+
+Dev Dashboard apps cannot create merchant-owned metaobject definitions; the API rejects them with `NOT_AUTHORIZED` regardless of the type name. Use the `$app:` prefix on every metaobject type in a setup script. Shopify expands it to `app--<client-id>--<name>` and returns that expanded form on read; parsers should tolerate both shapes (bare merchant-owned and the app-owned expansion). See `app/platform/theming/parseTheme.ts` for the pattern.
+
+Metafield definitions are the opposite: use merchant-owned namespaces (`theme`, `compliance`, `product`) so the metafield keys stay stable if you ever rotate the Dev Dashboard app.
 
 ### Flow B. Legacy custom app (deprecated)
 

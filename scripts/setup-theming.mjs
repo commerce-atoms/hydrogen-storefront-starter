@@ -4,9 +4,9 @@
  * Idempotently provisions the Shopify custom-data definitions required by
  * the optional per-collection theming module in `app/platform/theming/`:
  *
- *   1. A metaobject definition of type `theme_palette` with N color fields.
+ *   1. A metaobject definition of type `store_theme_preset` with N color fields.
  *   2. A metafield definition on Collection with namespace `theme`, key
- *      `preset`, and type `metaobject_reference` scoped to `theme_palette`.
+ *      `preset`, and type `metaobject_reference` scoped to `store_theme_preset`.
  *      Storefront access is set to PUBLIC_READ so the Storefront API can
  *      resolve the reference.
  *
@@ -55,7 +55,7 @@ async function main() {
 
   const metaobjectDefinitionId = await ensureMetaobjectDefinition({
     admin,
-    type: 'theme_palette',
+    type: '$app:store_theme_preset',
     name: 'Theme palette',
     description:
       'A colour palette applied to any collection whose theme.preset metafield points at it.',

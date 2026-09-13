@@ -3,7 +3,7 @@
  *
  * A `Theme` is a bag of CSS custom property overrides. Any owner type that
  * carries a `theme.preset` metafield can select a palette (Shopify
- * Metaobject of type `theme_palette`); adding a themed entity is a dropdown
+ * Metaobject of type `store_theme_preset`); adding a themed entity is a dropdown
  * change in admin, no code change.
  *
  * Today only Collections consume this module. The metaobject, parser, and
@@ -74,7 +74,7 @@ export const THEME_TOKEN_MAP: Readonly<Record<keyof Theme, string>> =
  * Metaobject type the storefront resolves for palettes. Must match the type
  * created by `scripts/setup-theming.mjs` (or provisioned by hand in admin).
  */
-export const THEME_METAOBJECT_TYPE = 'theme_palette' as const;
+export const THEME_METAOBJECT_TYPE = 'store_theme_preset' as const;
 
 /**
  * Metafield identifiers for the palette reference. Currently only used on

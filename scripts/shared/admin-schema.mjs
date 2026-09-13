@@ -269,7 +269,13 @@ export function assertNoUserErrors(errs, opName) {
 /**
  * @typedef {Object} MetaobjectDefinitionSpec
  * @property {(query: string, variables?: Record<string, unknown>) => Promise<any>} admin
- * @property {string} type               Machine name (snake_case).
+ * @property {string} type               Machine name. Prefix with `$app:`
+ *                                       (e.g. `$app:store_theme_preset`)
+ *                                       for app-owned definitions.
+ *                                       Required for Dev Dashboard apps;
+ *                                       merchant-owned bare types are
+ *                                       rejected with NOT_AUTHORIZED for
+ *                                       stores created after 1 Jan 2026.
  * @property {string} name               Human label in admin.
  * @property {string} [description]      Optional help text.
  * @property {ReadonlyArray<MetaobjectFieldSpec>} fields
@@ -353,6 +359,15 @@ export async function ensureMetaobjectDefinition({
 
   console.log(`  creating ${type} metaobject definition`);
 
+  // `access.admin` is only permitted on app-owned (`$app:`-prefixed)
+  // definitions; supplying it on merchant-owned types is rejected with
+  // ADMIN_ACCESS_INPUT_NOT_ALLOWED. `access.storefront: PUBLIC_READ`
+  // is safe on either shape and required for Storefront API reads.
+  const isAppOwned = type.startsWith('$app:');
+  const access = isAppOwned
+    ? {admin: 'MERCHANT_READ_WRITE', storefront: 'PUBLIC_READ'}
+    : {storefront: 'PUBLIC_READ'};
+
   const created = /** @type {any} */ (
     await admin(
       `mutation CreateMetaobjectDefinition($definition: MetaobjectDefinitionCreateInput!) {
@@ -366,6 +381,7 @@ export async function ensureMetaobjectDefinition({
           type,
           name,
           ...(description ? {description} : {}),
+          access,
           fieldDefinitions: fields.map(fieldToCreateInput),
         },
       },

@@ -45,8 +45,15 @@ export function parseTheme(
   const metaobject = themePreset?.reference;
   if (!metaobject) return null;
 
-  // Bail if a merchant repointed the metafield at a different metaobject type.
-  if (metaobject.type && metaobject.type !== THEME_METAOBJECT_TYPE) {
+  // Bail if the metafield points at a different metaobject type. Accepts
+  // both the bare merchant-owned form (`store_theme_preset`) and the
+  // app-owned expansion Shopify returns for `$app:`-prefixed types
+  // (`app--<client-id>--store_theme_preset`).
+  if (
+    metaobject.type &&
+    metaobject.type !== THEME_METAOBJECT_TYPE &&
+    !metaobject.type.endsWith(`--${THEME_METAOBJECT_TYPE}`)
+  ) {
     return null;
   }
 
