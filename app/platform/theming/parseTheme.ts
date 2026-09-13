@@ -1,7 +1,9 @@
+import {getMetaobjectString} from '@commerce-atoms/metafield/metaobjects/getMetaobjectString';
+
 import {
   THEME_METAOBJECT_TYPE,
   THEME_PALETTE_FIELD_MAP,
-  type CollectionTheme,
+  type Theme,
   type ThemePresetSource,
 } from './types';
 
@@ -32,53 +34,33 @@ function isSafeCssColor(value: string): boolean {
 }
 
 /**
- * Resolve a `theme.preset` metafield reference into a typed `CollectionTheme`,
- * or `null` if the collection has no palette assigned (or the assigned
- * palette contains no usable values).
+ * Resolve a `theme.preset` metafield reference into a typed `Theme`, or
+ * `null` when no palette is assigned or none of its values are safe.
  *
- * A value is included only if:
- *   1. the metaobject field is present and non-empty
- *   2. its value passes `isSafeCssColor`
- *
- * Rejected values are silently dropped — merchants get an unstyled token
- * instead of a broken page.
+ * Owner-agnostic. Rejected values are dropped silently.
  */
-export function parseCollectionTheme(
+export function parseTheme(
   themePreset: ThemePresetSource | null | undefined,
-): CollectionTheme | null {
+): Theme | null {
   const metaobject = themePreset?.reference;
   if (!metaobject) return null;
 
-  // Defence-in-depth: the fragment already scopes to `theme_palette`, but if
-  // the metafield is repointed at a different metaobject type via admin the
-  // parser must still bail cleanly.
+  // Bail if a merchant repointed the metafield at a different metaobject type.
   if (metaobject.type && metaobject.type !== THEME_METAOBJECT_TYPE) {
     return null;
   }
 
-  const fields = metaobject.fields;
-  if (!fields || fields.length === 0) return null;
-
-  const byKey = new Map<string, string>();
-  for (const field of fields) {
-    if (!field?.key) continue;
-    if (typeof field.value !== 'string') continue;
-    byKey.set(field.key, field.value);
-  }
-
-  const theme: CollectionTheme = {};
+  const theme: Theme = {};
   let matched = 0;
 
   for (const [themeKey, fieldKey] of Object.entries(
     THEME_PALETTE_FIELD_MAP,
-  ) as Array<[keyof CollectionTheme, string]>) {
-    const raw = byKey.get(fieldKey);
-    if (typeof raw !== 'string') continue;
+  ) as Array<[keyof Theme, string]>) {
+    const value = getMetaobjectString(metaobject, fieldKey);
+    if (value === null) continue;
+    if (!isSafeCssColor(value)) continue;
 
-    const trimmed = raw.trim();
-    if (!isSafeCssColor(trimmed)) continue;
-
-    theme[themeKey] = trimmed;
+    theme[themeKey] = value;
     matched += 1;
   }
 

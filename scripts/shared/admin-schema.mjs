@@ -4,19 +4,22 @@
  *
  * Purpose
  * -------
- * Every metafield-backed feature module in this starter (see
- * `docs/reference/metaobjects.md`) needs an idempotent setup script that
- * ensures its Shopify custom-data definitions exist. This module extracts
- * the common boilerplate so each `scripts/setup-*.mjs` is a thin
+ * Every metafield-backed feature module needs an idempotent setup script
+ * that ensures its Shopify custom-data definitions exist. This module
+ * extracts the common boilerplate so each `scripts/setup-*.mjs` is a thin
  * declaration of its schema, not a re-implementation of admin plumbing.
  *
  * What it provides
  * ----------------
- *   - requireEnv()                            — fail-fast env var check
- *   - createAdminClient({endpoint, token})    — bound Admin API fetcher
- *   - ensureMetaobjectDefinition({...})       — idempotent metaobject upsert
- *   - ensureMetafieldDefinition({...})        — idempotent metafield upsert
- *   - assertNoUserErrors(errs, opName)        — Shopify userErrors handler
+ *   - requireEnv()                            fail-fast env var check
+ *   - createAdminClient(env)                  bound Admin API fetcher
+ *                                             (async: exchanges Dev
+ *                                             Dashboard credentials for
+ *                                             a token when needed)
+ *   - exchangeClientCredentialsForToken(...)  Dev Dashboard token grant
+ *   - ensureMetaobjectDefinition({...})       idempotent metaobject upsert
+ *   - ensureMetafieldDefinition({...})        idempotent metafield upsert
+ *   - assertNoUserErrors(errs, opName)        Shopify userErrors handler
  *
  * What it does not provide
  * ------------------------
@@ -26,18 +29,34 @@
  *   - Metaobject *entry* provisioning. Only *definitions*.
  *   - Runtime access. Storefront queries use the Storefront API, not this.
  *
- * Auth
- * ----
- *   PUBLIC_STORE_DOMAIN               your-shop.myshopify.com
- *   PRIVATE_ADMIN_API_ACCESS_TOKEN    Admin API token with the definition
- *                                     scopes required by whichever mutations
- *                                     the caller runs (typically
- *                                     write_metaobject_definitions plus
- *                                     write_metaobjects for metaobject
- *                                     features, plus Custom data admin
- *                                     access for metafield definitions).
+ * Auth (two flows supported)
+ * --------------------------
  *
- * Loaded from `process.env`; the script never shells out to Shopify CLI.
+ *   PUBLIC_STORE_DOMAIN               your-shop.myshopify.com
+ *
+ * Flow A: Dev Dashboard app (current, required for stores where legacy
+ * custom apps cannot be created, i.e. new stores after 1 January 2026):
+ *
+ *   SHOPIFY_APP_CLIENT_ID             from Dev Dashboard -> Settings
+ *   SHOPIFY_APP_CLIENT_SECRET         from Dev Dashboard -> Settings
+ *
+ *   The helper exchanges these for a 24-hour Admin API token via
+ *   POST /admin/oauth/access_token (client_credentials grant). Same
+ *   organisation only. See
+ *   https://shopify.dev/docs/apps/build/dev-dashboard/get-api-access-tokens
+ *
+ * Flow B: Legacy custom app (only works for stores that already have
+ * one; cannot be created after 1 January 2026):
+ *
+ *   PRIVATE_ADMIN_API_ACCESS_TOKEN    static shpat_* token from admin
+ *                                     -> Apps -> Develop apps
+ *
+ * If both are set, the static token wins (least surprising for scripted
+ * environments). If neither is set, the helper exits with a clear error.
+ *
+ * The token / app needs the scopes required by whichever mutations the
+ * caller runs (typically write_metaobject_definitions plus
+ * write_metafield_definitions, and matching read scopes).
  *
  * The Admin API version is pinned here so setup scripts do not silently
  * drift when Shopify bumps the default. Bumping is a deliberate change.
@@ -46,43 +65,126 @@
 export const ADMIN_API_VERSION = '2026-04';
 
 /**
+ * @typedef {Object} AdminEnv
+ * @property {string} shop
+ * @property {string} endpoint
+ * @property {string} [token]           Direct static token (legacy custom app).
+ * @property {string} [clientId]        Dev Dashboard app Client ID.
+ * @property {string} [clientSecret]    Dev Dashboard app Client secret.
+ */
+
+/**
  * Fail-fast env check. Call at the top of each setup script.
  *
- * @returns {{shop: string, token: string, endpoint: string}}
+ * @returns {AdminEnv}
  */
 export function requireEnv() {
   const shop = process.env.PUBLIC_STORE_DOMAIN?.trim();
   const token = process.env.PRIVATE_ADMIN_API_ACCESS_TOKEN?.trim();
+  const clientId = process.env.SHOPIFY_APP_CLIENT_ID?.trim();
+  const clientSecret = process.env.SHOPIFY_APP_CLIENT_SECRET?.trim();
 
-  if (!shop || !token) {
+  if (!shop) {
     console.error(
-      'Missing env vars. Set PUBLIC_STORE_DOMAIN and PRIVATE_ADMIN_API_ACCESS_TOKEN.',
+      'Missing PUBLIC_STORE_DOMAIN (e.g. your-shop.myshopify.com).',
+    );
+    process.exit(1);
+  }
+
+  // A placeholder value like `shpat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+  // is treated as unset so a stale .env does not silently short-circuit
+  // the newer client-credentials path.
+  const looksLikePlaceholder =
+    typeof token === 'string' && /^shpat_x{5,}$/.test(token);
+  const hasStaticToken = Boolean(token) && !looksLikePlaceholder;
+  const hasClientCredentials = Boolean(clientId && clientSecret);
+
+  if (!hasStaticToken && !hasClientCredentials) {
+    console.error('Missing Admin API credentials. Set one of:');
+    console.error(
+      '  1. SHOPIFY_APP_CLIENT_ID + SHOPIFY_APP_CLIENT_SECRET (Dev Dashboard app).',
     );
     console.error(
-      'The admin token needs the write scopes for whichever definitions you are provisioning.',
+      '  2. PRIVATE_ADMIN_API_ACCESS_TOKEN (legacy custom app; pre-2026 stores only).',
+    );
+    console.error(
+      'Dev Dashboard: https://shopify.dev/docs/apps/build/dev-dashboard/get-api-access-tokens',
     );
     process.exit(1);
   }
 
   return {
     shop,
-    token,
     endpoint: `https://${shop}/admin/api/${ADMIN_API_VERSION}/graphql.json`,
+    ...(hasStaticToken ? {token} : {}),
+    ...(hasClientCredentials ? {clientId, clientSecret} : {}),
   };
 }
 
 /**
- * Build a bound Admin API fetcher. Unwraps HTTP + top-level `errors`;
- * caller still handles Shopify's per-mutation `userErrors` via
- * `assertNoUserErrors` (a userError is a business-rule failure, not an
- * infra failure — different semantics).
+ * Exchange Dev Dashboard client credentials for a 24-hour Admin API
+ * access token. Same-organisation only.
  *
- * @param {{endpoint: string, token: string}} opts
- * @returns {(query: string, variables?: Record<string, unknown>) => Promise<any>}
+ * Ref: https://shopify.dev/docs/apps/build/authentication-authorization/client-credentials-grant
+ *
+ * @param {{shop: string, clientId: string, clientSecret: string}} opts
+ * @returns {Promise<string>}
  */
-export function createAdminClient({endpoint, token}) {
+export async function exchangeClientCredentialsForToken({
+  shop,
+  clientId,
+  clientSecret,
+}) {
+  const body = new URLSearchParams({
+    grant_type: 'client_credentials',
+    client_id: clientId,
+    client_secret: clientSecret,
+  });
+
+  const res = await fetch(`https://${shop}/admin/oauth/access_token`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body,
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(
+      `Token exchange failed: ${res.status} ${res.statusText}\n${text}\n` +
+        'Common causes: app and store are not in the same Dev Dashboard organisation; ' +
+        'client_id / client_secret mismatch; app version not released; app not installed on the store.',
+    );
+  }
+
+  const json =
+    /** @type {{access_token?: string, error?: string, error_description?: string}} */ (
+      await res.json()
+    );
+
+  if (!json.access_token) {
+    throw new Error(
+      `Token exchange returned no access_token: ${JSON.stringify(json)}`,
+    );
+  }
+  return json.access_token;
+}
+
+/**
+ * Build a bound Admin API fetcher. Resolves an access token from the env
+ * (either the static `token` or by exchanging client credentials).
+ *
+ * The fetcher unwraps HTTP + top-level `errors`; callers still handle
+ * Shopify's per-mutation `userErrors` via `assertNoUserErrors` (a
+ * userError is a business-rule failure, not an infra failure).
+ *
+ * @param {AdminEnv} env
+ * @returns {Promise<(query: string, variables?: Record<string, unknown>) => Promise<any>>}
+ */
+export async function createAdminClient(env) {
+  const token = await resolveAccessToken(env);
+
   return async function admin(query, variables) {
-    const res = await fetch(endpoint, {
+    const res = await fetch(env.endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -109,6 +211,28 @@ export function createAdminClient({endpoint, token}) {
 
     return json.data;
   };
+}
+
+/**
+ * @param {AdminEnv} env
+ * @returns {Promise<string>}
+ */
+async function resolveAccessToken(env) {
+  if (env.token) {
+    return env.token;
+  }
+  if (env.clientId && env.clientSecret) {
+    return exchangeClientCredentialsForToken({
+      shop: env.shop,
+      clientId: env.clientId,
+      clientSecret: env.clientSecret,
+    });
+  }
+  // requireEnv() guarantees one of the two; kept for callers that build
+  // an AdminEnv manually.
+  throw new Error(
+    'AdminEnv is missing both `token` and `clientId`/`clientSecret`.',
+  );
 }
 
 /**
@@ -155,7 +279,7 @@ export function assertNoUserErrors(errs, opName) {
  * Idempotent: create the metaobject definition if missing; otherwise add
  * any fields the caller has since introduced.
  *
- * Existing fields are never modified — merchant admin is the source of
+ * Existing fields are never modified. Merchant admin is the source of
  * truth for label / description / validation edits, and touching them
  * here would fight with merchant intent.
  *
@@ -283,7 +407,7 @@ function fieldToCreateInput(f) {
  *                                          `CUSTOMER` | `ORDER` | ...
  *                                         (Shopify `MetafieldOwnerType` enum).
  * @property {string} namespace            Scoping namespace. Reserve short
- *                                         module-scoped names — the merchant
+ *                                         module-scoped names; the merchant
  *                                         admin shows them.
  * @property {string} key                  Field key within the namespace.
  * @property {string} name                 Human label shown in admin.
@@ -300,10 +424,10 @@ function fieldToCreateInput(f) {
 /**
  * Idempotent: create the metafield definition if missing.
  *
- * If a definition already exists, this helper does **not** patch it —
- * it warns loudly when storefront access diverges from the requested
- * value. Repointing an existing definition (owner, type, validations)
- * is destructive; do it in admin with merchant intent, then re-run.
+ * If a definition already exists, this helper does not patch it. It
+ * warns loudly when storefront access diverges from the requested value.
+ * Repointing an existing definition (owner, type, validations) is
+ * destructive; do it in admin with merchant intent, then re-run.
  *
  * @param {MetafieldDefinitionSpec} spec
  */
@@ -336,7 +460,7 @@ export async function ensureMetafieldDefinition({
         `  ${namespace}.${key} metafield exists but storefront access is ${node.access?.storefront ?? 'unset'} (expected ${storefrontAccess}).`,
       );
       console.warn(
-        `  Update the definition manually in Settings → Custom data → ${ownerType}, or delete it and re-run.`,
+        `  Update the definition manually in Settings -> Custom data -> ${ownerType}, or delete it and re-run.`,
       );
     } else {
       console.log(

@@ -69,10 +69,10 @@ const FIELDS = [
 ];
 
 async function main() {
-  const {shop, endpoint, token} = requireEnv();
-  const admin = createAdminClient({endpoint, token});
+  const env = requireEnv();
+  const admin = await createAdminClient(env);
 
-  console.log(`Provisioning my-feature on ${shop} (Admin API ${ADMIN_API_VERSION})`);
+  console.log(`Provisioning my-feature on ${env.shop} (Admin API ${ADMIN_API_VERSION})`);
 
   const defId = await ensureMetaobjectDefinition({
     admin,
@@ -127,15 +127,24 @@ All helpers live in [`scripts/shared/admin-schema.mjs`](././scripts/shared/admin
 
 ### `requireEnv()`
 
-Fail-fast env check. Reads `PUBLIC_STORE_DOMAIN` and `PRIVATE_ADMIN_API_ACCESS_TOKEN`. Exits with code 1 and a clear message if either is missing.
+Fail-fast env check. Reads `PUBLIC_STORE_DOMAIN` plus **one** of:
 
-Returns `{shop, token, endpoint}`.
+- `SHOPIFY_APP_CLIENT_ID` + `SHOPIFY_APP_CLIENT_SECRET` (Dev Dashboard app), or
+- `PRIVATE_ADMIN_API_ACCESS_TOKEN` (legacy custom app; pre-2026 stores only).
 
-### `createAdminClient({endpoint, token})`
+Exits with code 1 and a clear message if credentials are missing. If both are set, the static token wins (least surprising for scripted environments).
 
-Builds a bound Admin API fetcher. Unwraps HTTP and top-level GraphQL `errors`. Returns an `admin(query, variables)` function that throws on infra failure and returns `data` on success.
+Returns an `AdminEnv` object with `shop`, `endpoint`, and either `token` or `clientId` + `clientSecret`.
 
-Per-mutation `userErrors` (business-rule failures) are still handled by the caller via `assertNoUserErrors`.
+### `createAdminClient(env)` (async)
+
+Builds a bound Admin API fetcher. If `env` carries client credentials rather than a static token, it exchanges them for a 24-hour access token via `POST /admin/oauth/access_token` (client_credentials grant) before returning.
+
+Returns a `Promise<(query, variables) => Promise<data>>`. Unwraps HTTP and top-level GraphQL `errors`. Per-mutation `userErrors` (business-rule failures) are still handled by the caller via `assertNoUserErrors`.
+
+### `exchangeClientCredentialsForToken({shop, clientId, clientSecret})`
+
+Direct access to the token exchange, exposed for callers that build an `AdminEnv` by hand or need to cache the token. `createAdminClient` calls it internally.
 
 ### `ensureMetaobjectDefinition({admin, type, name, description?, fields})`
 
@@ -170,16 +179,37 @@ Exported constant. The Admin API version is pinned so scripts do not silently dr
 
 ## Auth
 
-Setup scripts read two environment variables:
+Setup scripts always read `PUBLIC_STORE_DOMAIN` (`your-shop.myshopify.com`, same variable the app reads at runtime), plus one of two credential flows.
+
+### Flow A. Dev Dashboard app (current)
 
 | Var | Purpose |
 |---|---|
-| `PUBLIC_STORE_DOMAIN` | `your-shop.myshopify.com`. Same variable the app reads at runtime. |
-| `PRIVATE_ADMIN_API_ACCESS_TOKEN` | Admin API access token. Needs the write scopes for whichever definitions the script provisions (typically `write_metaobject_definitions`, `write_metaobjects`, and Custom data admin access for metafield definitions). |
+| `SHOPIFY_APP_CLIENT_ID` | Client ID from Dev Dashboard → Settings. |
+| `SHOPIFY_APP_CLIENT_SECRET` | Client secret from Dev Dashboard → Settings. |
 
-Both are loaded from `process.env`. Scripts do not shell out to Shopify CLI. Set them however secrets are already managed (`.env`, `direnv`, a secret manager). `.env` is git-ignored; the token must never enter version control.
+The helper exchanges these for a 24-hour Admin API token via `POST /admin/oauth/access_token` (client_credentials grant). Same-organisation only. See the [Shopify docs](https://shopify.dev/docs/apps/build/dev-dashboard/get-api-access-tokens).
 
-The Admin API token is separate from the Storefront API token. The Storefront token cannot mutate definitions. Create a private app / custom app in the store's admin (Settings → Apps and sales channels → Develop apps) with the necessary Admin API scopes, install it on the store, and copy the token.
+This is the only path Shopify supports for stores where legacy custom apps cannot be created (new stores after 1 January 2026).
+
+Required scopes on the Dev Dashboard app:
+
+- `write_metaobject_definitions`, `read_metaobject_definitions`
+- `write_metafield_definitions`, `read_metafield_definitions`
+
+### Flow B. Legacy custom app (deprecated)
+
+| Var | Purpose |
+|---|---|
+| `PRIVATE_ADMIN_API_ACCESS_TOKEN` | Static `shpat_*` Admin API token from a legacy custom app. |
+
+Only works for stores that already have a legacy custom app. Cannot be created after 1 January 2026. If both flows are configured, the static token wins.
+
+### Common
+
+Scripts read from `process.env`; they do not shell out to Shopify CLI. Set values however secrets are already managed (`.env`, `direnv`, a secret manager). `.env` is git-ignored; tokens must never enter version control.
+
+The Admin API credentials are separate from the Storefront API token. The Storefront token cannot mutate definitions.
 
 ---
 

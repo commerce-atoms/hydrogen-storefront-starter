@@ -7,7 +7,7 @@ import {buildCollectionMeta} from '@commerce-atoms/seo/meta/buildCollectionMeta'
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
 import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
 
-import {parseCollectionTheme} from '@platform/theming/parseCollectionTheme';
+import {parseTheme} from '@platform/theming/parseTheme';
 
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
@@ -86,7 +86,7 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
   // reference. Returns null if the collection has no palette assigned, in
   // which case the page renders with the global brand tokens from
   // `styles/tokens.css`.
-  const theme = parseCollectionTheme(collection.themePreset);
+  const theme = parseTheme(collection.themePreset);
 
   return {
     collection,

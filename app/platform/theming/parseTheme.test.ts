@@ -1,9 +1,9 @@
 import {describe, expect, it} from 'vitest';
 
-import {parseCollectionTheme} from './parseCollectionTheme';
+import {parseTheme} from './parseTheme';
 
 function palette(
-  fields: Array<{key: string; value: string | null} | null | undefined>,
+  fields: Array<{key: string; value: string | null} | null>,
   type: string | null = 'theme_palette',
 ) {
   return {
@@ -15,16 +15,16 @@ function palette(
   };
 }
 
-describe('parseCollectionTheme', () => {
+describe('parseTheme', () => {
   it('returns null when the metafield is absent or unresolved', () => {
-    expect(parseCollectionTheme(null)).toBeNull();
-    expect(parseCollectionTheme(undefined)).toBeNull();
-    expect(parseCollectionTheme({reference: null})).toBeNull();
-    expect(parseCollectionTheme({reference: {fields: []}})).toBeNull();
+    expect(parseTheme(null)).toBeNull();
+    expect(parseTheme(undefined)).toBeNull();
+    expect(parseTheme({reference: null})).toBeNull();
+    expect(parseTheme({reference: {fields: []}})).toBeNull();
   });
 
   it('builds a theme from valid metaobject fields and normalises whitespace', () => {
-    const theme = parseCollectionTheme(
+    const theme = parseTheme(
       palette([
         {key: 'background', value: '  #0b0b0d  '},
         {key: 'accent', value: '#7a0800'},
@@ -40,7 +40,7 @@ describe('parseCollectionTheme', () => {
   });
 
   it('rejects CSS-injection payloads and returns null if nothing survives', () => {
-    const theme = parseCollectionTheme(
+    const theme = parseTheme(
       palette([
         {key: 'background', value: 'red; } body { display:none'},
         {key: 'accent', value: 'url(javascript:alert(1))'},
@@ -52,7 +52,7 @@ describe('parseCollectionTheme', () => {
   });
 
   it('drops individual bad values but keeps the good ones', () => {
-    const theme = parseCollectionTheme(
+    const theme = parseTheme(
       palette([
         {key: 'background', value: '#0b0b0d'},
         {key: 'accent', value: 'red; evil'},
@@ -63,7 +63,7 @@ describe('parseCollectionTheme', () => {
   });
 
   it('ignores fields whose key is not part of the palette schema', () => {
-    const theme = parseCollectionTheme(
+    const theme = parseTheme(
       palette([
         {key: 'notes', value: '#ff0000'},
         {key: 'background', value: '#0b0b0d'},
@@ -74,7 +74,7 @@ describe('parseCollectionTheme', () => {
   });
 
   it('bails when the referenced metaobject is not a theme_palette', () => {
-    const theme = parseCollectionTheme(
+    const theme = parseTheme(
       palette([{key: 'background', value: '#0b0b0d'}], 'seo_settings'),
     );
 
