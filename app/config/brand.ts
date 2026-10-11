@@ -13,7 +13,14 @@ export interface BrandConfig {
   /** Short tagline. Used in OG description, footer, hero fallbacks. */
   slogan: string;
   /** Customer-facing contact email. */
-  contactEmail: string;
+  contactEmail?: string;
+  /**
+   * Default social share image (1200 × 630), as an imported asset URL.
+   * Used by every page that has no image of its own.
+   */
+  ogImage?: string;
+  /** Square logo, as an imported asset URL. Used in Organization JSON-LD. */
+  logo?: string;
   /** Default locale (BCP-47). */
   defaultLocale: string;
   /** All locales the storefront serves. Used by the locale prefix in routes.ts. */
@@ -30,11 +37,16 @@ export interface BrandConfig {
     heading: string;
     body: string;
   };
-  /** Social handles (without `@`). Used in OG metadata and footer links. */
+  /**
+   * Social profile URLs. Rendered as footer links and emitted as
+   * Organization `sameAs`. `x` also drives the `twitter:site` meta tag.
+   */
   social: {
-    twitter?: string;
     instagram?: string;
+    youtube?: string;
+    x?: string;
     tiktok?: string;
+    linktree?: string;
   };
 }
 

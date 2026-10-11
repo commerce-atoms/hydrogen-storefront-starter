@@ -1,0 +1,26 @@
+.socialLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.socialLink {
+  display: inline-flex;
+  color: inherit;
+  opacity: 0.7;
+  transition: opacity 150ms ease;
+}
+
+.socialLink:hover,
+.socialLink:focus-visible {
+  opacity: 1;
+}
+
+.socialLink svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}

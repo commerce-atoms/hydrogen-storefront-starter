@@ -18,8 +18,15 @@
 
 .footerMeta {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
   padding: var(--space-4) var(--space-6);
+}
+
+.footerSocial {
+  color: var(--color-background);
+  justify-content: center;
 }
 
 .footerBrand {

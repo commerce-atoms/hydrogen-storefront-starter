@@ -1,3 +1,11 @@
+
+import {withMetaDefaults} from '@commerce-atoms/seo/meta/withMetaDefaults';
+
+import {brand} from '~/config/brand';
+
+import {buildBrandMeta} from './brandMeta';
+
+import type {MetaOutput} from '@commerce-atoms/seo/types/meta';
 import type {MetaDescriptor} from 'react-router';
 
 /**
@@ -49,70 +57,89 @@ export function buildCanonicalUrl(
 }
 
 /**
- * Converts SEO meta object to React Router MetaDescriptor array.
- * Handles title, description, canonical URL, Open Graph, and Twitter Card tags.
+ * Resolves a root-relative asset path to an absolute URL. Social crawlers
+ * reject relative `og:image` values. Already-absolute URLs (Shopify CDN,
+ * Oxygen asset CDN in production builds) pass through untouched.
  */
-export function buildMetaTags(seoMeta: {
-  title?: string;
-  description?: string;
-  canonicalUrl?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  ogType?: string;
-  ogUrl?: string;
-  twitterCard?: string;
-  twitterTitle?: string;
-  twitterDescription?: string;
-  twitterImage?: string;
-}): MetaDescriptor[] {
-  const tags: MetaDescriptor[] = [];
+export function buildAbsoluteUrl(
+  pathOrUrl: string,
+  location: {pathname: string; origin?: string},
+  matches: ReadonlyArray<{data?: unknown} | undefined>,
+): string | undefined {
+  if (/^https?:\/\//.test(pathOrUrl)) return pathOrUrl;
+  return buildCanonicalUrl({...location, pathname: pathOrUrl}, matches);
+}
 
-  if (seoMeta.title) {
-    tags.push({title: seoMeta.title});
-  }
+interface MetaTagsContext {
+  location: {pathname: string; origin?: string};
+  matches: ReadonlyArray<{data?: unknown} | undefined>;
+}
 
-  if (seoMeta.description) {
-    tags.push({name: 'description', content: seoMeta.description});
-  }
+/**
+ * Converts a `@commerce-atoms/seo` `MetaOutput` into React Router meta
+ * descriptors.
+ *
+ * React Router renders only the deepest route's meta, so the site-wide
+ * brand descriptors are appended here, and pages without an image of their
+ * own fall back to `brand.ogImage`.
+ */
+export function buildMetaTags(
+  seoMeta: MetaOutput,
+  {location, matches}: MetaTagsContext,
+): MetaDescriptor[] {
+  const defaultImageUrl = brand.ogImage
+    ? buildAbsoluteUrl(brand.ogImage, location, matches)
+    : undefined;
+  const {title, description, canonicalUrl, openGraph, twitter, jsonLd} =
+    withMetaDefaults(seoMeta, {
+      image: defaultImageUrl ? {url: defaultImageUrl, alt: brand.name} : undefined,
+    });
 
-  if (seoMeta.canonicalUrl) {
-    tags.push({tagName: 'link', rel: 'canonical', href: seoMeta.canonicalUrl});
-  }
+  const tags: MetaDescriptor[] = [{title}];
 
-  // Open Graph tags
-  if (seoMeta.ogTitle) {
-    tags.push({property: 'og:title', content: seoMeta.ogTitle});
+  if (description) {
+    tags.push({name: 'description', content: description});
   }
-  if (seoMeta.ogDescription) {
-    tags.push({property: 'og:description', content: seoMeta.ogDescription});
-  }
-  if (seoMeta.ogImage) {
-    tags.push({property: 'og:image', content: seoMeta.ogImage});
-  }
-  if (seoMeta.ogType) {
-    tags.push({property: 'og:type', content: seoMeta.ogType});
-  }
-  if (seoMeta.ogUrl) {
-    tags.push({property: 'og:url', content: seoMeta.ogUrl});
+  if (canonicalUrl) {
+    tags.push({tagName: 'link', rel: 'canonical', href: canonicalUrl});
   }
 
-  // Twitter Card tags
-  if (seoMeta.twitterCard) {
-    tags.push({name: 'twitter:card', content: seoMeta.twitterCard});
+  tags.push({property: 'og:type', content: 'website'});
+  if (openGraph?.title) {
+    tags.push({property: 'og:title', content: openGraph.title});
   }
-  if (seoMeta.twitterTitle) {
-    tags.push({name: 'twitter:title', content: seoMeta.twitterTitle});
+  if (openGraph?.description) {
+    tags.push({property: 'og:description', content: openGraph.description});
   }
-  if (seoMeta.twitterDescription) {
+  if (openGraph?.url) {
+    tags.push({property: 'og:url', content: openGraph.url});
+  }
+  const ogImage = openGraph?.images?.[0];
+  if (ogImage) {
+    tags.push({property: 'og:image', content: ogImage.url});
     tags.push({
-      name: 'twitter:description',
-      content: seoMeta.twitterDescription,
+      property: 'og:image:alt',
+      content: ogImage.alt || openGraph?.title || title,
     });
   }
-  if (seoMeta.twitterImage) {
-    tags.push({name: 'twitter:image', content: seoMeta.twitterImage});
+
+  if (twitter?.card) {
+    tags.push({name: 'twitter:card', content: twitter.card});
+  }
+  if (twitter?.title) {
+    tags.push({name: 'twitter:title', content: twitter.title});
+  }
+  if (twitter?.description) {
+    tags.push({name: 'twitter:description', content: twitter.description});
+  }
+  const twitterImage = twitter?.images?.[0];
+  if (twitterImage) {
+    tags.push({name: 'twitter:image', content: twitterImage});
   }
 
-  return tags;
+  if (jsonLd) {
+    tags.push({'script:ld+json': jsonLd});
+  }
+
+  return [...tags, ...buildBrandMeta(brand)];
 }

@@ -32,7 +32,7 @@ export const meta: Route.MetaFunction = ({data, location, matches}) => {
       : undefined,
   });
 
-  return buildMetaTags(seoMeta);
+  return buildMetaTags(seoMeta, {location, matches});
 };
 
 export const handle = {

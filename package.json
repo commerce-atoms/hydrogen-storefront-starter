@@ -42,7 +42,7 @@
     "@commerce-atoms/filters": "^0.0.3",
     "@commerce-atoms/metafield": "^0.4.1",
     "@commerce-atoms/money": "^0.0.3",
-    "@commerce-atoms/seo": "^0.0.3",
+    "@commerce-atoms/seo": "^0.1.0",
     "@commerce-atoms/urlstate": "^0.0.3",
     "@commerce-atoms/variants": "^0.0.3",
     "@shopify/hydrogen": "2026.4.5",
