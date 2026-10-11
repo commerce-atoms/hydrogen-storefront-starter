@@ -1,4 +1,5 @@
 
+import {buildTitle} from '@commerce-atoms/seo/meta/buildTitle';
 import {withMetaDefaults} from '@commerce-atoms/seo/meta/withMetaDefaults';
 
 import {brand} from '~/config/brand';
@@ -72,7 +73,47 @@ export function buildAbsoluteUrl(
 
 interface MetaTagsContext {
   location: {pathname: string; origin?: string};
-  matches: ReadonlyArray<{data?: unknown} | undefined>;
+  matches: ReadonlyArray<{data?: unknown; handle?: unknown} | undefined>;
+}
+
+/**
+ * Breadcrumb labels from the matched routes' `handle.breadcrumb`, root to
+ * leaf. Mirrors the trail `getLayoutData` renders.
+ */
+function getBreadcrumbLabels(matches: MetaTagsContext['matches']): string[] {
+  const labels: string[] = [];
+  for (const match of matches) {
+    const crumb = (match?.handle as {breadcrumb?: unknown} | undefined)
+      ?.breadcrumb;
+    if (!crumb) continue;
+
+    let resolved: unknown;
+    try {
+      resolved = typeof crumb === 'function' ? crumb(match?.data) : crumb;
+    } catch {
+      continue;
+    }
+
+    for (const item of Array.isArray(resolved) ? resolved : [resolved]) {
+      const label = (item as {label?: unknown} | null)?.label;
+      if (typeof label === 'string') labels.push(label);
+    }
+  }
+  return labels;
+}
+
+/**
+ * `<title>` for the page: its own title, then the breadcrumb parents from
+ * nearest to furthest, then the brand. The last breadcrumb is the page
+ * itself, so it is replaced by the page title (which may be a custom SEO
+ * title). E.g. `Wolf Study 01 | Dark Red | Shop | Brand`.
+ */
+export function buildDocumentTitle(
+  pageTitle: string,
+  matches: MetaTagsContext['matches'],
+): string {
+  const parents = getBreadcrumbLabels(matches).slice(0, -1).reverse();
+  return buildTitle([pageTitle, ...parents], {siteName: brand.name});
 }
 
 /**
@@ -81,7 +122,9 @@ interface MetaTagsContext {
  *
  * React Router renders only the deepest route's meta, so the site-wide
  * brand descriptors are appended here, and pages without an image of their
- * own fall back to `brand.ogImage`.
+ * own fall back to `brand.ogImage`. The `<title>` follows the breadcrumb
+ * trail (see `buildDocumentTitle`); OG and Twitter titles stay the page's
+ * own title because platforms show the site name separately.
  */
 export function buildMetaTags(
   seoMeta: MetaOutput,
@@ -95,7 +138,7 @@ export function buildMetaTags(
       image: defaultImageUrl ? {url: defaultImageUrl, alt: brand.name} : undefined,
     });
 
-  const tags: MetaDescriptor[] = [{title}];
+  const tags: MetaDescriptor[] = [{title: buildDocumentTitle(title, matches)}];
 
   if (description) {
     tags.push({name: 'description', content: description});
