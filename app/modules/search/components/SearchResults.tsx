@@ -4,6 +4,8 @@ import {Image} from '@shopify/hydrogen';
 
 import {applyFilters} from '@commerce-atoms/filters/apply/applyFilters';
 
+import {getCollectionUrl} from '@platform/i18n/urls';
+
 import {ProductCard} from '@components/commerce/ProductCard';
 
 import styles from './search-results.module.css';
@@ -143,7 +145,7 @@ export function SearchResults({results, type, q, filters}: SearchResultsProps) {
                 {results.collections.nodes.slice(0, 6).map((collection) => (
                   <Link
                     key={collection.id}
-                    to={`/collections/${collection.handle}`}
+                    to={getCollectionUrl(collection.handle)}
                     className={styles.collectionCard}
                   >
                     {collection.image && (
@@ -244,7 +246,7 @@ export function SearchResults({results, type, q, filters}: SearchResultsProps) {
             {results.collections.nodes.map((collection) => (
               <Link
                 key={collection.id}
-                to={`/collections/${collection.handle}`}
+                to={getCollectionUrl(collection.handle)}
                 className={styles.collectionCard}
               >
                 {collection.image && (

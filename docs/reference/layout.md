@@ -23,12 +23,12 @@ This starter uses React Router's `handle` mechanism to let routes declare layout
 
 Routes can export a `handle` object with the following fields:
 
-| Handle field | Purpose | Resolution rule |
+| Handle field    | Purpose                       | Resolution rule    |
 | --------------- | ----------------------------- | ------------------ |
-| `pageTitle` | Document title | deepest route wins |
-| `pageHeader` | Page header content | deepest route wins |
-| `breadcrumb` | Breadcrumb entries | root → leaf merged |
-| `seo` | SEO metadata | deepest route wins |
+| `pageTitle`     | Document title                | deepest route wins |
+| `pageHeader`    | Page header content           | deepest route wins |
+| `breadcrumb`    | Breadcrumb entries            | root → leaf merged |
+| `seo`           | SEO metadata                  | deepest route wins |
 | `layoutVariant` | Layout mode hint (shop, etc.) | deepest route wins |
 
 **This is important: it defines governance.** Only these fields are supported. Adding new fields requires updating the layout system.
@@ -46,10 +46,10 @@ Breadcrumbs accumulate from root → leaf. All matched routes contribute to the 
 **Example:**
 
 - Root route: `breadcrumb: {label: 'Home', href: '/'}`
-- Collection route: `breadcrumb: {label: 'Products', href: '/collections'}`
+- Shop route: `breadcrumb: {label: 'Shop', href: '/shop'}`
 - Product route: `breadcrumb: {label: 'Snowboard', href: '/products/snowboard'}`
 
-**Result:** `[{label: 'Home', href: '/'}, {label: 'Products', href: '/collections'}, {label: 'Snowboard', href: '/products/snowboard'}]`
+**Result:** `[{label: 'Home', href: '/'}, {label: 'Shop', href: '/shop'}, {label: 'Snowboard', href: '/products/snowboard'}]`
 
 ### All Other Metadata: Leaf → Root (Deepest Wins)
 

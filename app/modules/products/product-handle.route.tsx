@@ -4,7 +4,8 @@ import {buildProductMeta} from '@commerce-atoms/seo/meta/buildProductMeta';
 import {getSelectedOptionsFromUrl} from '@commerce-atoms/variants/getSelectedOptionsFromUrl';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
-import {buildCanonicalUrl,buildMetaTags} from '@platform/seo/meta';
+import {SHOP_PATH} from '@platform/i18n/urls';
+import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
 
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
@@ -31,8 +32,10 @@ export const meta: Route.MetaFunction = ({data, location, matches}) => {
 };
 
 export const handle = {
-  breadcrumb: (data: Awaited<ReturnType<typeof loader>>) =>
+  breadcrumb: (data: Awaited<ReturnType<typeof loader>>) => [
+    breadcrumb('Shop', SHOP_PATH),
     breadcrumb(data.product.title, `/products/${data.product.handle}`),
+  ],
 };
 
 export async function loader(args: Route.LoaderArgs) {

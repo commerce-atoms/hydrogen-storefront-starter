@@ -1,5 +1,7 @@
 import {NavLink} from 'react-router';
 
+import {toStorefrontPath} from '@platform/i18n/urls';
+
 import {activeLinkStyle, FALLBACK_HEADER_MENU} from '../utils/navigation';
 
 import {useAside} from './Aside';
@@ -55,12 +57,13 @@ export function Menu({
         if (!item.url) return null;
 
         // if the url is internal, we strip the domain
-        const url =
+        const url = toStorefrontPath(
           item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
+            item.url.includes(publicStoreDomain) ||
+            item.url.includes(primaryDomainUrl)
             ? new URL(item.url).pathname
-            : item.url;
+            : item.url,
+        );
 
         return (
           <MenuItem

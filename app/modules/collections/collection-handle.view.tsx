@@ -9,6 +9,7 @@ import {ProductCard} from '@components/commerce/ProductCard';
 import {PaginatedResourceSection} from '@components/pagination/PaginatedResourceSection';
 
 import styles from './collection-handle.view.module.css';
+import {ShopNav} from './components/ShopNav';
 import {DEFAULT_COLLECTION_SORT, COLLECTION_SORT_OPTIONS} from './sort';
 
 import type {Theme} from '@platform/theming/types';
@@ -16,16 +17,19 @@ import type {Theme} from '@platform/theming/types';
 import type {
   CollectionQuery,
   ProductItemFragment,
+  ShopNavCollectionFragment,
 } from 'storefrontapi.generated';
 
 interface CollectionHandleViewProps {
   collection: CollectionQuery['collection'];
+  collections: ShopNavCollectionFragment[];
   sort: string;
   theme: Theme | null;
 }
 
 export function CollectionHandleView({
   collection,
+  collections,
   sort,
   theme,
 }: CollectionHandleViewProps) {
@@ -45,6 +49,7 @@ export function CollectionHandleView({
     <ThemeStyle theme={theme} handle={collection.handle}>
       <div className={styles.collection}>
         <h1>{collection.title}</h1>
+        <ShopNav collections={collections} activeHandle={collection.handle} />
         {collection.description && (
           <p className={styles.collectionDescription}>
             {collection.description}

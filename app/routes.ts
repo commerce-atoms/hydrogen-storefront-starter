@@ -42,15 +42,13 @@ const siteRoutes: RouteConfigEntry[] = [
   route('products/:handle', 'modules/products/product-handle.route.tsx'),
 
   // ─────────────────────────────────────────────────────────────────────────
-  // COLLECTIONS (features.enableCollections)
+  // SHOP: collections (features.enableCollections)
+  // Shopify's native `/collections/*` paths are mapped to `/shop/*` by
+  // `toStorefrontPath` in `platform/i18n/urls.ts`.
   // ─────────────────────────────────────────────────────────────────────────
   ...optional(features.enableCollections, [
-    route('collections', 'modules/collections/collections-index.route.tsx'),
-    route('collections/all', 'modules/collections/collections-all.route.tsx'),
-    route(
-      'collections/:handle',
-      'modules/collections/collection-handle.route.tsx',
-    ),
+    route('shop', 'modules/collections/collections-all.route.tsx'),
+    route('shop/:handle', 'modules/collections/collection-handle.route.tsx'),
   ]),
 
   // ─────────────────────────────────────────────────────────────────────────

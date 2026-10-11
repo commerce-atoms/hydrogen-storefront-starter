@@ -2,6 +2,8 @@ import {Link} from 'react-router';
 
 import {useOptimisticCart} from '@shopify/hydrogen';
 
+import {SHOP_PATH} from '@platform/i18n/urls';
+
 import {useAside} from '@layout/components/Aside';
 
 import styles from './cart-panel.module.css';
@@ -65,7 +67,7 @@ function CartEmpty({
         started!
       </p>
       <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
+      <Link to={SHOP_PATH} onClick={close} prefetch="viewport">
         Continue shopping →
       </Link>
     </div>

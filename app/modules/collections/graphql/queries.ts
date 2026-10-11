@@ -3,7 +3,7 @@ import {COLLECTION_THEME_FRAGMENT} from '@platform/theming/collectionThemeFragme
 import {
   PRODUCT_ITEM_FRAGMENT,
   COLLECTION_ITEM_FRAGMENT,
-  COLLECTION_FRAGMENT,
+  SHOP_NAV_COLLECTION_FRAGMENT,
 } from './fragments';
 
 export const COLLECTION_QUERY = `#graphql
@@ -72,31 +72,14 @@ export const CATALOG_QUERY = `#graphql
   ${COLLECTION_ITEM_FRAGMENT}
 ` as const;
 
-export const COLLECTIONS_QUERY = `#graphql
-  query StoreCollections(
-    $country: CountryCode
-    $endCursor: String
-    $first: Int
-    $language: LanguageCode
-    $last: Int
-    $startCursor: String
-  ) @inContext(country: $country, language: $language) {
-    collections(
-      first: $first,
-      last: $last,
-      before: $startCursor,
-      after: $endCursor
-    ) {
+export const SHOP_NAV_QUERY = `#graphql
+  query ShopNav($country: CountryCode, $language: LanguageCode)
+  @inContext(country: $country, language: $language) {
+    collections(first: 50, sortKey: TITLE) {
       nodes {
-        ...Collection
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
+        ...ShopNavCollection
       }
     }
   }
-  ${COLLECTION_FRAGMENT}
+  ${SHOP_NAV_COLLECTION_FRAGMENT}
 ` as const;

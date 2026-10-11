@@ -1,6 +1,11 @@
 import {describe, expect, test} from 'vitest';
 
-import {buildProductUrl, getProductUrl} from './urls';
+import {
+  buildProductUrl,
+  getCollectionUrl,
+  getProductUrl,
+  toStorefrontPath,
+} from './urls';
 
 describe('buildProductUrl', () => {
   test('builds basic product URL without locale', () => {
@@ -104,5 +109,28 @@ describe('getProductUrl', () => {
     const url = getProductUrl('hoodie', '');
 
     expect(url).toBe('/products/hoodie');
+  });
+});
+
+describe('getCollectionUrl', () => {
+  test('nests collections under the shop root', () => {
+    expect(getCollectionUrl('dark-red')).toBe('/shop/dark-red');
+  });
+});
+
+describe('toStorefrontPath', () => {
+  test.each([
+    ['/collections', '/shop'],
+    ['/collections/all', '/shop'],
+    ['/collections/all?page=2', '/shop?page=2'],
+    ['/collections/dark-red', '/shop/dark-red'],
+    ['/collections/all-black', '/shop/all-black'],
+    ['/fr-ca/collections', '/fr-ca/shop'],
+    ['/fr-ca/collections/winter', '/fr-ca/shop/winter'],
+    ['/products/snowboard', '/products/snowboard'],
+    ['/pages/collections', '/pages/collections'],
+    ['/collectionsx', '/collectionsx'],
+  ])('maps %s to %s', (input, expected) => {
+    expect(toStorefrontPath(input)).toBe(expected);
   });
 });

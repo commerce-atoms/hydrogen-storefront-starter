@@ -26,7 +26,7 @@ export const FALLBACK_HEADER_MENU: NonNullable<HeaderQuery['menu']> = {
       tags: [],
       title: 'Collections',
       type: 'HTTP',
-      url: '/collections',
+      url: '/shop',
       items: [],
     },
     {

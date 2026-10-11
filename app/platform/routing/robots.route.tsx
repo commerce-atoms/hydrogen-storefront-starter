@@ -81,15 +81,15 @@ ${shopId ? `Disallow: /${shopId}/checkouts` : ''}
 ${shopId ? `Disallow: /${shopId}/orders` : ''}
 Disallow: /carts
 Disallow: /account
-Disallow: /collections/*sort_by*
-Disallow: /*/collections/*sort_by*
-Disallow: /collections/*+*
-Disallow: /collections/*%2B*
-Disallow: /collections/*%2b*
-Disallow: /*/collections/*+*
-Disallow: /*/collections/*%2B*
-Disallow: /*/collections/*%2b*
-Disallow: */collections/*filter*&*filter*
+Disallow: /shop/*sort_by*
+Disallow: /*/shop/*sort_by*
+Disallow: /shop/*+*
+Disallow: /shop/*%2B*
+Disallow: /shop/*%2b*
+Disallow: /*/shop/*+*
+Disallow: /*/shop/*%2B*
+Disallow: /*/shop/*%2b*
+Disallow: */shop/*filter*&*filter*
 Disallow: /blogs/*+*
 Disallow: /blogs/*%2B*
 Disallow: /blogs/*%2b*

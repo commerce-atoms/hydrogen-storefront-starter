@@ -17,14 +17,12 @@ vi.mock('~/config/brand', () => ({
 
 const context = {
   location: {pathname: '/about', origin: 'https://shop.example'},
-  matches: [
-    {data: {env: {PUBLIC_STORE_FRONTEND_DOMAIN: 'www.example.com'}}},
-  ],
+  matches: [{data: {env: {PUBLIC_STORE_FRONTEND_DOMAIN: 'www.example.com'}}}],
 };
 
 function content(tags: ReturnType<typeof buildMetaTags>, key: string) {
-  const tag = tags.find(
-    (t) => 'property' in t ? t.property === key : 'name' in t && t.name === key,
+  const tag = tags.find((t) =>
+    'property' in t ? t.property === key : 'name' in t && t.name === key,
   );
   return tag && 'content' in tag ? tag.content : undefined;
 }
@@ -81,8 +79,8 @@ describe('buildMetaTags', () => {
             data: {product: {title: 'Wolf Study 01'}},
             handle: {
               breadcrumb: () => [
-                {label: 'Shop', href: '/collections/all'},
-                {label: 'Dark Red', href: '/collections/dark-red'},
+                {label: 'Shop', href: '/shop'},
+                {label: 'Dark Red', href: '/shop/dark-red'},
                 {label: 'Wolf Study 01', href: '/products/wolf-study-01'},
               ],
             },
@@ -108,7 +106,9 @@ describe('buildMetaTags', () => {
         ],
       },
     );
-    expect(tags).toContainEqual({title: 'Custom SEO title | Works | Test Brand'});
+    expect(tags).toContainEqual({
+      title: 'Custom SEO title | Works | Test Brand',
+    });
   });
 
   test('does not repeat the brand on the homepage', () => {

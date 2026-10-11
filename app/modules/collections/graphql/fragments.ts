@@ -54,17 +54,10 @@ export const COLLECTION_ITEM_FRAGMENT = `#graphql
   ${MONEY_FRAGMENT}
 ` as const;
 
-export const COLLECTION_FRAGMENT = `#graphql
-  fragment Collection on Collection {
+export const SHOP_NAV_COLLECTION_FRAGMENT = `#graphql
+  fragment ShopNavCollection on Collection {
     id
     title
     handle
-    image {
-      id
-      url
-      altText
-      width
-      height
-    }
   }
 ` as const;

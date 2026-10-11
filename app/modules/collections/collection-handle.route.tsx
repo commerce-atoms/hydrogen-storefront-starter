@@ -5,6 +5,7 @@ import {getPaginationVariables} from '@shopify/hydrogen';
 import {buildCollectionMeta} from '@commerce-atoms/seo/meta/buildCollectionMeta';
 
 import {redirectIfHandleIsLocalized} from '@platform/i18n/redirects';
+import {getCollectionUrl, SHOP_PATH} from '@platform/i18n/urls';
 import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
 
 import {parseTheme} from '@platform/theming/parseTheme';
@@ -12,7 +13,7 @@ import {parseTheme} from '@platform/theming/parseTheme';
 import {breadcrumb} from '@layout/utils/breadcrumbs';
 
 import {CollectionHandleView} from './collection-handle.view';
-import {COLLECTION_QUERY} from './graphql/queries';
+import {COLLECTION_QUERY, SHOP_NAV_QUERY} from './graphql/queries';
 import {DEFAULT_COLLECTION_SORT} from './sort';
 import {mapSortToShopify} from './utils/sortMapping';
 
@@ -33,8 +34,8 @@ export const meta: Route.MetaFunction = ({data, location, matches}) => {
 
 export const handle = {
   breadcrumb: (data: Awaited<ReturnType<typeof loader>>) => [
-    breadcrumb('Collections', '/collections'),
-    breadcrumb(data.collection.title, `/collections/${data.collection.handle}`),
+    breadcrumb('Shop', SHOP_PATH),
+    breadcrumb(data.collection.title, getCollectionUrl(data.collection.handle)),
   ],
 };
 
@@ -63,14 +64,15 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
   const {sortKey, reverse} = mapSortToShopify(sortParam);
 
   if (!handle) {
-    throw redirect('/collections');
+    throw redirect(SHOP_PATH);
   }
 
-  const [{collection}] = await Promise.all([
+  const [{collection}, {collections}] = await Promise.all([
     storefront.query(COLLECTION_QUERY, {
       variables: {handle, ...paginationVariables, sortKey, reverse},
       cache: storefront.CacheShort(),
     }),
+    storefront.query(SHOP_NAV_QUERY),
   ]);
 
   if (!collection) {
@@ -90,14 +92,20 @@ async function loadCriticalData({context, params, request}: Route.LoaderArgs) {
 
   return {
     collection,
+    collections: collections.nodes,
     sort: sortParam,
     theme,
   };
 }
 
 export default function Collection() {
-  const {collection, sort, theme} = useLoaderData<typeof loader>();
+  const {collection, collections, sort, theme} = useLoaderData<typeof loader>();
   return (
-    <CollectionHandleView collection={collection} sort={sort} theme={theme} />
+    <CollectionHandleView
+      collection={collection}
+      collections={collections}
+      sort={sort}
+      theme={theme}
+    />
   );
 }

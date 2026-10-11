@@ -22,7 +22,7 @@ export interface FeatureFlags {
   enableSearch: boolean;
   /** Blog module — `/blogs/*`. */
   enableBlog: boolean;
-  /** Collections module — `/collections/*`. */
+  /** Collections module — `/shop/*`. */
   enableCollections: boolean;
   /** Policies module — `/policies/*`. */
   enablePolicies: boolean;

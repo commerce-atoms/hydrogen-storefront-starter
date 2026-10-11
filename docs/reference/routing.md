@@ -63,10 +63,7 @@ export default hydrogenRoutes([
       // UI routes (inside layout)
       index('modules/home/home.route.tsx'),
       route('products/:handle', 'modules/products/product-handle.route.tsx'),
-      route(
-        'collections/:handle',
-        'modules/collections/collection-handle.route.tsx',
-      ),
+      route('shop/:handle', 'modules/collections/collection-handle.route.tsx'),
       route('cart', 'modules/cart/cart.route.tsx'),
       route('search', 'modules/search/search.route.tsx'),
 
@@ -162,19 +159,19 @@ The boilerplate follows **standard commerce URL patterns.**
 
 ### Recommended Patterns
 
-| Route | URL Pattern | Purpose |
-| ----------------- | ----------------------------------- | ----------------------------------- |
-| Home | `/` | Homepage |
-| Product Detail | `/products/:handle` | Individual product |
-| Collection | `/collections/:handle` | Collection page |
-| Collections Index | `/collections` | All collections |
-| Cart | `/cart` | Shopping cart |
-| Search | `/search` | Search results |
-| Policies | `/policies/:handle` | Policy pages (privacy, terms, etc.) |
-| Pages | `/pages/:handle` | CMS pages |
-| Blogs | `/blogs` | Blog index |
-| Blog | `/blogs/:blogHandle` | Individual blog |
-| Article | `/blogs/:blogHandle/:articleHandle` | Individual article |
+| Route          | URL Pattern                         | Purpose                                                                           |
+| -------------- | ----------------------------------- | --------------------------------------------------------------------------------- |
+| Home           | `/`                                 | Homepage                                                                          |
+| Product Detail | `/products/:handle`                 | Individual product                                                                |
+| Shop           | `/shop`                             | All products, with a category row linking every collection                        |
+| Collection     | `/shop/:handle`                     | Collection page (Shopify's `/collections/*` URLs map here via `toStorefrontPath`) |
+| Cart           | `/cart`                             | Shopping cart                                                                     |
+| Search         | `/search`                           | Search results                                                                    |
+| Policies       | `/policies/:handle`                 | Policy pages (privacy, terms, etc.)                                               |
+| Pages          | `/pages/:handle`                    | CMS pages                                                                         |
+| Blogs          | `/blogs`                            | Blog index                                                                        |
+| Blog           | `/blogs/:blogHandle`                | Individual blog                                                                   |
+| Article        | `/blogs/:blogHandle/:articleHandle` | Individual article                                                                |
 
 ### Locale-Prefixed Routes (Optional)
 
@@ -196,22 +193,22 @@ Route filenames inside modules are **explicit and descriptive.**
 
 **Pattern:** `{resource}-{action}.route.tsx`
 
-| Pattern | Example | Purpose |
-| --------------------------------- | ----------------------------- | -------------------------- |
-| `{resource}-handle.route.tsx` | `product-handle.route.tsx` | Dynamic handle-based route |
-| `{resource}-index.route.tsx` | `collections-index.route.tsx` | List/index page |
-| `{resource}.route.tsx` | `cart.route.tsx` | Single resource page |
-| `{resource}-{modifier}.route.tsx` | `collections-all.route.tsx` | Variation |
+| Pattern                           | Example                     | Purpose                    |
+| --------------------------------- | --------------------------- | -------------------------- |
+| `{resource}-handle.route.tsx`     | `product-handle.route.tsx`  | Dynamic handle-based route |
+| `{resource}-index.route.tsx`      | `policies-index.route.tsx`  | List/index page            |
+| `{resource}.route.tsx`            | `cart.route.tsx`            | Single resource page       |
+| `{resource}-{modifier}.route.tsx` | `collections-all.route.tsx` | Variation                  |
 
 ### Route Parameters
 
 Use **descriptive parameter names** in URLs:
 
-| Parameter | Use Case | Example |
+| Parameter | Use Case                   | Example                       |
 | --------- | -------------------------- | ----------------------------- |
-| `:handle` | SEO-friendly identifiers | Products, collections, blogs |
-| `:id` | Internal identifiers | When handles aren't available |
-| `:slug` | Human-readable identifiers | Custom pages |
+| `:handle` | SEO-friendly identifiers   | Products, collections, blogs  |
+| `:id`     | Internal identifiers       | When handles aren't available |
+| `:slug`   | Human-readable identifiers | Custom pages                  |
 
 **Important:** Filenames do not need to mirror URL structure. The route manifest maps URLs to files.
 

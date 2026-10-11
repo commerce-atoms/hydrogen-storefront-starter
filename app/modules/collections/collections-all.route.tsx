@@ -4,20 +4,27 @@ import {getPaginationVariables} from '@shopify/hydrogen';
 
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
+import {SHOP_PATH} from '@platform/i18n/urls';
 import {buildCanonicalUrl, buildMetaTags} from '@platform/seo/meta';
 
+import {breadcrumb} from '@layout/utils/breadcrumbs';
+
 import {CollectionsAllView} from './collections-all.view';
-import {CATALOG_QUERY} from './graphql/queries';
+import {CATALOG_QUERY, SHOP_NAV_QUERY} from './graphql/queries';
 
 import type {Route} from './+types/collections-all.route';
 
 export const meta: Route.MetaFunction = ({location, matches}) => {
   const canonicalUrl = buildCanonicalUrl(location, matches);
   const seoMeta = buildPageMeta({
-    title: 'Products',
+    title: 'Shop',
     canonicalUrl,
   });
   return buildMetaTags(seoMeta, {location, matches});
+};
+
+export const handle = {
+  breadcrumb: () => breadcrumb('Shop', SHOP_PATH),
 };
 
 export async function loader(args: Route.LoaderArgs) {
@@ -36,16 +43,16 @@ async function loadCriticalData({context, request}: Route.LoaderArgs) {
     pageBy: 8,
   });
 
-  const [{products}] = await Promise.all([
+  const [{products}, {collections}] = await Promise.all([
     storefront.query(CATALOG_QUERY, {
       variables: {...paginationVariables},
     }),
-    // Add other queries here, so that they are loaded in parallel
+    storefront.query(SHOP_NAV_QUERY),
   ]);
-  return {products};
+  return {products, collections: collections.nodes};
 }
 
-export default function Collection() {
-  const {products} = useLoaderData<typeof loader>();
-  return <CollectionsAllView products={products} />;
+export default function Shop() {
+  const {products, collections} = useLoaderData<typeof loader>();
+  return <CollectionsAllView products={products} collections={collections} />;
 }

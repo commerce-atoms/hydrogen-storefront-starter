@@ -6,6 +6,8 @@ import {Image} from '@shopify/hydrogen';
 import {formatMoney} from '@commerce-atoms/money/format/formatMoney';
 import {pickDefaultVariant} from '@commerce-atoms/variants/pickDefaultVariant';
 
+import {getCollectionUrl} from '@platform/i18n/urls';
+
 import {useAside} from '@layout/components/Aside';
 
 import {getEmptyPredictiveSearchResult} from '../utils/predictive';
@@ -141,7 +143,7 @@ function SearchResultsPredictiveCollections({
       <ul>
         {collections.map((collection) => {
           const collectionUrl = urlWithTrackingParams({
-            baseUrl: `/collections/${collection.handle}`,
+            baseUrl: getCollectionUrl(collection.handle),
             trackingParams: collection.trackingParameters,
             term: term.current,
           });

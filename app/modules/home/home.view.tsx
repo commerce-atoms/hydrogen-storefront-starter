@@ -3,6 +3,8 @@ import {Await, Link} from 'react-router';
 
 import {Image} from '@shopify/hydrogen';
 
+import {getCollectionUrl} from '@platform/i18n/urls';
+
 import {ProductCard} from '@components/commerce/ProductCard';
 import {Loading} from '@components/primitives/Loading';
 
@@ -40,7 +42,7 @@ function FeaturedCollection({
   return (
     <Link
       className={styles.featuredCollection}
-      to={`/collections/${collection.handle}`}
+      to={getCollectionUrl(collection.handle)}
     >
       {image && (
         <div className={styles.featuredCollectionImage}>

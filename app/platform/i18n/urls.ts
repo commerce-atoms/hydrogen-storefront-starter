@@ -74,6 +74,30 @@ export function buildProductUrl({
 }
 
 /**
+ * Shop root: the full catalog lives at `/shop`, each collection at
+ * `/shop/:handle`. Shopify itself still emits `/collections/*` URLs
+ * (menus, API `url` fields); `toStorefrontPath` maps those.
+ */
+export const SHOP_PATH = '/shop';
+
+export function getCollectionUrl(handle: string): string {
+  return `${SHOP_PATH}/${handle}`;
+}
+
+/**
+ * Maps a Shopify-native pathname to this storefront's path, keeping any
+ * locale prefix and query string: `/collections` and `/collections/all` →
+ * `/shop`, `/collections/x` → `/shop/x`, `/fr-ca/collections/x` →
+ * `/fr-ca/shop/x`. Other paths are returned unchanged.
+ */
+export function toStorefrontPath(pathname: string): string {
+  return pathname.replace(
+    /^(\/[a-zA-Z]{2}-[a-zA-Z]{2})?\/collections(\/all)?(?=[/?#]|$)/,
+    (_match, locale: string | undefined) => `${locale ?? ''}${SHOP_PATH}`,
+  );
+}
+
+/**
  * Get a simple product URL without variant selection
  * For use in components that don't need variant-specific URLs
  */
