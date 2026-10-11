@@ -18,7 +18,7 @@ export const meta: Route.MetaFunction = ({location, matches}) => {
     title: 'Policies',
     canonicalUrl,
   });
-  return buildMetaTags(seoMeta);
+  return buildMetaTags(seoMeta, {location, matches});
 };
 
 export const handle = {

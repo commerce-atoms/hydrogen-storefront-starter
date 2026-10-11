@@ -17,7 +17,7 @@ export const meta: Route.MetaFunction = ({location, matches}) => {
     title: 'Products',
     canonicalUrl,
   });
-  return buildMetaTags(seoMeta);
+  return buildMetaTags(seoMeta, {location, matches});
 };
 
 export async function loader(args: Route.LoaderArgs) {

@@ -17,7 +17,7 @@ export const meta: Route.MetaFunction = ({location, matches}) => {
     title: 'Cart',
     canonicalUrl,
   });
-  return buildMetaTags(seoMeta);
+  return buildMetaTags(seoMeta, {location, matches});
 };
 
 export const headers: HeadersFunction = ({actionHeaders}) => actionHeaders;

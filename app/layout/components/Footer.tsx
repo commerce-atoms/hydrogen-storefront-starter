@@ -7,6 +7,7 @@ import {FALLBACK_FOOTER_MENU} from '../utils/navigation';
 
 import styles from './footer.module.css';
 import {Menu} from './Menu';
+import {SocialLinks} from './SocialLinks';
 
 import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
 
@@ -40,6 +41,7 @@ export function Footer({
               />
             )}
             <div className={styles.footerMeta} data-testid="layout-footer-meta">
+              <SocialLinks className={styles.footerSocial} />
               <span
                 className={styles.footerBrand}
                 data-testid="layout-footer-brand"

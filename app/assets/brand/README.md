@@ -18,8 +18,21 @@ component that consumes it. Delete the row if your fork does not need it.
 
 | File | Suggested use | Wire it from |
 |-----------------|-----------------------------------------------------------------|--------------|
-| `logo.svg` | Header wordmark / OG fallback | `app/layout/components/Header.tsx`, meta functions |
-| `og-default.png`| Default OpenGraph image (1200 × 630) | `app/root.tsx` meta or `@platform/seo/brandMeta.ts` |
+| `logo.svg` / `logo.png` | Header wordmark; Organization JSON-LD logo | `Header.tsx`; import into `brand.logo` in `app/config/brand.ts` |
+| `og-default.jpg`| Default social share image (1200 × 630) for pages without their own image | Import into `brand.ogImage` in `app/config/brand.ts` |
+
+`brand.ogImage` and `brand.logo` take the imported asset URL:
+
+```ts
+import ogImage from '~/assets/brand/og-default.jpg';
+import logo from '~/assets/brand/logo.png';
+
+export const brand: BrandConfig = {
+  // …
+  ogImage,
+  logo,
+};
+```
 
 ## Where colour tokens live
 

@@ -1,8 +1,15 @@
 import {useLoaderData} from 'react-router';
 
+import {buildOrganizationJsonLd} from '@commerce-atoms/seo/jsonld/buildOrganizationJsonLd';
 import {buildPageMeta} from '@commerce-atoms/seo/meta/buildPageMeta';
 
-import {buildCanonicalUrl,buildMetaTags} from '@platform/seo/meta';
+import {brand} from '~/config/brand';
+
+import {
+  buildAbsoluteUrl,
+  buildCanonicalUrl,
+  buildMetaTags,
+} from '@platform/seo/meta';
 
 import {
   FEATURED_COLLECTION_QUERY,
@@ -14,11 +21,23 @@ import type {Route} from './+types/home.route';
 
 export const meta: Route.MetaFunction = ({location, matches}) => {
   const canonicalUrl = buildCanonicalUrl(location, matches);
+  const description =
+    matches[0]?.data?.header?.shop?.description || brand.slogan;
   const seoMeta = buildPageMeta({
-    title: 'Home',
+    title: brand.name,
+    description,
     canonicalUrl,
   });
-  return buildMetaTags(seoMeta);
+  const jsonLd = buildOrganizationJsonLd({
+    name: brand.name,
+    url: buildCanonicalUrl({...location, pathname: '/'}, matches),
+    logo: brand.logo
+      ? buildAbsoluteUrl(brand.logo, location, matches)
+      : undefined,
+    description,
+    sameAs: Object.values(brand.social),
+  });
+  return buildMetaTags({...seoMeta, jsonLd}, {location, matches});
 };
 
 export const handle = {

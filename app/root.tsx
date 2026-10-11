@@ -54,9 +54,9 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 /**
  * Site-wide meta descriptors sourced from `app/config/brand.ts`.
  *
- * These cascade to every route via React Router's meta concatenation. Only
- * additive descriptors live here (og:site_name, og:locale, twitter:site) —
- * per-page descriptors like `<title>` remain owned by each route.
+ * React Router renders only the deepest route's meta, so this applies to
+ * routes without their own `meta` export. Routes using `buildMetaTags`
+ * append the same descriptors themselves.
  */
 export const meta: Route.MetaFunction = () => buildBrandMeta(brand);
 
